@@ -5,15 +5,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.os.Bundle;
 import android.app.Activity;
-import android.text.InputType;
 import android.widget.*;
 
 public class MainActivity extends Activity {
-	RelativeLayout layout = null;
-	TextView text = null;
 	Button b = null;
 	EditText entreeText = null;
-	TextView titreListe = null;
 	TextView listeChoseAFaire = null;
 	String ChoseAFaire = "\tRien";
 	int compteur = 0;
@@ -42,7 +38,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			switch(v.getId()) {
 			    case R.id.bouton:
-			    	if(entreeText.getText().toString() != ""){
+			    	if(entreeText.getText().toString().length() > 0){
 				    	if(compteur == 0){
 				    		ChoseAFaire = "\t- " + entreeText.getText().toString();
 				    		compteur++;
