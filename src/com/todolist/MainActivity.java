@@ -22,16 +22,16 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		text = (TextView) findViewById(R.id.texteUn);
-		text.setText("ToDoList v1.0");
+		
+		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
-	    entreeText.setHint((CharSequence) "Une tâche à effectuer ?");
-	    titreListe = (TextView) findViewById(R.id.texteDeux);
-	    titreListe.setText("\nListe des choses à faire\n__________________________");
+	    
+	    //Liste des choses à faire
 	    listeChoseAFaire = (TextView) findViewById(R.id.ChoseAFaire);
 	    listeChoseAFaire.setText(ChoseAFaire);
+	    
+	    //Gestion d'évènements du bouton ajouter
 	    b = (Button) findViewById(R.id.bouton);
-		b.setText("Ajouter !");
 	    b.setOnClickListener(envoyerListener);
 	}
 	
@@ -50,6 +50,7 @@ public class MainActivity extends Activity {
 				    	else
 				    		ChoseAFaire = ChoseAFaire + "\n\t- " + entreeText.getText().toString();
 				    		listeChoseAFaire.setText(ChoseAFaire);
+				    		entreeText.setText(null);
 			    	}
 			    	break;
 		    

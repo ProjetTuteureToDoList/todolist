@@ -6,11 +6,10 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id = "@+id/texteUn"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/version" />
 
     <EditText
         android:id = "@+id/entreeTexte"
@@ -18,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:ems="10"
-        android:hint="@string/hello_world"
+        android:hint="@string/messageEditText"
         android:inputType="textMultiLine"
         android:lines="1" >
 
@@ -30,21 +29,30 @@
      android:layout_height="wrap_content"
      android:layout_width="wrap_content"
      android:layout_gravity="center"
-     android:text="@string/hello_world"
+     android:text="@string/messageBouton"
      android:onClick="selfDestruct" />
     
-     <TextView
-        android:id = "@+id/texteDeux"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world"
-        android:textSize="12sp" />
-     
-     <TextView
-        android:id = "@+id/ChoseAFaire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world"
-        android:textSize="15sp" />
+    <TableLayout
+      android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:stretchColumns="1">
+    
+	     <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/titreListe"
+	        android:textSize="15sp" />
+	     <View
+		    android:layout_height="2dip"
+		    android:background="#FF909090" />
+	     <TableRow>
+		     <TextView
+		        android:id = "@+id/ChoseAFaire"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/text"
+		        android:textSize="20sp" />
+		 </TableRow>
+     </TableLayout>
   
 </LinearLayout>
