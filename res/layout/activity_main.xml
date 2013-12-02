@@ -53,15 +53,25 @@
 		     <View
 			    android:layout_height="2dip"
 			    android:background="#FF909090" />
+		     
 		     <TableRow>
-			     <TextView
+		         <TextView
 			        android:id = "@+id/ChoseAFaire"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:text="@string/text"
-			        android:textSize="20sp" />
+			        android:textSize="20sp"
+			        android:fillAfter="true"
+			        android:fillEnabled="true" />
+			     <ImageView
+			        android:id = "@+id/imageSuppression"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/croix_rouge"
+			        android:fillAfter="true"
+			        android:fillEnabled="true"  />
 			 </TableRow>
-	     </TableLayout>
+		 </TableLayout>
 	 </ScrollView>
   
 </LinearLayout>
