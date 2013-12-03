@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 	   
 	    //Initialisation de la liste vide avec la croix effacée
 	    if(compteur == 0){
-	    	choseAFaire = "\n\tRien";
+	    	choseAFaire = "\n\tPas de tâche trouvée!";
 	    	image.setVisibility(image.GONE);
 	    }
 	    listeChoseAFaire.setText(choseAFaire);

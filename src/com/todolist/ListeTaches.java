@@ -1,5 +1,5 @@
 package com.todolist;
 
-public class ListeGroupe {
+public class ListeTaches {
 
 }

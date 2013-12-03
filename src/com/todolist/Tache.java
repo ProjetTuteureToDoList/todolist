@@ -5,37 +5,44 @@ import java.util.Date;
 public class Tache {
 	private String nom;
 	private Date date; 				// à completer
-//	Date faitLe; 			//date de la création de la tâche
 	private boolean etat;			// à faire (False) ou fait (True) 
 	private int importance;			// de 1 à 10
 	private String description; 	// décrit la tâche
-//	Lieu lieu; 			// comporte un point (coordonnées GPS) et un rayon
+//	Lieu lieu; 						// comporte un point (coordonnées GPS) et un rayon
+//	Date faitLe; 					//date de la création de la tâche
 	
 	
-	public Tache(){
+		// liste des constructeurs :
+	// constructeur par Défaut
+	public Tache(){				
 		this.nom = "Anonyme";
-		this.date = new Date();				// à completer
+		this.date = new Date();				// initialise la date à la date actuel lors de la construction
 		this.etat = false;
 		this.importance = 1;
 		this.description = "Pas de description";		
 	}
-	
-	public Tache(String nom, Date date, int importance, String description){
+	// constructeur complet
+	public Tache(String nom, Date d, int importance, String description){
 		this.nom = nom;
-		this.date = date;				// à completer
+		this.date = new Date(d.getYear(), d.getMonth(), d.getDay(), d.getMinutes(), d.getSeconds());
 		this.etat = false;
 		this.importance = importance;
 		this.description = description;		
 	}
 	
-	// liste des méthodes:
+		// liste des méthodes:
 	
 	public void rappeler(){
 		// sonnerie + élément visuel envoyés à l'utilisateur	
 	}
 	
+	public void valider(){
+		// permet de valider une tâche (passer de l'état non-fait à fait)
+		this.etat = true;
+	}
 	
-	// Getters
+		
+		// liste des Getters
 	public String getNom() {
 		return nom;
 	}
@@ -52,7 +59,7 @@ public class Tache {
 		return description;
 	}
 	
-	// Setters
+		// liste des Setters
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
