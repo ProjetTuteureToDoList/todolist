@@ -69,7 +69,6 @@
 			        android:id = "@+id/imageSuppression"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:src="@drawable/croix_rouge"
 			        android:fillAfter="true"
 			        android:fillEnabled="true"  />
 			 </TableRow>
