@@ -10,6 +10,7 @@ public class Tache {
 	private String description; 	// décrit la tâche
 //	Lieu lieu; 						// comporte un point (coordonnées GPS) et un rayon
 //	Date faitLe; 					//date de la création de la tâche
+	private int numTache;			//permettra de facilement retrouver une tâche dans le tableau pour modif/suppr
 	
 	
 		// liste des constructeurs :
@@ -20,6 +21,15 @@ public class Tache {
 		this.etat = false;
 		this.importance = 1;
 		this.description = "Pas de description";		
+	}
+	
+	// constructeur de tâche "rapide"
+	public Tache(String nom){
+		this.nom = nom;
+		this.date = new Date();
+		this.etat = false;
+		this.importance = 1;
+		this.description = "Pas de description";
 	}
 	// constructeur complet
 	public Tache(String nom, Date d, int importance, String description){
@@ -58,6 +68,9 @@ public class Tache {
 	public String getDescription() {
 		return description;
 	}
+	public int getIdTache(){
+		return numTache;
+	}
 	
 		// liste des Setters
 	public void setNom(String nom) {
@@ -74,5 +87,8 @@ public class Tache {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public void setIdTache(int idTache){
+		this.numTache = idTache;
 	}
 }

@@ -17,11 +17,13 @@ public class MainActivity extends Activity {
 	String choseAFaire = null;
 	int compteur = 0;
 	Animation anim = null;
+	ListeTaches lt = new ListeTaches();
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		
 		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
@@ -34,12 +36,12 @@ public class MainActivity extends Activity {
 	    b.setOnClickListener(envoyerListener);
 	    
 	    //Initialisation de croix_rouge.png
-	    image = (ImageView) findViewById(R.id.imageSuppression);
+	    //image = (ImageView) findViewById(R.id.imageSuppression);
 	   
 	    //Initialisation de la liste vide avec la croix effacée
 	    if(compteur == 0){
-	    	choseAFaire = "\n\tPas de tâche trouvée!";
-	    	image.setVisibility(image.GONE);
+	    	choseAFaire = "\n\tRien à faire, tu peux aller dormir";
+	    	//image.setVisibility(image.GONE);
 	    }
 	    listeChoseAFaire.setText(choseAFaire);
 	    
@@ -56,18 +58,13 @@ public class MainActivity extends Activity {
 			switch(v.getId()) {
 			    case R.id.bouton:
 			    	if(entreeText.getText().toString().length() > 0){
-				    	if(compteur == 0){
-				    		choseAFaire = "\n\t- " + entreeText.getText().toString();
-				    		compteur++;
-				    		image.setVisibility(image.VISIBLE);
-				    	}
-				    	else
-				    		choseAFaire = choseAFaire + "\n\t- " + entreeText.getText().toString();
-				    	
-				    	listeChoseAFaire.setText(choseAFaire);
+			    		compteur++;
+			    		//image.setVisibility(image.VISIBLE);
+			    		lt.ajoutTache(new Tache(entreeText.getText().toString()));
+				    	listeChoseAFaire.setText(lt.toutesLesTachesStr());
 				    	entreeText.setText(null);
 				    	listeChoseAFaire.startAnimation(anim);
-				    	image.startAnimation(anim);
+				    	//image.startAnimation(anim);
 			    	}
 			    	break;
 			     
