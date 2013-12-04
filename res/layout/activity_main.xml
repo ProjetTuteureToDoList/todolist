@@ -37,40 +37,46 @@
 	     android:onClick="selfDestruct" /> 
 	</LinearLayout>
 	
-    <ScrollView
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-	    <TableLayout
-	      android:layout_width="fill_parent"
-		  android:layout_height="wrap_content"
-		  android:stretchColumns="1">
-	    
-		     <TextView
+    <TableLayout
+      android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:stretchColumns="1">
+    
+	     <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/titreListe"
+	        android:textSize="15sp" />
+	     <View
+		    android:layout_height="2dip"
+		    android:background="#FF909090" />
+	     
+	     
+	        <!--<TextView
+		        android:id = "@+id/ChoseAFaire"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		         />
+	         
+			
+		    <ImageView
+		        android:id = "@+id/imageSuppression"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/titreListe"
-		        android:textSize="15sp" />
-		     <View
-			    android:layout_height="2dip"
-			    android:background="#FF909090" />
-		     
-		     <TableRow>
-		         <TextView
-			        android:id = "@+id/ChoseAFaire"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/text"
-			        android:textSize="20sp"
-			        android:fillAfter="true"
-			        android:fillEnabled="true" />
-			     <ImageView
-			        android:id = "@+id/imageSuppression"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:fillAfter="true"
-			        android:fillEnabled="true"  />
-			 </TableRow>
-		 </TableLayout>
-	 </ScrollView>
+		        android:fillAfter="true"
+		        android:fillEnabled="true"  /> -->
+		        
+	        <ListView 
+			   	android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:id = "@+id/listview"
+				android:text="@string/text"
+		        android:textSize="20sp"
+		        android:fillAfter="true"
+		        android:fillEnabled="true" >
+			</ListView>
+ 
+		
+	 </TableLayout>
   
 </LinearLayout>

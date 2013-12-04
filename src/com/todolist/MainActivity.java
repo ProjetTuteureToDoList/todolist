@@ -1,5 +1,8 @@
 package com.todolist;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,11 +16,11 @@ public class MainActivity extends Activity {
 	Button b = null;
 	ImageView image = null;
 	EditText entreeText = null;
-	TextView listeChoseAFaire = null;
-	String choseAFaire = null;
 	int compteur = 0;
 	Animation anim = null;
 	ListeTaches lt = new ListeTaches();
+	ListView liste = null;
+	List<String> listeNomTaches = new ArrayList<String>();
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +28,14 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		
+		
 		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
 	    
 	    //Liste des choses à faire
-	    listeChoseAFaire = (TextView) findViewById(R.id.ChoseAFaire);
+	    liste = (ListView) findViewById(R.id.listview);
+	    liste.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, listeNomTaches));
+	    
 	    
 	    //Gestion d'évènements du bouton ajouter
 	    b = (Button) findViewById(R.id.bouton);
@@ -38,15 +44,12 @@ public class MainActivity extends Activity {
 	    //Initialisation de croix_rouge.png
 	    //image = (ImageView) findViewById(R.id.imageSuppression);
 	   
-	    //Initialisation de la liste vide avec la croix effacée
-	    if(compteur == 0){
-	    	choseAFaire = "\n\tRien à faire, tu peux aller dormir";
-	    	//image.setVisibility(image.GONE);
-	    }
-	    listeChoseAFaire.setText(choseAFaire);
 	    
 	    //Initialisation de l'animation
 	    anim = AnimationUtils.loadAnimation(getApplication(), R.anim.tanslate);
+	    
+	    
+	    
 	}
 	
 	
@@ -61,9 +64,10 @@ public class MainActivity extends Activity {
 			    		compteur++;
 			    		//image.setVisibility(image.VISIBLE);
 			    		lt.ajoutTache(new Tache(entreeText.getText().toString()));
-				    	listeChoseAFaire.setText(lt.toutesLesTachesStr());
+				    	listeNomTaches.add(entreeText.getText().toString());
+				    	actualiserListe();
 				    	entreeText.setText(null);
-				    	listeChoseAFaire.startAnimation(anim);
+				    	//liste.getChildAt(listeNomTaches.size()).startAnimation(anim);
 				    	//image.startAnimation(anim);
 			    	}
 			    	break;
@@ -73,6 +77,10 @@ public class MainActivity extends Activity {
 			
 		}
 	};
+	
+	public void actualiserListe(){
+		liste.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listeNomTaches));
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
