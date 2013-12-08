@@ -1,7 +1,8 @@
-package com.todolist;
+package com.Activites;
 
-import java.util.ArrayList;
-import java.util.List;
+import gestionDesTaches.Tache;
+
+import com.todolist.R;
 
 import android.view.Menu;
 import android.view.View;
@@ -16,44 +17,41 @@ public class MainActivity extends Activity {
 	Button b = null;
 	ImageView image = null;
 	EditText entreeText = null;
-	int compteur = 0;
 	Animation anim = null;
-	ListeTaches lt = new ListeTaches();
-	ListView liste = null;
-	List<String> listeNomTaches = new ArrayList<String>();
+	ListeTacheAdapter lta = null;
+	
+	/*Permet de contrôler la ListView d'activity_main contenant
+	 * toutes les vues de tache_page_principale.xml
+	 */
+	ListView checkList = null;			
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		
-		
 		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
 	    
 	    //Liste des choses à faire
-	    liste = (ListView) findViewById(R.id.listview);
-	    liste.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, listeNomTaches));
+	    lta = new ListeTacheAdapter(this);
+	    checkList = (ListView) findViewById(R.id.listview);
+	    checkList.setAdapter(lta);
+	    checkList.setOnItemClickListener(tacheListener);
 	    
 	    
-	    //Gestion d'évènements du bouton ajouter
+	    //Initialisation et gestion de l'évènement clic du bouton ajouter
 	    b = (Button) findViewById(R.id.bouton);
-	    b.setOnClickListener(envoyerListener);
-	    
-	    //Initialisation de croix_rouge.png
-	    //image = (ImageView) findViewById(R.id.imageSuppression);
+	    b.setOnClickListener(ajouterListener);
 	   
 	    
 	    //Initialisation de l'animation
-	    anim = AnimationUtils.loadAnimation(getApplication(), R.anim.tanslate);
-	    
-	    
+	    anim = AnimationUtils.loadAnimation(getApplication(), R.anim.tanslate);	  
 	    
 	}
 	
 	
-	private OnClickListener envoyerListener = new OnClickListener() {
+	private OnClickListener ajouterListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -61,25 +59,28 @@ public class MainActivity extends Activity {
 			switch(v.getId()) {
 			    case R.id.bouton:
 			    	if(entreeText.getText().toString().length() > 0){
-			    		compteur++;
-			    		//image.setVisibility(image.VISIBLE);
-			    		lt.ajoutTache(new Tache(entreeText.getText().toString()));
-				    	listeNomTaches.add(entreeText.getText().toString());
+			    		lta.ajoutTacheAdapter(entreeText.getText().toString());
 				    	actualiserListe();
+				    	//lta.getView(lta.getCount() - 1, findViewById(R.id.tache), null).startAnimation(anim); NE MARCHE PAS
 				    	entreeText.setText(null);
-				    	//liste.getChildAt(listeNomTaches.size()).startAnimation(anim);
-				    	//image.startAnimation(anim);
 			    	}
 			    	break;
-			     
 		    
 			}
 			
 		}
 	};
 	
+	private AdapterView.OnItemClickListener tacheListener = new AdapterView.OnItemClickListener() {
+		@Override
+        public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+            lta.ajoutTacheAdapter(((Tache) lta.getItem(position)).getNom());
+	    	actualiserListe();
+        }
+	};
+	
 	public void actualiserListe(){
-		liste.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, listeNomTaches));
+		checkList.setAdapter(lta);
 	}
 
 	@Override
@@ -88,5 +89,4 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
 }
