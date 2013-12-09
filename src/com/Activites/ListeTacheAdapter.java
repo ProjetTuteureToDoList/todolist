@@ -9,6 +9,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,19 +59,28 @@ public class ListeTacheAdapter extends BaseAdapter{
 		// Si la vue est recyclée, il contient déjà le bon layout, donc pas besoin de la recréer
 		// pour des soucis d'optimisation du processus
 		if(convertView != null)
-		  // On n'a plus qu'à le récupérer
-		  layout  = (LinearLayout) convertView;
-		else
-		  // Sinon, il faut utiliser le LayoutInflater
-		  layout = (LinearLayout) mInflater.inflate(R.layout.tache_page_principale, parent, false);
+			// On n'a plus qu'à le récupérer
+			layout  = (LinearLayout) convertView;
+		else{
+			// Sinon, il faut utiliser le LayoutInflater
+			layout = (LinearLayout) mInflater.inflate(R.layout.tache_page_principale, parent, false);
+			
+			//ANIMATION
+			if(position == lt.getTabTache().size() - 1 && !lt.getTabTache().get(position).getAnimation()){
+				Animation anim = AnimationUtils.loadAnimation(this.listeContexte, R.anim.tanslate);
+				layout.startAnimation(anim);
+				lt.getTabTache().get(position).setAnimation(true);
+			}
+		}
 		 
 		TextView laTache = (TextView) layout.findViewById(R.id.tache);
-		laTache.setText(lt.getTabTache().get(position).getNom());		
+		laTache.setText(lt.getTabTache().get(position).getNom());
 
-	  return layout;	
+		
+		return layout;	
 	}
 
-	/* retourne la taille de l'adapter
+	/** retourne la taille de l'adapter
 	 * c'est à dire la taille de la liste de tâche
 	 */
 	
@@ -80,5 +91,9 @@ public class ListeTacheAdapter extends BaseAdapter{
 	
 	public void ajoutTacheAdapter(String nouvelleTache){
 		lt.ajoutTache(new Tache(nouvelleTache));
+	}
+	
+	public void suppressionTacheAdapter(int position){
+		lt.suppressionTache(position);
 	}
 }

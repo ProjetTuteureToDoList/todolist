@@ -16,10 +16,9 @@ public class ListeTaches {
 	}
 	
 	
-	public void retirerTache(Tache t){		
-		if(tabTache.contains(t))
-			tabTache.remove(t);
-		
+	public void suppressionTache(int position){		
+		if(tabTache.size() > position)
+			tabTache.remove(position);	
 	}
 	
 	public ArrayList<Tache> getTabTache(){

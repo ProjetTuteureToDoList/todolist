@@ -12,6 +12,8 @@ public class Tache {
 //	Date faitLe; 					//date de la création de la tâche
 	private int numTache;			//permettra de facilement retrouver une tâche dans le tableau pour modif/suppr
 	
+	private boolean animation; 		//permet de déterminer si elle a été animé ou non
+	
 	
 		// liste des constructeurs :
 	// constructeur par Défaut
@@ -20,7 +22,8 @@ public class Tache {
 		this.date = new Date();				// initialise la date à la date actuel lors de la construction
 		this.etat = false;
 		this.importance = 1;
-		this.description = "Pas de description";		
+		this.description = "Pas de description";
+		this.animation = false;
 	}
 	
 	// constructeur de tâche "rapide"
@@ -71,6 +74,9 @@ public class Tache {
 	public int getIdTache(){
 		return numTache;
 	}
+	public boolean getAnimation(){
+		return animation;
+	}
 	
 		// liste des Setters
 	public void setNom(String nom) {
@@ -90,5 +96,9 @@ public class Tache {
 	}
 	public void setIdTache(int idTache){
 		this.numTache = idTache;
+	}
+	
+	public void setAnimation(boolean animTache){
+		this.animation = animTache;
 	}
 }
