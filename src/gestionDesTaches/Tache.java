@@ -1,6 +1,8 @@
 package gestionDesTaches;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Tache {
 	private String nom;
@@ -10,10 +12,14 @@ public class Tache {
 	private String description; 	// décrit la tâche
 //	Lieu lieu; 						// comporte un point (coordonnées GPS) et un rayon
 //	Date faitLe; 					//date de la création de la tâche
-	private int numTache;			//permettra de facilement retrouver une tâche dans le tableau pour modif/suppr
 	
+	private int numTache;			//permettra de facilement retrouver une tâche dans le tableau pour modif/suppr
 	private boolean animation; 		//permet de déterminer si elle a été animé ou non
 	
+	private List<String> tag;		//Liste des tags d'une tâche spécifique
+	private static String []tagParDef = {"Maison", "Travail", "Ecole", "Famille"};
+									//Liste de tous les tags existants	
+	static List<String> tabTag = Arrays.asList(tagParDef);			
 	
 		// liste des constructeurs :
 	// constructeur par Défaut
