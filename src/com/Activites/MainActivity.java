@@ -1,17 +1,20 @@
 package com.Activites;
 
 import gestionDesTaches.Tache;
-
-import com.todolist.R;
-
+import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.os.Bundle;
-import android.app.Activity;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
-public class MainActivity extends Activity {
+import com.Activites.ListeTacheAdapter.CroixAdapterListener;
+import com.todolist.R;
+
+public class MainActivity extends Activity implements CroixAdapterListener {
 	Button b = null;
 	EditText entreeText = null;
 	ListeTacheAdapter lta = null;
@@ -34,13 +37,13 @@ public class MainActivity extends Activity {
 	    lta = new ListeTacheAdapter(this);
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);
-	    checkList.setOnItemLongClickListener(tacheLongListener);
-	    checkList.setOnItemClickListener(tacheListener);
-	    
+	    checkList.setOnItemLongClickListener(tacheLongListener);	    
 	    
 	    //Initialisation et gestion de l'évènement clic du bouton ajouter
 	    b = (Button) findViewById(R.id.bouton);
 	    b.setOnClickListener(ajouterListener);
+	    
+	    lta.addListener(this);
 	    
 	}
 	
@@ -71,8 +74,9 @@ public class MainActivity extends Activity {
 	
 	private AdapterView.OnItemClickListener tacheListener = new AdapterView.OnItemClickListener() {
 		@Override
-        public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
-			lta.suppressionTacheAdapter(position);
+        public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
+			temp = position;
+			checkList.getChildAt(position).setOnClickListener(ajouterListener);
 			actualiserListe();
         }
 	};
@@ -80,7 +84,6 @@ public class MainActivity extends Activity {
 	private AdapterView.OnItemLongClickListener tacheLongListener = new AdapterView.OnItemLongClickListener() {
 		@Override
         public boolean onItemLongClick(AdapterView<?> arg0, View v, int position, long arg3) {
-			temp = position;
             lta.ajoutTacheAdapter(((Tache) lta.getItem(position)).getNom());
 	    	actualiserListe();
 			return true;
@@ -96,5 +99,11 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public void onClickCroix(int position) {
+		lta.suppressionTacheAdapter(position);
+		actualiserListe();
 	}
 }
