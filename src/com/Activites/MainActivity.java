@@ -18,7 +18,6 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	Button b = null;
 	EditText entreeText = null;
 	ListeTacheAdapter lta = null;
-	int temp;
 	
 	/*Permet de contrôler la ListView d'activity_main contenant
 	 * toutes les vues de tache_page_principale.xml
@@ -37,17 +36,19 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	    lta = new ListeTacheAdapter(this);
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);
+	    checkList.setOnItemClickListener(tacheListener);
 	    checkList.setOnItemLongClickListener(tacheLongListener);	    
 	    
 	    //Initialisation et gestion de l'évènement clic du bouton ajouter
 	    b = (Button) findViewById(R.id.bouton);
 	    b.setOnClickListener(ajouterListener);
 	    
+	    //Initialisation du Listener de la Croix
 	    lta.addListener(this);
 	    
 	}
-	
-	
+
+	//////EVENEMENTS LISTENERS
 	private OnClickListener ajouterListener = new OnClickListener() {
 
 		@Override
@@ -60,10 +61,6 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 				    	entreeText.setText(null);
 			    	}
 			    	break;
-			    	
-			    case R.drawable.croix_suppr : //NE MARCHE PAS POUR L'INSTANT
-            		lta.suppressionTacheAdapter(temp);
-            		break;
 		    
 			}
 			
@@ -75,8 +72,7 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	private AdapterView.OnItemClickListener tacheListener = new AdapterView.OnItemClickListener() {
 		@Override
         public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-			temp = position;
-			checkList.getChildAt(position).setOnClickListener(ajouterListener);
+			lta.ajoutTacheAdapter(((Tache) lta.getItem(position)).getNom());
 			actualiserListe();
         }
 	};
@@ -84,11 +80,18 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	private AdapterView.OnItemLongClickListener tacheLongListener = new AdapterView.OnItemLongClickListener() {
 		@Override
         public boolean onItemLongClick(AdapterView<?> arg0, View v, int position, long arg3) {
-            lta.ajoutTacheAdapter(((Tache) lta.getItem(position)).getNom());
+            lta.setOptionTacheVisibilite(true, position);
 	    	actualiserListe();
 			return true;
         }
 	};
+	
+	@Override
+	public void onClickCroix(int position) {
+		lta.suppressionTacheAdapter(position);
+		actualiserListe();
+	}
+	//////////////
 	
 	public void actualiserListe(){
 		checkList.setAdapter(lta);
@@ -99,11 +102,5 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-	}
-
-	@Override
-	public void onClickCroix(int position) {
-		lta.suppressionTacheAdapter(position);
-		actualiserListe();
 	}
 }

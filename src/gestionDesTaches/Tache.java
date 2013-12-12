@@ -14,12 +14,15 @@ public class Tache {
 //	Date faitLe; 					//date de la création de la tâche
 	
 	private int numTache;			//permettra de facilement retrouver une tâche dans le tableau pour modif/suppr
-	private boolean animation; 		//permet de déterminer si elle a été animé ou non
+	
 	
 	private List<String> tag;		//Liste des tags d'une tâche spécifique
 	private static String []tagParDef = {"Maison", "Travail", "Ecole", "Famille"};
 									//Liste de tous les tags existants	
-	static List<String> tabTag = Arrays.asList(tagParDef);			
+	static List<String> tabTag = Arrays.asList(tagParDef);
+	
+	private boolean animation; 		//permet de déterminer si elle a été animé ou non
+	private boolean afficheOption; 	//permet de déterminer si la tache est en mode option ou non (affichage des icônes options après long clic)
 	
 		// liste des constructeurs :
 	// constructeur par Défaut
@@ -83,6 +86,9 @@ public class Tache {
 	public boolean getAnimation(){
 		return animation;
 	}
+	public boolean getAfficheOption(){
+		return afficheOption;
+	}
 	
 		// liste des Setters
 	public void setNom(String nom) {
@@ -103,8 +109,10 @@ public class Tache {
 	public void setIdTache(int idTache){
 		this.numTache = idTache;
 	}
-	
 	public void setAnimation(boolean animTache){
 		this.animation = animTache;
+	}
+	public void setAfficheOption(boolean afficheOption){
+		this.afficheOption = afficheOption;
 	}
 }
