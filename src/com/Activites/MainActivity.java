@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.Activites.ListeTacheAdapter.CroixAdapterListener;
@@ -32,12 +33,16 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
 	    
-	    //Liste des choses à faire
+	    //Liste des choses à faire, initialisation de la ListeTacheAdapter, liaison à une ListView
 	    lta = new ListeTacheAdapter(this);
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);
 	    checkList.setOnItemClickListener(tacheListener);
-	    checkList.setOnItemLongClickListener(tacheLongListener);	    
+	    checkList.setOnItemLongClickListener(tacheLongListener);
+	    
+	    //Initialisation d'un LinearLayout représentant la totalité de l'écran
+	    LinearLayout t = (LinearLayout) findViewById(R.id.allScreen);
+	    t.setOnClickListener(ajouterListener);
 	    
 	    //Initialisation et gestion de l'évènement clic du bouton ajouter
 	    b = (Button) findViewById(R.id.bouton);
@@ -61,6 +66,9 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 				    	entreeText.setText(null);
 			    	}
 			    	break;
+			    case R.id.allScreen:
+			    		for(int i = 0 ; i < lta.getCount() ; i++)
+			    			lta.setOptionTacheVisibilite(false, i);
 		    
 			}
 			
@@ -80,7 +88,13 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	private AdapterView.OnItemLongClickListener tacheLongListener = new AdapterView.OnItemLongClickListener() {
 		@Override
         public boolean onItemLongClick(AdapterView<?> arg0, View v, int position, long arg3) {
-            lta.setOptionTacheVisibilite(true, position);
+           
+            for(int i = 0 ; i < lta.getCount() ; i++){
+				if(i == position)
+					lta.setOptionTacheVisibilite(true, position);
+				else
+					lta.setOptionTacheVisibilite(false, i);
+			}
 	    	actualiserListe();
 			return true;
         }

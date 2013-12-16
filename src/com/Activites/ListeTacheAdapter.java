@@ -40,6 +40,8 @@ public class ListeTacheAdapter extends BaseAdapter{
 		return lt.getTabTache().get(position);
 	}
 	
+	
+	
 	/**
 	 * Récupère l'identifiant d'une tâche de la liste de tâche
 	 * en fonction de sa position dans la liste
@@ -48,6 +50,8 @@ public class ListeTacheAdapter extends BaseAdapter{
 	public long getItemId(int position) {
 		return lt.getTabTache().get(position).getIdTache();
 	}
+	
+	
 	
 	/**
 	 * Méthode appelé à chaque fois qu'un élément de ListeTacheAdapter est affiché
