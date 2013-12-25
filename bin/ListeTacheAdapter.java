@@ -2,7 +2,6 @@ package com.Activites;
 
 import java.util.ArrayList;
 
-import gestionDesTaches.BDDTache;
 import gestionDesTaches.ListeTaches;
 import gestionDesTaches.Tache;
 
@@ -27,8 +26,7 @@ public class ListeTacheAdapter extends BaseAdapter{
 	
 	public ListeTacheAdapter(Context context){
 		this.listeContexte = context;
-		BDDTache db = new BDDTache(context, "Tache", null, 1);
-		this.lt = new ListeTaches(db);
+		this.lt = new ListeTaches();
 		this.mInflater = LayoutInflater.from(this.listeContexte);
 	}
 	

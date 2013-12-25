@@ -2,23 +2,35 @@ package gestionDesTaches;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class ListeTaches {
 	private ArrayList<Tache> tabTache = new ArrayList<Tache>();
 	private int compteurTache;
+	private BDDTache db;
 	
-	public ListeTaches(){
-		compteurTache = 0;
+	public ListeTaches(BDDTache db){
+		compteurTache = db.getSize();
+		Log.e("Essai", String.valueOf(compteurTache));
+		for(int i = 0 ; i < compteurTache ; i++)
+			tabTache.add(db.selectionner(i));
+		this.db = db;
 	}
 	
 	public void ajoutTache(Tache t){
+		t.setIdTache(compteurTache);
 		tabTache.add(t);
+		db.ajouter(t);
 		compteurTache++;
 	}
 	
-	
 	public void suppressionTache(int position){		
-		if(tabTache.size() > position)
+		if(tabTache.size() > position){
 			tabTache.remove(position);	
+			db.supprimer(position);
+			compteurTache--;
+		}
+		
 	}
 	
 	public ArrayList<Tache> getTabTache(){

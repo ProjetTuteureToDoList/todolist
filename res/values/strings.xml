@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ToDoList Android</string>
+    <string name="app_name">ToDoList</string>
     <string name="action_settings">Settings</string>
     <string name="titre">ToDoList</string>
     <string name="messageEditText">Une tâche à effectuer ?</string>

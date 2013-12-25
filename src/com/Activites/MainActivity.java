@@ -1,8 +1,8 @@
 package com.Activites;
 
-import gestionDesTaches.Tache;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,18 +31,19 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	ListView checkList = null;			//Permet de faire le lien entre la lta et une ListView donné dans activity_main.xml
 	  
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		
 		//Temporaire : masquage du TextView "Retour"
 		TextView retour = (TextView) findViewById(R.id.retour);
 		retour.setVisibility(8);
 		
 		//Initialisation du titre : ouverture du fichier pour la police 
-		TextView texteView = (TextView) findViewById(R.id.titre);
+		TextView titre = (TextView) findViewById(R.id.titre);
 		Typeface font = Typeface.createFromAsset(getAssets(), "Lifestyle M54.ttf");
-		texteView.setTypeface(font);
+		titre.setTypeface(font);
 		
 		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
@@ -98,7 +99,8 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	private AdapterView.OnItemClickListener tacheListener = new AdapterView.OnItemClickListener() {
 		@Override
         public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-			lta.ajoutTacheAdapter(((Tache) lta.getItem(position)).getNom());
+			Intent descriptifTache = new Intent(MainActivity.this, DescriptifTache.class);
+			startActivity(descriptifTache);
 			actualiserListe();
         }
 	};
