@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class BDDTache extends SQLiteOpenHelper {
 	public static final String TACHE_NAME = "Nom";
@@ -75,7 +76,14 @@ public class BDDTache extends SQLiteOpenHelper {
 		db.close();
 	}
 	
-	public void modifier(Tache t){
+	public void toutSupprimer(){
+		int tailleBDD = this.getSize();
+		for(int i = 0 ; i < tailleBDD ; i++)
+			supprimer(i);
+	}
+	
+	public void modifier(Tache t){					
+		
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues valeursTache = new ContentValues();
 		

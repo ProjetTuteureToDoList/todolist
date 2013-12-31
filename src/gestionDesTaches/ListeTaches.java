@@ -27,8 +27,13 @@ public class ListeTaches {
 	public void suppressionTache(int position){		
 		if(tabTache.size() > position){
 			tabTache.remove(position);	
-			db.supprimer(position);
+			db.toutSupprimer();
 			compteurTache--;
+			for(int i = 0 ; i < compteurTache ; i++){
+				tabTache.get(i).setIdTache(i);
+				db.ajouter(tabTache.get(i));
+			}
+			
 		}
 		
 	}
