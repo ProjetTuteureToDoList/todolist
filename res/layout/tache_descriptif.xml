@@ -11,17 +11,14 @@
 	    android:orientation="horizontal"
 	    android:background="@color/bleu" >
 	    
-	    <TextView
+	    <ImageView
 	        android:layout_weight="1"
 	   		android:layout_width="0dp"
-	    	android:layout_height="wrap_content" 
-	    	android:layout_marginLeft="15dp"
-	    	android:layout_marginTop="5dp"
-	    	android:text="@string/Retour"
-	        android:textSize="15sp"
-	        android:textStyle="bold"
-	    	android:textColor="@color/blanc"
-	    	android:id="@+id/retour" />
+	    	android:layout_height="fill_parent" 
+	    	android:layout_gravity="clip_vertical"
+	    	android:id="@+id/retour"
+	    	android:contentDescription="@string/text"
+	    	android:src="@drawable/icone_retour" />
 	    
 	    <TextView
 	        android:layout_weight="2"

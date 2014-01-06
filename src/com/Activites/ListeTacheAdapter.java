@@ -8,7 +8,6 @@ import gestionDesTaches.Tache;
 
 import com.todolist.R;
 
-import android.view.View.OnClickListener;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,7 +36,7 @@ public class ListeTacheAdapter extends BaseAdapter{
 	 * en fonction de sa position dans la liste
 	 */
 	@Override
-	public Object getItem(int position) {
+	public Tache getItem(int position) {
 		return lt.getTabTache().get(position);
 	}
 	
@@ -73,7 +71,6 @@ public class ListeTacheAdapter extends BaseAdapter{
 				
 		else{
 			// Sinon, il faut utiliser le LayoutInflater
-			
 			layout = (LinearLayout) mInflater.inflate(R.layout.tache_page_principale, parent, false);
 			
 			//ANIMATION SUR AJOUT, MAGNIFIQUE !!!!!!
@@ -86,40 +83,12 @@ public class ListeTacheAdapter extends BaseAdapter{
 		
 		
 		TextView tacheNom = (TextView) layout.findViewById(R.id.tache);
-		ImageView imageSuppr = (ImageView) layout.findViewById(R.id.croix_suppr);
-		ImageView imageModif = (ImageView) layout.findViewById(R.id.icone_modification);
-		ImageView imageAlerte = (ImageView) layout.findViewById(R.id.icone_alerte);
-		
 		tacheNom.setText(lt.getTabTache().get(position).getNom());
-		imageSuppr.setTag(position);
-		imageModif.setTag(position);
-		imageAlerte.setTag(position);
 		
-		if(lt.getTabTache().get(position).getAfficheOption() == true){
-			tacheNom.setVisibility(8);
-			imageSuppr.setVisibility(0);
-			imageModif.setVisibility(0);
-			imageAlerte.setVisibility(0);
-			
-			imageSuppr.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						//Lorsque l'on clique sur la croix, on récupère la position de la Tache
-						Integer position = (Integer)v.getTag();
-								
-						//On prévient les listeners qu'il y a eu un clic sur l'ImageView "mCroixSuppr".
-						sendListener(position);			
-					}
-				        	
-				});
-		}
-		else{
-			tacheNom.setVisibility(0);
-			imageSuppr.setVisibility(8);
-			imageModif.setVisibility(8);
-			imageAlerte.setVisibility(8);
-		}
+		if(lt.getTabTache().get(position).getAfficheOption())
+			layout.setBackgroundResource(R.color.bleuSelection);
+		else
+			layout.setBackgroundResource(R.color.blanc);
 		
 		return layout;	
 	}
@@ -141,8 +110,20 @@ public class ListeTacheAdapter extends BaseAdapter{
 		lt.suppressionTache(position);
 	}
 	
-	public void setOptionTacheVisibilite(boolean option, int position){
-		lt.getTabTache().get(position).setAfficheOption(option);
+	public void setSelectionTacheVisibilite(boolean selection, int position){
+		lt.getTabTache().get(position).setAfficheSelection(selection);
+	}
+	
+	public boolean isSelectionned(){
+		boolean result = false;
+		int i = 0;
+		while(i < this.getCount() && !result){
+			if(this.getItem(i).getAfficheOption())
+				result = true;
+			i++;
+		}
+		
+		return result;
 	}
 	
 ////////INTERFACE LISTENER POUR LA CROIX

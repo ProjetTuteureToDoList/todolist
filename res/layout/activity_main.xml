@@ -12,17 +12,14 @@
 	    android:orientation="horizontal"
 	    android:background="@color/bleu" >
 	    
-	    <TextView
+	    <ImageView
 	        android:layout_weight="1"
 	   		android:layout_width="0dp"
-	    	android:layout_height="wrap_content" 
-	    	android:layout_marginLeft="15dp"
-	    	android:layout_marginTop="5dp"
-	    	android:text="@string/Retour"
-	        android:textSize="15sp"
-	        android:textStyle="bold"
-	    	android:textColor="@color/blanc"
-	    	android:id="@+id/retour" />
+	    	android:layout_height="fill_parent" 
+	    	android:layout_gravity="clip_vertical"
+	    	android:id="@+id/retour"
+	    	android:contentDescription="@string/text"
+	    	android:src="@drawable/icone_retour" />
 	    
 	   <ImageView
 	        android:layout_weight="1"
@@ -30,6 +27,7 @@
 		    android:layout_height="fill_parent"
 	    	android:layout_gravity="clip_vertical"
 		    android:contentDescription="@string/text"
+		    android:id="@+id/icone_menu"
 	        android:src = "@drawable/icone_menu"/>
 	    
 	    <TextView
@@ -49,7 +47,17 @@
 		    android:layout_height="fill_parent"
 	    	android:layout_gravity="clip_vertical"
 		    android:contentDescription="@string/text"
-	        android:src = "@drawable/icone_preference"/>
+	        android:src="@drawable/icone_preference"
+	        android:id="@+id/icone_preference"/>
+	    
+	    <ImageView
+	        android:layout_weight="1"
+	   		android:layout_width="0dp"
+	    	android:layout_height="fill_parent" 
+	    	android:layout_gravity="clip_vertical"
+	    	android:id="@+id/corbeille"
+	    	android:contentDescription="@string/text"
+	    	android:src="@drawable/icone_corbeille" />
 	        
 	    
     </LinearLayout>
@@ -77,8 +85,7 @@
 	     android:id = "@+id/bouton"
 	     android:layout_width="wrap_content"
 	     android:layout_height="wrap_content"
-	     android:text="@string/messageBouton"
-	     android:onClick="selfDestruct" /> 
+	     android:text="@string/messageBouton" /> 
 	</LinearLayout>
 	
     <TableLayout

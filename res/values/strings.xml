@@ -8,6 +8,6 @@
     <string name="titreListe">\n\tListe des choses à faire</string>
     <string name="messageBouton">Ajouter !</string>
     <string name="text">Ce texte doit être programmé</string>
-    <string name="Retour">&lt; Retour</string>
-
+    <string name="Suppr">Suppr</string>
+    
 </resources>

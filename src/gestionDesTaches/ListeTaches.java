@@ -2,8 +2,6 @@ package gestionDesTaches;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 public class ListeTaches {
 	private ArrayList<Tache> tabTache = new ArrayList<Tache>();
 	private int compteurTache;
@@ -11,7 +9,6 @@ public class ListeTaches {
 	
 	public ListeTaches(BDDTache db){
 		compteurTache = db.getSize();
-		Log.e("Essai", String.valueOf(compteurTache));
 		for(int i = 0 ; i < compteurTache ; i++)
 			tabTache.add(db.selectionner(i));
 		this.db = db;

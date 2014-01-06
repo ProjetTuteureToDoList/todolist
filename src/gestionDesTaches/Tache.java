@@ -22,7 +22,7 @@ public class Tache {
 	static List<String> tabTag = Arrays.asList(tagParDef);
 	
 	private boolean animation; 		//permet de déterminer si elle a été animé ou non
-	private boolean afficheOption; 	//permet de déterminer si la tache est en mode option ou non (affichage des icônes options après long clic)
+	private boolean afficheSelection; 	//permet de déterminer si la tache est en mode option ou non (affichage des icônes options après long clic)
 	
 		// liste des constructeurs :
 	// constructeur par Défaut
@@ -87,7 +87,7 @@ public class Tache {
 		return animation;
 	}
 	public boolean getAfficheOption(){
-		return afficheOption;
+		return afficheSelection;
 	}
 	
 		// liste des Setters
@@ -112,7 +112,7 @@ public class Tache {
 	public void setAnimation(boolean animTache){
 		this.animation = animTache;
 	}
-	public void setAfficheOption(boolean afficheOption){
-		this.afficheOption = afficheOption;
+	public void setAfficheSelection(boolean afficheSelection){
+		this.afficheSelection = afficheSelection;
 	}
 }
