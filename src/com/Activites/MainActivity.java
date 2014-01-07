@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,10 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.Activites.ListeTacheAdapter.CroixAdapterListener;
 import com.todolist.R;
 
-public class MainActivity extends Activity implements CroixAdapterListener {
+public class MainActivity extends Activity{
 	Button boutonAjouter = null;		//la variable du bouton	"Ajouter !"		
 	EditText entreeText = null;			//enntrée de texte pour le rajout de tâche
 	ListeTacheAdapter lta = null;		//représente la listView adapté pour la ListeTache
@@ -80,9 +81,6 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	    boutonAjouter = (Button) findViewById(R.id.bouton);
 	    boutonAjouter.setOnClickListener(petitClick);
 	    
-	    //Initialisation du Listener de la Croix
-	    lta.addListener(this);
-	    
 	}
 
 	//////EVENEMENTS LISTENERS
@@ -105,7 +103,7 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 			    case R.id.retour:
 			    	for(int i = 0 ; i < lta.getCount() ; i++)
 			    		lta.setSelectionTacheVisibilite(false, i);
-			    	modeSelection = false;
+			    	changerMode();
 			    	actualiserHeader();	
 			    	break;
 
@@ -116,6 +114,8 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 			    			i--;
 			    		}
 			    	}
+			    	modeSelection = false;
+			    	actualiserHeader();
 			    	break;
 			    	
 			    case R.id.allScreen:
@@ -133,9 +133,26 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	private AdapterView.OnItemClickListener tacheListener = new AdapterView.OnItemClickListener() {
 		@Override
         public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-			Intent descriptifTache = new Intent(MainActivity.this, DescriptifTache.class);
-			startActivity(descriptifTache);
-			actualiserListe();
+			/*
+			 * Si on est en mode sélection, on ne peut pas atteindre le descriptif d'une tâche
+			 * On peut alors grâce au simple clic cocher/décocher la tâche pour la sélection
+			 */
+			
+			if(!modeSelection){
+				Intent descriptifTache = new Intent(MainActivity.this, DescriptifTache.class);
+				startActivity(descriptifTache);
+			}
+			else{
+				if(!lta.getItem(position).getAfficheOption())
+					lta.setSelectionTacheVisibilite(true, position);
+				else{
+					lta.setSelectionTacheVisibilite(false, position);
+					if(!lta.isSelectionned())
+						changerMode();
+				}
+				actualiserListe();
+				actualiserHeader();
+			}
         }
 	};
 	
@@ -144,25 +161,18 @@ public class MainActivity extends Activity implements CroixAdapterListener {
         public boolean onItemLongClick(AdapterView<?> arg0, View v, int position, long arg3) {
 			if(!lta.getItem(position).getAfficheOption()){
 				lta.setSelectionTacheVisibilite(true, position);
-				modeSelection = true;			
+				changerMode();			
 			}
 			else{
 				lta.setSelectionTacheVisibilite(false, position);
 				if(!lta.isSelectionned())
-					modeSelection = false;
+					changerMode();
 			}
 			actualiserHeader();	
 			lta.notifyDataSetChanged();
 			return true;
         }
 	};
-	
-	@Override
-	public void onClickCroix(int position) {
-		lta.suppressionTacheAdapter(position);
-		actualiserListe();
-	}
-	//////////////
 	
 	/*
 	 * Actualisation de la liste grâce à la méthode setAdapter
@@ -176,6 +186,23 @@ public class MainActivity extends Activity implements CroixAdapterListener {
 	 * 		- Rendre invisible les boutons menu et préférence
 	 * 		- Rendre visible les boutons supprimer, retour et tag
 	 */
+	
+	public void changerMode(){
+		Animation animApparition = AnimationUtils.loadAnimation(this, R.anim.apparition);
+		
+		if(modeSelection){
+			modeSelection = false;
+			menu.startAnimation(animApparition);
+			preference.startAnimation(animApparition);
+		}
+		else{
+			modeSelection = true;
+			retour.startAnimation(animApparition);
+			suppr.startAnimation(animApparition);
+		}
+			
+	}
+	
 	public void actualiserHeader(){	
 		
 		if(!modeSelection){

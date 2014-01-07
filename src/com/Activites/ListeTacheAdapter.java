@@ -1,7 +1,5 @@
 package com.Activites;
 
-import java.util.ArrayList;
-
 import gestionDesTaches.BDDTache;
 import gestionDesTaches.ListeTaches;
 import gestionDesTaches.Tache;
@@ -15,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -84,11 +83,23 @@ public class ListeTacheAdapter extends BaseAdapter{
 		
 		TextView tacheNom = (TextView) layout.findViewById(R.id.tache);
 		tacheNom.setText(lt.getTabTache().get(position).getNom());
+		ImageView caseCochee = (ImageView) layout.findViewById(R.id.caseCochee);
+		ImageView caseNonCochee = (ImageView) layout.findViewById(R.id.caseNonCochee);
 		
-		if(lt.getTabTache().get(position).getAfficheOption())
-			layout.setBackgroundResource(R.color.bleuSelection);
-		else
-			layout.setBackgroundResource(R.color.blanc);
+		if(isSelectionned()){
+			if(lt.getTabTache().get(position).getAfficheOption()){
+				caseCochee.setVisibility(0);
+				caseNonCochee.setVisibility(8);
+			}
+			else{
+				caseCochee.setVisibility(8);
+				caseNonCochee.setVisibility(0);
+			}
+		}
+		else{
+			caseCochee.setVisibility(8);
+			caseNonCochee.setVisibility(8);
+		}
 		
 		return layout;	
 	}
@@ -124,28 +135,5 @@ public class ListeTacheAdapter extends BaseAdapter{
 		}
 		
 		return result;
-	}
-	
-////////INTERFACE LISTENER POUR LA CROIX
-	public interface CroixAdapterListener {
-	    public void onClickCroix(int position);
-	}
-	
-	private ArrayList<CroixAdapterListener> mListListener = new ArrayList<CroixAdapterListener>();
-	/**
-	 * Pour ajouter un listener sur notre adapter
-	 */
-	public void addListener(CroixAdapterListener aListener) {
-	    mListListener.add(aListener);
-	}
-	/**
-	 * Pour envoyer les listeners
-	 */
-	private void sendListener(int position) {
-	    for(int i = mListListener.size()-1; i >= 0; i--) {
-	    	mListListener.get(i).onClickCroix(position);
-	    }
-	}
-/////////
-	
+	}	
 }
