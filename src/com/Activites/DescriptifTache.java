@@ -19,6 +19,19 @@ public class DescriptifTache extends Activity{
 		Typeface font = Typeface.createFromAsset(getAssets(), "Lifestyle M54.ttf");
 		titre.setTypeface(font);
 		
+		TextView tache = (TextView) findViewById(R.id.tache);
+		tache.setText("La tâche s'appelle " + getIntent().getStringExtra("nom") + 
+					  "\nSa description est : " + getIntent().getStringExtra("description") +
+					  "\nDate : " + getIntent().getIntExtra("dateJour", 1) + 
+					  "/" + getIntent().getIntExtra("dateMois", 1) + 
+					  "/" + getIntent().getIntExtra("dateAnnee", 1970) + 
+					  "\nImportance de la tâche : " + getIntent().getIntExtra("importance", 1) + 
+					  "\nEtat : ");
+		if(getIntent().getBooleanExtra("etat", true))
+			tache.setText(tache.getText() + "Fait");
+		else
+			tache.setText(tache.getText() + "Non fait");
+		
 		
 	}
 	

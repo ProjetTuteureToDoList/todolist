@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -54,6 +57,10 @@ public class MainActivity extends Activity{
 		
 		retour.setOnClickListener(petitClick);
 		suppr.setOnClickListener(petitClick);
+		menu.setOnTouchListener(touchClick);
+		preference.setOnTouchListener(touchClick);
+		retour.setOnTouchListener(touchClick);
+		suppr.setOnTouchListener(touchClick);
 		
 		retour.setVisibility(8);
 		suppr.setVisibility(8);
@@ -85,7 +92,6 @@ public class MainActivity extends Activity{
 
 	//////EVENEMENTS LISTENERS
 	private OnClickListener petitClick = new OnClickListener() {
-
 		@Override
 		public void onClick(View v) {
 			
@@ -97,37 +103,82 @@ public class MainActivity extends Activity{
 				    	entreeText.clearFocus();
 				    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				    	inputMethodManager.hideSoftInputFromWindow(entreeText.getWindowToken(), 0);
+				    	actualiserListe();
 			    	}
-			    	break;
-			    	
-			    case R.id.retour:
-			    	for(int i = 0 ; i < lta.getCount() ; i++)
-			    		lta.setSelectionTacheVisibilite(false, i);
-			    	changerMode();
-			    	actualiserHeader();	
-			    	break;
-
-			    case R.id.corbeille:
-			    	for(int i = 0 ; i < lta.getCount() ; i++){
-			    		if(lta.getItem(i).getAfficheOption()){
-			    			lta.suppressionTacheAdapter(i);
-			    			i--;
-			    		}
-			    	}
-			    	modeSelection = false;
-			    	actualiserHeader();
 			    	break;
 			    	
 			    case R.id.allScreen:
-			    	entreeText.clearFocus();		    	
+			    	entreeText.clearFocus();	
+			    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			    	inputMethodManager.hideSoftInputFromWindow(entreeText.getWindowToken(), 0);
 			    	break;
-			    default:
-			    	v.setBackgroundResource(R.color.bleuSelection);
 			}
 			
-			actualiserListe();
-			
 		}
+	};
+	
+	private View.OnTouchListener touchClick = new OnTouchListener(){
+		boolean isInside = true;
+		float viewLargeur = 0;
+		float viewHauteur = 0;
+		
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			
+			if(v.getId() == R.id.icone_menu || v.getId() == R.id.icone_preference ||
+			   v.getId() == R.id.corbeille || v.getId() == R.id.retour){
+				switch(event.getAction()){
+					case MotionEvent.ACTION_DOWN:
+						viewLargeur = v.getRight() - v.getLeft();
+						viewHauteur = v.getBottom() - v.getTop();
+						v.setBackgroundResource(R.color.bleuSelection);
+						break;
+					case MotionEvent.ACTION_UP:
+						v.setBackgroundResource(R.color.bleu);
+						Log.e("isInside = ", String.valueOf(isInside));
+						if(isInside){
+							switch(v.getId()){
+								case R.id.icone_menu:
+									break;
+									
+								case R.id.icone_preference:
+									break;
+									
+								case R.id.corbeille:
+									for(int i = 0 ; i < lta.getCount() ; i++){
+							    		if(lta.getItem(i).getAfficheOption()){
+							    			lta.suppressionTacheAdapter(i);
+							    			i--;
+							    		}
+							    	}
+							    	modeSelection = false;
+							    	actualiserHeader();
+							    	break;
+							    	
+								 case R.id.retour:
+							    	for(int i = 0 ; i < lta.getCount() ; i++)
+							    		lta.setSelectionTacheVisibilite(false, i);
+							    	changerMode();
+							    	actualiserHeader();	
+							    	break;	
+							}
+							actualiserListe();
+						}
+						break;
+						
+					case MotionEvent.ACTION_MOVE:
+						if(event.getX() < viewLargeur && event.getY() < viewHauteur && event.getX() > 0 && event.getY() > 0)
+							isInside = true;
+						else
+							isInside = false;
+						Log.e("Coordonnees Rect : ", "Largeur : " + String.valueOf(viewLargeur) + " Hauteur : " + String.valueOf(viewHauteur));
+						Log.e("isInside", String.valueOf(event.getX()) + " " + String.valueOf(event.getY()) + " -> " + String.valueOf(isInside));
+						break;
+				}
+			}			
+			return true;
+		}
+		
 	};
 	
 	private AdapterView.OnItemClickListener tacheListener = new AdapterView.OnItemClickListener() {
@@ -140,6 +191,15 @@ public class MainActivity extends Activity{
 			
 			if(!modeSelection){
 				Intent descriptifTache = new Intent(MainActivity.this, DescriptifTache.class);
+				Bundle donneesTache = new Bundle();
+				donneesTache.putString("nom", lta.getItem(position).getNom());
+				donneesTache.putString("description", lta.getItem(position).getDescription());
+				donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDay());
+				donneesTache.putInt("dateMois", lta.getItem(position).getDate().getMonth());
+				donneesTache.putInt("dateAnnee", lta.getItem(position).getDate().getYear());
+				donneesTache.putInt("importance", lta.getItem(position).getImportance());
+				donneesTache.putBoolean("etat", lta.getItem(position).getEtat());
+				descriptifTache.putExtras(donneesTache);
 				startActivity(descriptifTache);
 			}
 			else{
@@ -161,7 +221,8 @@ public class MainActivity extends Activity{
         public boolean onItemLongClick(AdapterView<?> arg0, View v, int position, long arg3) {
 			if(!lta.getItem(position).getAfficheOption()){
 				lta.setSelectionTacheVisibilite(true, position);
-				changerMode();			
+				if(!modeSelection)
+					changerMode();			
 			}
 			else{
 				lta.setSelectionTacheVisibilite(false, position);
@@ -173,6 +234,7 @@ public class MainActivity extends Activity{
 			return true;
         }
 	};
+	///
 	
 	/*
 	 * Actualisation de la liste grâce à la méthode setAdapter
