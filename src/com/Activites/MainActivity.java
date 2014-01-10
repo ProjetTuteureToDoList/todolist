@@ -1,11 +1,14 @@
 package com.Activites;
 
+import Autres.OnSwipeTouchListener;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -79,6 +82,7 @@ public class MainActivity extends Activity{
 	    checkList.setAdapter(lta);
 	    checkList.setOnItemClickListener(tacheListener);
 	    checkList.setOnItemLongClickListener(tacheLongListener);
+	    checkList.setOnTouchListener(tacheSwipeListener);
 	    
 	    //Initialisation d'un LinearLayout représentant la totalité de l'écran
 	    allScreen = (LinearLayout) findViewById(R.id.allScreen);
@@ -97,7 +101,7 @@ public class MainActivity extends Activity{
 			
 			switch(v.getId()) {
 			    case R.id.bouton:
-			    	if(entreeText.getText().toString().length() > 0){
+			    	if(entreeText.getText().toString().replace(" ", "").length() > 0){
 			    		lta.ajoutTacheAdapter(entreeText.getText().toString());
 				    	entreeText.setText(null);
 				    	entreeText.clearFocus();
@@ -135,7 +139,6 @@ public class MainActivity extends Activity{
 						break;
 					case MotionEvent.ACTION_UP:
 						v.setBackgroundResource(R.color.bleu);
-						Log.e("isInside = ", String.valueOf(isInside));
 						if(isInside){
 							switch(v.getId()){
 								case R.id.icone_menu:
@@ -145,14 +148,37 @@ public class MainActivity extends Activity{
 									break;
 									
 								case R.id.corbeille:
+									int nbTacheSelectionnees = 0;
 									for(int i = 0 ; i < lta.getCount() ; i++){
-							    		if(lta.getItem(i).getAfficheOption()){
-							    			lta.suppressionTacheAdapter(i);
-							    			i--;
-							    		}
-							    	}
-							    	modeSelection = false;
-							    	actualiserHeader();
+							    		if(lta.getItem(i).getAfficheOption())
+							    			nbTacheSelectionnees++;
+									}
+									
+									Builder confirmationSuppr = new AlertDialog.Builder(MainActivity.this);
+									if(nbTacheSelectionnees == 1)
+										confirmationSuppr.setTitle("Êtes-vous sûr de supprimer " + nbTacheSelectionnees + " tâche ?");
+									else
+										confirmationSuppr.setTitle("Êtes-vous sûr de supprimer " + nbTacheSelectionnees + " tâches ?");
+									
+									confirmationSuppr.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface dialog, int id){
+											for(int i = 0 ; i < lta.getCount() ; i++){
+									    		if(lta.getItem(i).getAfficheOption()){
+									    			lta.suppressionTacheAdapter(i);
+									    			i--;
+									    		}
+									    	}
+											actualiserListe();
+											changerMode();
+									    	actualiserHeader();
+										}
+									});
+									
+									confirmationSuppr.setNegativeButton("Non", new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface dialog, int id){
+										}
+									});
+									confirmationSuppr.show();
 							    	break;
 							    	
 								 case R.id.retour:
@@ -171,15 +197,18 @@ public class MainActivity extends Activity{
 							isInside = true;
 						else
 							isInside = false;
-						Log.e("Coordonnees Rect : ", "Largeur : " + String.valueOf(viewLargeur) + " Hauteur : " + String.valueOf(viewHauteur));
-						Log.e("isInside", String.valueOf(event.getX()) + " " + String.valueOf(event.getY()) + " -> " + String.valueOf(isInside));
 						break;
 				}
-			}			
-			return true;
+				
+				return true;
+			}
+			else
+				return false;
 		}
 		
 	};
+	
+	final OnSwipeTouchListener tacheSwipeListener = new OnSwipeTouchListener();
 	
 	private AdapterView.OnItemClickListener tacheListener = new AdapterView.OnItemClickListener() {
 		@Override
@@ -188,21 +217,33 @@ public class MainActivity extends Activity{
 			 * Si on est en mode sélection, on ne peut pas atteindre le descriptif d'une tâche
 			 * On peut alors grâce au simple clic cocher/décocher la tâche pour la sélection
 			 */
-			
+		    
 			if(!modeSelection){
-				Intent descriptifTache = new Intent(MainActivity.this, DescriptifTache.class);
-				Bundle donneesTache = new Bundle();
-				donneesTache.putString("nom", lta.getItem(position).getNom());
-				donneesTache.putString("description", lta.getItem(position).getDescription());
-				donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDay());
-				donneesTache.putInt("dateMois", lta.getItem(position).getDate().getMonth());
-				donneesTache.putInt("dateAnnee", lta.getItem(position).getDate().getYear());
-				donneesTache.putInt("importance", lta.getItem(position).getImportance());
-				donneesTache.putBoolean("etat", lta.getItem(position).getEtat());
-				descriptifTache.putExtras(donneesTache);
-				startActivity(descriptifTache);
+				
+				if(tacheSwipeListener.swipeDetected()){
+					if(tacheSwipeListener.getAction() == OnSwipeTouchListener.Action.LR || tacheSwipeListener.getAction() == OnSwipeTouchListener.Action.RL){
+						if(!lta.getItem(position).getEtat())
+							lta.getItem(position).setEtat(true);
+						else
+							lta.getItem(position).setEtat(false);
+					}
+				}
+				else{
+					Intent descriptifTache = new Intent(MainActivity.this, DescriptifTache.class);
+					Bundle donneesTache = new Bundle();
+					donneesTache.putString("nom", lta.getItem(position).getNom());
+					donneesTache.putString("description", lta.getItem(position).getDescription());
+					donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDay());
+					donneesTache.putInt("dateMois", lta.getItem(position).getDate().getMonth());
+					donneesTache.putInt("dateAnnee", lta.getItem(position).getDate().getYear());
+					donneesTache.putInt("importance", lta.getItem(position).getImportance());
+					donneesTache.putBoolean("etat", lta.getItem(position).getEtat());
+					descriptifTache.putExtras(donneesTache);
+					startActivity(descriptifTache);
+				}
 			}
 			else{
+				
 				if(!lta.getItem(position).getAfficheOption())
 					lta.setSelectionTacheVisibilite(true, position);
 				else{
@@ -210,9 +251,10 @@ public class MainActivity extends Activity{
 					if(!lta.isSelectionned())
 						changerMode();
 				}
-				actualiserListe();
 				actualiserHeader();
 			}
+			actualiserListe();
+				
         }
 	};
 	
@@ -230,7 +272,7 @@ public class MainActivity extends Activity{
 					changerMode();
 			}
 			actualiserHeader();	
-			lta.notifyDataSetChanged();
+			actualiserListe();
 			return true;
         }
 	};
@@ -240,7 +282,7 @@ public class MainActivity extends Activity{
 	 * Actualisation de la liste grâce à la méthode setAdapter
 	 */
 	public void actualiserListe(){
-		checkList.setAdapter(lta);
+		lta.notifyDataSetChanged();
 	}
 	
 	/*

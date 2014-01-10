@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import android.util.Log;
+
 public class Tache {
 	private String nom;
 	private Date date; 				// à completer

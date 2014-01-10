@@ -7,6 +7,7 @@ import gestionDesTaches.Tache;
 import com.todolist.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,11 @@ public class ListeTacheAdapter extends BaseAdapter{
 		
 		
 		TextView tacheNom = (TextView) layout.findViewById(R.id.tache);
-		tacheNom.setText(lt.getTabTache().get(position).getNom());
+		if(lt.getTabTache().get(position).getNom().length() > 30)
+			tacheNom.setText(lt.getTabTache().get(position).getNom().subSequence(0, 28) + "...");
+		else
+			tacheNom.setText(lt.getTabTache().get(position).getNom());
+		
 		ImageView caseCochee = (ImageView) layout.findViewById(R.id.caseCochee);
 		ImageView caseNonCochee = (ImageView) layout.findViewById(R.id.caseNonCochee);
 		
@@ -99,6 +104,15 @@ public class ListeTacheAdapter extends BaseAdapter{
 		else{
 			caseCochee.setVisibility(8);
 			caseNonCochee.setVisibility(8);
+		}
+		
+		if(getItem(position).getEtat()){
+		 	tacheNom.getPaint().setStrikeThruText(true);
+		 	tacheNom.setTextColor(Color.parseColor("#818181"));
+		}
+		else{
+			tacheNom.getPaint().setStrikeThruText(false);
+	 		tacheNom.setTextColor(Color.parseColor("#000000"));
 		}
 		
 		return layout;	
