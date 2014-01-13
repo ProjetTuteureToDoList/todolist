@@ -8,6 +8,7 @@ import com.todolist.R;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,34 +64,36 @@ public class ListeTacheAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LinearLayout layout = null;
+
 		// Si la vue est recyclée, il contient déjà le bon layout, donc pas besoin de la recréer
 		// pour des soucis d'optimisation du processus
 		if(convertView != null)
 			// On n'a plus qu'à le récupérer
-			layout = (LinearLayout) convertView;
-				
+			layout = (LinearLayout) convertView;	
 		else{
 			// Sinon, il faut utiliser le LayoutInflater
 			layout = (LinearLayout) mInflater.inflate(R.layout.tache_page_principale, parent, false);
 			
-			//ANIMATION SUR AJOUT, MAGNIFIQUE !!!!!!
-			if(position == lt.getTabTache().size() - 1 && !lt.getTabTache().get(position).getAnimation()){
-				Animation animTranslate = AnimationUtils.loadAnimation(this.listeContexte, R.anim.tanslate);
-				layout.startAnimation(animTranslate);
-				lt.getTabTache().get(position).setAnimation(true);
-			}	
 		}
 		
+		//ANIMATION SUR AJOUT, MAGNIFIQUE !!!!!!
+		if(position == lt.getTabTache().size() - 1 && !lt.getTabTache().get(position).getAnimation()){
+			Animation animTranslate = AnimationUtils.loadAnimation(this.listeContexte, R.anim.tanslate_tache);
+			layout.startAnimation(animTranslate);
+			lt.getTabTache().get(position).setAnimation(true);
+		}
 		
 		TextView tacheNom = (TextView) layout.findViewById(R.id.tache);
+		
+		//Vérification de la longueur de la tâche
 		if(lt.getTabTache().get(position).getNom().length() > 30)
 			tacheNom.setText(lt.getTabTache().get(position).getNom().subSequence(0, 28) + "...");
 		else
 			tacheNom.setText(lt.getTabTache().get(position).getNom());
 		
+		//Affichage de la case cochée/non cochée
 		ImageView caseCochee = (ImageView) layout.findViewById(R.id.caseCochee);
 		ImageView caseNonCochee = (ImageView) layout.findViewById(R.id.caseNonCochee);
-		
 		if(isSelectionned()){
 			if(lt.getTabTache().get(position).getAfficheOption()){
 				caseCochee.setVisibility(0);
@@ -106,6 +109,7 @@ public class ListeTacheAdapter extends BaseAdapter{
 			caseNonCochee.setVisibility(8);
 		}
 		
+		//Affichage du texte barré et grisé si la tâche est effectué
 		if(getItem(position).getEtat()){
 		 	tacheNom.getPaint().setStrikeThruText(true);
 		 	tacheNom.setTextColor(Color.parseColor("#818181"));
@@ -133,10 +137,6 @@ public class ListeTacheAdapter extends BaseAdapter{
 	
 	public void suppressionTacheAdapter(int position){
 		lt.suppressionTache(position);
-	}
-	
-	public void setSelectionTacheVisibilite(boolean selection, int position){
-		lt.getTabTache().get(position).setAfficheSelection(selection);
 	}
 	
 	public boolean isSelectionned(){

@@ -9,8 +9,11 @@ public class ListeTaches {
 	
 	public ListeTaches(BDDTache db){
 		compteurTache = db.getSize();
-		for(int i = 0 ; i < compteurTache ; i++)
-			tabTache.add(db.selectionner(i));
+		for(int i = 0 ; i < compteurTache ; i++){
+			Tache t = db.selectionner(i);
+			t.setAnimation(true);
+			tabTache.add(t);
+		}
 		this.db = db;
 	}
 	

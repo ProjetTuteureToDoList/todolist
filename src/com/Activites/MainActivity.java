@@ -38,6 +38,8 @@ public class MainActivity extends Activity{
 	ImageView preference = null;
 	ImageView menu = null;
 	ImageView suppr = null;
+	ImageView tag = null;
+	TextView titre = null;
 	
 	/*Permet de contrôler la ListView d'activity_main contenant
 	 * toutes les vues de tache_page_principale.xml
@@ -52,26 +54,26 @@ public class MainActivity extends Activity{
 		setContentView(R.layout.activity_main);
 		
 		//Initilalisation de la barre d'en haut
-		//		- masquage des éléments inutiles au départ (retour, suppr)
+		//		- masquage des éléments inutiles au départ (retour, suppr, tag)
 		retour = (ImageView) findViewById(R.id.retour);
 		preference = (ImageView) findViewById(R.id.icone_preference);
 		menu = (ImageView) findViewById(R.id.icone_menu);
 		suppr = (ImageView) findViewById(R.id.corbeille);
+		tag = (ImageView) findViewById(R.id.icone_tags);
 		
-		retour.setOnClickListener(petitClick);
-		suppr.setOnClickListener(petitClick);
 		menu.setOnTouchListener(touchClick);
 		preference.setOnTouchListener(touchClick);
 		retour.setOnTouchListener(touchClick);
 		suppr.setOnTouchListener(touchClick);
+		tag.setOnTouchListener(touchClick);
 		
 		retour.setVisibility(8);
 		suppr.setVisibility(8);
+		tag.setVisibility(8);
 		
 		//Initialisation du titre : ouverture du fichier pour la police 
-		TextView titre = (TextView) findViewById(R.id.titre);
-		Typeface font = Typeface.createFromAsset(getAssets(), "Lifestyle M54.ttf");
-		titre.setTypeface(font);
+		titre = (TextView) findViewById(R.id.titre);
+		titre.setTypeface(Typeface.createFromAsset(getAssets(), "Lifestyle M54.ttf"));
 		
 		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
@@ -130,7 +132,8 @@ public class MainActivity extends Activity{
 		public boolean onTouch(View v, MotionEvent event) {
 			
 			if(v.getId() == R.id.icone_menu || v.getId() == R.id.icone_preference ||
-			   v.getId() == R.id.corbeille || v.getId() == R.id.retour){
+			   v.getId() == R.id.corbeille || v.getId() == R.id.retour ||
+			   v.getId() == R.id.icone_tags){
 				switch(event.getAction()){
 					case MotionEvent.ACTION_DOWN:
 						viewLargeur = v.getRight() - v.getLeft();
@@ -181,12 +184,15 @@ public class MainActivity extends Activity{
 									confirmationSuppr.show();
 							    	break;
 							    	
-								 case R.id.retour:
+								case R.id.retour:
 							    	for(int i = 0 ; i < lta.getCount() ; i++)
-							    		lta.setSelectionTacheVisibilite(false, i);
+							    		lta.getItem(i).setAfficheSelection(false);
 							    	changerMode();
 							    	actualiserHeader();	
 							    	break;	
+							    
+								case R.id.icone_tags:
+									break;
 							}
 							actualiserListe();
 						}
@@ -245,9 +251,9 @@ public class MainActivity extends Activity{
 			else{
 				
 				if(!lta.getItem(position).getAfficheOption())
-					lta.setSelectionTacheVisibilite(true, position);
+		    		lta.getItem(position).setAfficheSelection(true);
 				else{
-					lta.setSelectionTacheVisibilite(false, position);
+		    		lta.getItem(position).setAfficheSelection(false);
 					if(!lta.isSelectionned())
 						changerMode();
 				}
@@ -262,12 +268,12 @@ public class MainActivity extends Activity{
 		@Override
         public boolean onItemLongClick(AdapterView<?> arg0, View v, int position, long arg3) {
 			if(!lta.getItem(position).getAfficheOption()){
-				lta.setSelectionTacheVisibilite(true, position);
+	    		lta.getItem(position).setAfficheSelection(true);
 				if(!modeSelection)
 					changerMode();			
 			}
 			else{
-				lta.setSelectionTacheVisibilite(false, position);
+	    		lta.getItem(position).setAfficheSelection(false);
 				if(!lta.isSelectionned())
 					changerMode();
 			}
@@ -293,16 +299,21 @@ public class MainActivity extends Activity{
 	
 	public void changerMode(){
 		Animation animApparition = AnimationUtils.loadAnimation(this, R.anim.apparition);
+		Animation animDecalageRL = AnimationUtils.loadAnimation(this, R.anim.tanslate_titre_rl);
+		Animation animDecalageLR = AnimationUtils.loadAnimation(this, R.anim.tanslate_titre_lr);
 		
 		if(modeSelection){
 			modeSelection = false;
 			menu.startAnimation(animApparition);
 			preference.startAnimation(animApparition);
+			titre.startAnimation(animDecalageLR);
 		}
 		else{
 			modeSelection = true;
 			retour.startAnimation(animApparition);
 			suppr.startAnimation(animApparition);
+			tag.startAnimation(animApparition);
+			titre.startAnimation(animDecalageRL);
 		}
 			
 	}
@@ -314,12 +325,14 @@ public class MainActivity extends Activity{
 			menu.setVisibility(0);
 			retour.setVisibility(8);
 			suppr.setVisibility(8);
+			tag.setVisibility(8);
 		}
 		else{
 			preference.setVisibility(8);
 			menu.setVisibility(8);
 			retour.setVisibility(0);
 			suppr.setVisibility(0);
+			tag.setVisibility(0);
 		}
 	}
 
