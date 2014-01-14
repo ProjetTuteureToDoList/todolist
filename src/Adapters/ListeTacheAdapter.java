@@ -1,4 +1,4 @@
-package com.Activites;
+package Adapters;
 
 import gestionDesTaches.BDDTache;
 import gestionDesTaches.ListeTaches;
@@ -8,7 +8,6 @@ import com.todolist.R;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,11 +69,9 @@ public class ListeTacheAdapter extends BaseAdapter{
 		if(convertView != null)
 			// On n'a plus qu'à le récupérer
 			layout = (LinearLayout) convertView;	
-		else{
+		else
 			// Sinon, il faut utiliser le LayoutInflater
 			layout = (LinearLayout) mInflater.inflate(R.layout.tache_page_principale, parent, false);
-			
-		}
 		
 		//ANIMATION SUR AJOUT, MAGNIFIQUE !!!!!!
 		if(position == lt.getTabTache().size() - 1 && !lt.getTabTache().get(position).getAnimation()){

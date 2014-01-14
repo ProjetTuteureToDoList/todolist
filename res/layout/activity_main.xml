@@ -1,16 +1,20 @@
+<!-- Layout englobant toute l'activité -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
+    android:baselineAligned="false"
     android:id="@+id/allScreen" >
     
+     <!-- Layout englobant le header -->
 	<LinearLayout
 		android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="45dp"
 	    android:orientation="horizontal"
-	    android:background="@color/bleu" >
+	    android:background="@color/bleu"
+	    android:id="@+id/header" >
 	    
 	    <ImageView
 	        android:layout_weight="1"
@@ -67,59 +71,93 @@
 	    	android:id="@+id/corbeille"
 	    	android:contentDescription="@string/text"
 	    	android:src="@drawable/icone_corbeille" />
-	        
 	    
     </LinearLayout>
     
-	<LinearLayout 
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
+    <!-- Layout englobant l'activité sans le header -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
 	    android:orientation="horizontal"
-	    android:layout_marginTop="5dp"
-  		android:focusableInTouchMode="true" >
-    
-	    <EditText
-	        android:id = "@+id/entreeTexte"
-	        android:layout_marginTop="3dp"
-	        android:layout_weight="1"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:ems="10"
-	        android:hint="@string/messageEditText"
-	        android:inputType="text"
-	        android:lines="1" >
-	    </EditText>
+		android:id="@+id/menuEtPrincipalLayout">
 	    
-	    <Button
-	     android:id = "@+id/bouton"
-	     android:layout_width="wrap_content"
-	     android:layout_height="wrap_content"
-	     android:text="@string/messageBouton" /> 
-	</LinearLayout>
-	
-    <TableLayout
-      android:layout_width="fill_parent"
-	  android:layout_height="wrap_content"
-	  android:stretchColumns="1">
-    
-	     <TextView
+        <!-- Layout englobant le menu -->
+	    <LinearLayout 
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/titreListe"
-	        android:textSize="15sp" />
-	     <View
-		    android:layout_height="2dp"
-		    android:background="@color/bleu" />
-		        
-        <ListView
-		   	android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:id="@+id/listview" 
-			android:divider="@color/bleu"
-    		android:dividerHeight="1dp">
-		</ListView>
- 
-		
-	 </TableLayout>
-  
+			android:orientation="vertical"
+			android:id="@+id/menuLayout"
+			android:background="@drawable/border">
+			
+		    <ListView
+			   	android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:id="@+id/menu" 
+				android:divider="@color/gris"
+		   		android:dividerHeight="1dp">
+			</ListView>
+		    
+		</LinearLayout>
+			    
+		<!-- Layout englobant le reste -->
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:id="@+id/principalLayout"
+		    android:orientation="vertical" >
+		    
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_marginTop="5dp"
+		  		android:focusableInTouchMode="true" >
+		    
+			    <EditText
+			        android:id = "@+id/entreeTexte"
+			        android:layout_marginTop="3dp"
+			        android:layout_weight="1"
+			        android:layout_width="0dp"
+			        android:layout_height="wrap_content"
+			        android:ems="10"
+			        android:hint="@string/messageEditText"
+			        android:inputType="text"
+			        android:lines="1" >
+			    </EditText>
+			    
+			    <Button
+			     android:id = "@+id/bouton"
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:text="@string/messageBouton" />
+			     
+			</LinearLayout>
+			
+		    <TableLayout
+		      android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:stretchColumns="1">
+		    
+			     <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="@string/titreListe"
+			        android:textSize="15sp" />
+			     <View
+				    android:layout_height="2dp"
+				    android:background="@color/bleu" />
+				        
+		        <ListView
+				   	android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:id="@+id/listview" 
+					android:divider="@color/bleu"
+		    		android:dividerHeight="1dp">
+				</ListView>
+		 
+				
+			 </TableLayout>
+		  
+		</LinearLayout>
+	</LinearLayout> 
 </LinearLayout>

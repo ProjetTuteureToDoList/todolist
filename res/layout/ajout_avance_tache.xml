@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+     
+	<LinearLayout
+		android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:background="@color/bleu" >
+	    
+	    <ImageView
+	        android:layout_weight="1"
+	   		android:layout_width="0dp"
+	    	android:layout_height="fill_parent" 
+	    	android:layout_gravity="clip_vertical"
+	    	android:id="@+id/retour"
+	    	android:contentDescription="@string/text"
+	    	android:src="@drawable/icone_retour" />
+	    
+	    <TextView
+	        android:layout_weight="2"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center"
+	        android:layout_margin="8dp"
+	        android:textColor="@color/blanc"
+	        android:id="@+id/titre" 
+	        android:textSize="25sp"
+	        android:text="@string/titre" />	        
+	    
+    </LinearLayout>
+
+</LinearLayout>
