@@ -1,18 +1,32 @@
 package com.Activites;
 
 import Adapters.ListeTacheAdapter;
+import Adapters.MenuAdapter;
+import Autres.OnSwipeTouchListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
-
 import com.todolist.R;
 
 public class DescriptifTache extends Activity{
@@ -20,7 +34,6 @@ public class DescriptifTache extends Activity{
 	ImageView retour = null;
 	ImageView modification = null;
 	ImageView suppr = null;
-	ListeTacheAdapter lta = null;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +53,7 @@ public class DescriptifTache extends Activity{
 		suppr.setOnTouchListener(touchClick);
 		
 		TextView tache = (TextView) findViewById(R.id.tache);
-		tache.setText("Nom: " + getIntent().getStringExtra("nom") + 
+		tache.setText("Id"+getIntent().getIntExtra("id", 1 ) + "/nNom: " + getIntent().getStringExtra("nom") + 
 					  "\nDescription : " + getIntent().getStringExtra("description") +
 					  "\nDate : " + getIntent().getIntExtra("date", 1) + 
 					  "/" + getIntent().getIntExtra("dateMois", 1) + 
@@ -76,14 +89,18 @@ public class DescriptifTache extends Activity{
 						switch(v.getId()){
 								
 							case R.id.corbeille:
-							
-								Builder confirmationSuppr = new AlertDialog.Builder(DescriptifTache.this);
+								Intent descriptifTache = new Intent(DescriptifTache.this, MainActivity.class);
+								Bundle Idsuppr = new Bundle();
+								Idsuppr.putInt ("id" , getIntent().getIntExtra("id" ,1 ));
+								MainActivity.putExtras(Idsuppr);
+								startActivity(MainActivity);
+								/*Builder confirmationSuppr = new AlertDialog.Builder(DescriptifTache.this);
 									confirmationSuppr.setTitle("Êtes-vous sûr de supprimer cette tâche ?");
 							
 								confirmationSuppr.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface dialog, int id){
 								    		if(lta.getItem(id).getAfficheOption()){
-								    			lta.suppressionTacheAdapter(id);
+								    			lta.supprimer(this);
 								    		}
 								    	}
 									
@@ -95,7 +112,7 @@ public class DescriptifTache extends Activity{
 									}
 								});
 								confirmationSuppr.show();
-						    	break;
+						    	break;*/
 						    	
 							case R.id.retour:
 						    	break;	

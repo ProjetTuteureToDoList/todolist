@@ -260,6 +260,7 @@ public class MainActivity extends Activity{
 				else{
 					Intent descriptifTache = new Intent(MainActivity.this, DescriptifTache.class);
 					Bundle donneesTache = new Bundle();
+					donneesTache.putInt("id",lta.getItem(position).getIdTache());
 					donneesTache.putString("nom", lta.getItem(position).getNom());
 					donneesTache.putString("description", lta.getItem(position).getDescription());
 					donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDay());
