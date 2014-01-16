@@ -188,9 +188,9 @@ public class MainActivity extends Activity{
 									
 									Builder confirmationSuppr = new AlertDialog.Builder(MainActivity.this);
 									if(nbTacheSelectionnees == 1)
-										confirmationSuppr.setTitle("Êtes-vous sûr de supprimer " + nbTacheSelectionnees + " tâche ?");
+										confirmationSuppr.setTitle("Êtes-vous sûr de vouloir supprimer cette tâche ?");
 									else
-										confirmationSuppr.setTitle("Êtes-vous sûr de supprimer " + nbTacheSelectionnees + " tâches ?");
+										confirmationSuppr.setTitle("Êtes-vous sûr de vouloir supprimer " + nbTacheSelectionnees + " tâches ?");
 									
 									confirmationSuppr.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface dialog, int id){
