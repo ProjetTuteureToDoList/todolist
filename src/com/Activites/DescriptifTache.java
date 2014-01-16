@@ -89,7 +89,7 @@ public class DescriptifTache extends Activity{
 						switch(v.getId()){
 								
 							case R.id.corbeille:
-								Intent descriptifTache = new Intent(DescriptifTache.this, MainActivity.class);
+								Intent MainActivity = new Intent(DescriptifTache.this, MainActivity.class);
 								Bundle Idsuppr = new Bundle();
 								Idsuppr.putInt ("id" , getIntent().getIntExtra("id" ,1 ));
 								MainActivity.putExtras(Idsuppr);
