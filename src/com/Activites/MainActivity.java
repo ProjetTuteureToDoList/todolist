@@ -364,16 +364,14 @@ public class MainActivity extends Activity{
 	
 	public void setMenuShowed(){
 		
-		LinearLayout layoutSansHeader = (LinearLayout) findViewById(R.id.menuEtPrincipalLayout);
 		Animation animTransitionMenuLR = AnimationUtils.loadAnimation(this, R.anim.translate_menu_lr);
-		
 		Animation animTransitionMenuRL = AnimationUtils.loadAnimation(this, R.anim.translate_menu_rl);
+		
 		animTransitionMenuRL.setAnimationListener(new Animation.AnimationListener(){
-
 			@Override
 			public void onAnimationEnd(Animation animation) {
-				menuLayout.setVisibility(8);
-				principalLayout.setVisibility(0);
+				menuLayout.setVisibility(LinearLayout.GONE);
+				principalLayout.setVisibility(LinearLayout.VISIBLE);
 				modeMenu = false;
 			}
 
@@ -388,13 +386,15 @@ public class MainActivity extends Activity{
 		});
 
 		
-		if(modeMenu)
-			layoutSansHeader.startAnimation(animTransitionMenuRL);
+		if(modeMenu){
+			menuLayout.startAnimation(animTransitionMenuRL);
+		}
+			
 		else{
 			modeMenu = true;
-			principalLayout.setVisibility(8);
-			menuLayout.setVisibility(0);
-			layoutSansHeader.startAnimation(animTransitionMenuLR);
+			principalLayout.setVisibility(LinearLayout.GONE);
+			menuLayout.setVisibility(LinearLayout.VISIBLE);
+			menuLayout.startAnimation(animTransitionMenuLR);
 		}
 	}
 	
