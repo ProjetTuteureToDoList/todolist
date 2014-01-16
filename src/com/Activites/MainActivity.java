@@ -60,6 +60,8 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		
+		
 		//Initilalisation de la barre d'en haut
 		//		- masquage des éléments inutiles au départ (retour, suppr, tag)
 		retour = (ImageView) findViewById(R.id.retour);
@@ -96,6 +98,10 @@ public class MainActivity extends Activity{
 	    
 	    //Liste des choses à faire, initialisation de la ListeTacheAdapter, liaison à une ListView
 	    lta = new ListeTacheAdapter(this);
+	    int tacheASuppr = getIntent().getIntExtra("id", -1);
+	    if(tacheASuppr != -1)
+			lta.suppressionTacheAdapter(tacheASuppr);
+	    
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);
 	    checkList.setOnItemClickListener(tacheListener);

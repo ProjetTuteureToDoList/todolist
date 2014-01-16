@@ -53,7 +53,7 @@ public class DescriptifTache extends Activity{
 		suppr.setOnTouchListener(touchClick);
 		
 		TextView tache = (TextView) findViewById(R.id.tache);
-		tache.setText("Id"+getIntent().getIntExtra("id", 1 ) + "/nNom: " + getIntent().getStringExtra("nom") + 
+		tache.setText("Id"+getIntent().getIntExtra("id", 1) + "/nNom: " + getIntent().getStringExtra("nom") + 
 					  "\nDescription : " + getIntent().getStringExtra("description") +
 					  "\nDate : " + getIntent().getIntExtra("date", 1) + 
 					  "/" + getIntent().getIntExtra("dateMois", 1) + 
@@ -91,7 +91,7 @@ public class DescriptifTache extends Activity{
 							case R.id.corbeille:
 								Intent MainActivity = new Intent(DescriptifTache.this, MainActivity.class);
 								Bundle Idsuppr = new Bundle();
-								Idsuppr.putInt ("id" , getIntent().getIntExtra("id" ,1 ));
+								Idsuppr.putInt("id" , getIntent().getIntExtra("id", 1));
 								MainActivity.putExtras(Idsuppr);
 								startActivity(MainActivity);
 								/*Builder confirmationSuppr = new AlertDialog.Builder(DescriptifTache.this);
