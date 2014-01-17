@@ -98,6 +98,8 @@ public class MainActivity extends Activity{
 	    
 	    //Liste des choses à faire, initialisation de la ListeTacheAdapter, liaison à une ListView
 	    lta = new ListeTacheAdapter(this);
+	    
+	    	//vérification si une tâche a été supprimé sur l'activité DescriptifTache
 	    int tacheASuppr = getIntent().getIntExtra("id", -1);
 	    if(tacheASuppr != -1)
 			lta.suppressionTacheAdapter(tacheASuppr);
