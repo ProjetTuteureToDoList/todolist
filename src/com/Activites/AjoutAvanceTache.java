@@ -19,6 +19,8 @@ public class AjoutAvanceTache extends Activity{
 	String details = null;
 	int importance;
 	Button creation = null;
+	String date = null;
+	String heure = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,31 @@ public class AjoutAvanceTache extends Activity{
 			nomDeTache = (((EditText) findViewById(R.id.nomDeTache)).getText()).toString();
 			details = (((EditText) findViewById(R.id.detailTache)).getText()).toString();
 			importance = (((RatingBar) findViewById(R.id.importanceTache)).getProgress());
+			date = (((EditText) findViewById(R.id.dateTache)).getText()).toString() ;
+			heure = (((EditText) findViewById(R.id.heureTache)).getText()).toString();
+			
 			Log.e("Nom", nomDeTache);
 			Log.e("Description", details);
 			Log.e("importance", String.valueOf(importance));
+			
+			// la date ici :3
+			int i = 2, jour, mois, annee, heure, minute;
+			String j, mo, an, h, min;
+			//	Have fun Juju tu vas t'ammuser à découper des string de date que l'utilisateur va peut être foirer :3
+			/*
+			if (compareTo(date.charAt(i), "/")) {
+				j = date.charAt(i-1);
+				i++; i++;
+			}
+			else {
+				j = date.charAt(i-1) + date.charAt(2);
+				i++; i++; i++;
+			}
+			*/
+			//mo = date.charAt(4
+			  
+			
+			
 		}
 		
 	};
