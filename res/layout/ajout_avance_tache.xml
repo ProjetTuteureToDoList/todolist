@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
     
      
 	<LinearLayout
@@ -40,7 +41,7 @@
 
 	    <LinearLayout
 	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
+	        android:layout_height="wrap_content"
 	        android:orientation="vertical" >
 
 	        <EditText
@@ -50,16 +51,78 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:ems="10"
-	            android:text="Nom de la Tâche" />
+	            android:hint="Nom de la Tâche"  />
 
-	        <TextView
-	            android:id="@+id/dateRappelTache"
-	            android:layout_width="fill_parent"
+	        <Button 
+	            android:layout_width="200dp"
 	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="Date de rappel de la tâche:" />
+	            android:layout_gravity="center"
+	            android:id="@+id/boutonDate"
+	            android:text="Changer la date"
+	            android:contentDescription="@string/text" />
+	        
+	        <!-- Layout correspondant au texte + croix_suppr en dessous du bouton Date -->
+	        <LinearLayout 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:layout_gravity="center"
+	            android:paddingTop="5dp"
+	            android:paddingBottom="5dp">
+	            
+	            <TextView
+		            android:id="@+id/dateChoisie"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:textSize="12sp"
+		            android:text="@string/text" />
+	            
+	            <ImageView
+	                android:id="@+id/croixDate"
+	                android:src="@drawable/croix_suppr"
+	                android:layout_height="fill_parent"
+	                android:layout_width="wrap_content" 	                
+	                android:contentDescription="@string/text" />
+	            
+	        </LinearLayout>
+	        
+	        
+	        
+	        <Button 
+	            android:layout_width="200dp"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:id="@+id/boutonHeure"
+	            android:text="Changer l'heure"
+	            android:contentDescription="@string/text" />
+	        
+	        <!-- Layout correspondant au texte + croix_suppr en dessous du bouton Heure -->
+	        <LinearLayout 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:layout_gravity="center"
+	            android:paddingTop="5dp"
+	            android:paddingBottom="5dp">
+	            
+		        <TextView
+		            android:id="@+id/heureChoisie"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:gravity="center"
+			        android:textSize="12sp"
+		            android:text="@string/text" />
+		        
+		        <ImageView
+	                android:id="@+id/croixHeure"
+	                android:src="@drawable/croix_suppr"
+	                android:layout_height="fill_parent"
+	                android:layout_width="wrap_content" 	                
+	                android:contentDescription="@string/text" />
+		        
+	        </LinearLayout>
 
-	        <TextView
+	        <!-- <TextView
 	            android:id="@+id/textView1"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
@@ -87,7 +150,7 @@
 	            android:layout_height="wrap_content"
 	            android:ems="10"
 	            android:inputType="time"
-	      	  	android:text="Ex 08:15am" />
+	      	  	android:text="Ex 08:15am" />-->
 
 	        <TextView
 	            android:id="@+id/importanceTacheText"
@@ -109,9 +172,7 @@
 	            android:layout_height="102dp"
 	            android:ems="10"
 	            android:gravity="top|left"
-	            android:text="Details de la tâche" >
-
-	            <requestFocus />
+	            android:hint="Details de la tâche" >
 	        </EditText>
 
 	        <TextView
