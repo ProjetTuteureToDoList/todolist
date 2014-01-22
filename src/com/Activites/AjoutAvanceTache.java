@@ -8,16 +8,19 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.RatingBar;
 import android.widget.TimePicker;
@@ -35,6 +38,7 @@ public class AjoutAvanceTache extends Activity{
 	Button boutonCreation = null;
 	Button boutonDate = null;
 	Button boutonHeure = null;
+	TextView importanceText = null;
 	
 	TextView dateChoisie = null;
 	TextView heureChoisie = null;
@@ -62,6 +66,12 @@ public class AjoutAvanceTache extends Activity{
 		boutonHeure = (Button) findViewById(R.id.boutonHeure);
 		boutonHeure.setOnClickListener(click);
 		
+		//Initialisation importanceText, qui est le texte qui renvoie l'importance choisie en texte
+		importanceText = (TextView) findViewById(R.id.importanceTacheText);
+		importance = 0;
+		importanceText.setText("Importance de la tâche (Choix : " + importance + ")");
+		((RatingBar) findViewById(R.id.importanceTache)).setOnRatingBarChangeListener(RatingBarNew);
+		
 		//Initialisation des TextView permettant de savoir le choix de l'utilisateur pour la date et l'heure
 		dateChoisie = (TextView) findViewById(R.id.dateChoisie);
 		heureChoisie = (TextView) findViewById(R.id.heureChoisie);
@@ -76,6 +86,8 @@ public class AjoutAvanceTache extends Activity{
 		
 		changerVisibilityDateEtHeure();
 		
+		//Initialisation Listener sur allScreen
+		findViewById(R.id.allScreen).setOnClickListener(click);
 	}
 	
 	private OnClickListener click = new OnClickListener(){
@@ -84,16 +96,24 @@ public class AjoutAvanceTache extends Activity{
 		public void onClick(View v) {
 
 			Calendar calender = Calendar.getInstance();
-			
 			switch(v.getId()){
 				case R.id.Creer:
 					nomDeTache = (((EditText) findViewById(R.id.nomDeTache)).getText()).toString();
 					details = (((EditText) findViewById(R.id.detailTache)).getText()).toString();
-					importance = (((RatingBar) findViewById(R.id.importanceTache)).getProgress());
 					
-					Log.e("Nom", nomDeTache);
-					Log.e("Description", details);
-					Log.e("importance", String.valueOf(importance));
+					Intent mainActivity = new Intent(AjoutAvanceTache.this, MainActivity.class);
+					Bundle donneesTache = new Bundle();
+					donneesTache.putInt("ajout_avancee", 1);
+					donneesTache.putString("nom", nomDeTache);
+					donneesTache.putString("description", details);
+					donneesTache.putInt("dateJour", jour);
+					donneesTache.putInt("dateMois", mois);
+					donneesTache.putInt("dateAnnee", annee);
+					donneesTache.putInt("dateHeure", heure);
+					donneesTache.putInt("dateMinute", minute);
+					donneesTache.putInt("importance", importance);
+					mainActivity.putExtras(donneesTache);
+					startActivity(mainActivity);
 					break;
 				
 				case R.id.boutonDate:
@@ -122,56 +142,65 @@ public class AjoutAvanceTache extends Activity{
 					heureChoisie.setText("");
 					changerVisibilityDateEtHeure();
 					break;
+				
+				case R.id.allScreen:
+					InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 					
+					if(findViewById(R.id.nomDeTache).isFocused()){
+						findViewById(R.id.nomDeTache).clearFocus();	
+				    	inputMethodManager.hideSoftInputFromWindow(findViewById(R.id.nomDeTache).getWindowToken(), 0);
+					}
+					if(findViewById(R.id.detailTache).isFocused()){
+						findViewById(R.id.detailTache).clearFocus();
+				    	inputMethodManager.hideSoftInputFromWindow(findViewById(R.id.detailTache).getWindowToken(), 0);
+					}
+			    	break;					
 			}
-			
-			// la date ici :3
-			int i = 2, jour, mois, annee, heure, minute;
-			String j, mo, an, h, min;
-			//	Have fun Juju tu vas t'ammuser à découper des string de date que l'utilisateur va peut être foirer :3
-			/*
-			if (compareTo(date.charAt(i), "/")) {
-				j = date.charAt(i-1);
-				i++; i++;
-			}
-			else {
-				j = date.charAt(i-1) + date.charAt(2);
-				i++; i++; i++;
-			}
-			*/
-			//mo = date.charAt(4
-			  
-			
-			
+					
 		}
 		
 	};
-	
 	
 	private DatePickerDialog.OnDateSetListener dateListener = new OnDateSetListener(){
 
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			jour = dayOfMonth;
-			mois = monthOfYear + 1;			//Les mois vont de 0 à 11 (+ 1)
-			annee = year;
-			dateChoisie.setText("Date choisie : " + jour + "/" + mois + "/" + annee);
-            changerVisibilityDateEtHeure();
+			if(view.isShown()){
+				jour = dayOfMonth;
+				mois = monthOfYear + 1;			//Les mois vont de 0 à 11 (+ 1)
+				annee = year;
+				dateChoisie.setText("Date choisie : " + jour + "/" + mois + "/" + annee);
+	            changerVisibilityDateEtHeure();
+			}
 		}
 		
 	};
 	
 	private TimePickerDialog.OnTimeSetListener heureListener = new OnTimeSetListener(){
-
+		
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfHour) {
-			heure = hourOfDay;
-			minute = minuteOfHour;
-			heureChoisie.setText("Heure choisie : " + heure + "h" + minute);
-			changerVisibilityDateEtHeure();
+			
+			if(view.isShown()){
+				heure = hourOfDay;
+				minute = minuteOfHour;
+				heureChoisie.setText("Heure choisie : " + heure + "h" + minute);
+				changerVisibilityDateEtHeure();
+			}
 		}
 		
+		
+	};
+	
+	private RatingBar.OnRatingBarChangeListener RatingBarNew = new OnRatingBarChangeListener(){
+
+		@Override
+		public void onRatingChanged(RatingBar ratingBar, float rating,
+				boolean fromUser) {
+				importance = ratingBar.getProgress();
+				importanceText.setText("Importance de la tâche (Choix : " + importance + ")");
+		}
 		
 	};
 	

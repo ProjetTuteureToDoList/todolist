@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class BDDTache extends SQLiteOpenHelper {
 	public static final String TACHE_NAME = "Nom";
@@ -15,6 +16,8 @@ public class BDDTache extends SQLiteOpenHelper {
 	public static final String TACHE_DATE_JOUR = "Date_Jour";
 	public static final String TACHE_DATE_MOIS = "Date_Mois";
 	public static final String TACHE_DATE_ANNEE = "Date_Annee";
+	public static final String TACHE_DATE_HEURE = "Date_Heure";
+	public static final String TACHE_DATE_MINUTE = "Date_Minute";
 	public static final String TACHE_ETAT = "Etat";
 	public static final String TACHE_IMPORTANCE = "Importance";
 	public static final String TACHE_DESCRIPTION = "Description";
@@ -26,6 +29,8 @@ public class BDDTache extends SQLiteOpenHelper {
 														TACHE_DATE_JOUR + " INTEGER NOT NULL, " +
 														TACHE_DATE_MOIS + " INTEGER NOT NULL, " +
 														TACHE_DATE_ANNEE + " INTEGER NOT NULL, " +
+														TACHE_DATE_HEURE + " INTEGER NOT NULL, " +
+														TACHE_DATE_MINUTE + " INTEGER NOT NULL, " +
 														TACHE_ETAT + " INTEGER NOT NULL DEFAULT 0, " +
 														TACHE_IMPORTANCE + " INTEGER NOT NULL DEFAULT 1, " +
 														TACHE_DESCRIPTION + " TEXT NOT NULL DEFAULT \"Pas de description\");";
@@ -55,9 +60,11 @@ public class BDDTache extends SQLiteOpenHelper {
 		ContentValues valeursTache = new ContentValues();
 		valeursTache.put(TACHE_NAME, t.getNom());
 		valeursTache.put(TACHE_ID, t.getIdTache());
-		valeursTache.put(TACHE_DATE_JOUR, t.getDate().getDay());
+		valeursTache.put(TACHE_DATE_JOUR, t.getDate().getDate());
 		valeursTache.put(TACHE_DATE_MOIS, t.getDate().getMonth());
 		valeursTache.put(TACHE_DATE_ANNEE, t.getDate().getYear());
+		valeursTache.put(TACHE_DATE_HEURE, t.getDate().getHours());
+		valeursTache.put(TACHE_DATE_MINUTE, t.getDate().getMinutes());
 		if(t.getEtat())
 			valeursTache.put(TACHE_ETAT, 1);
 		else
@@ -88,9 +95,11 @@ public class BDDTache extends SQLiteOpenHelper {
 		
 		valeursTache.put(TACHE_NAME, t.getNom());
 		valeursTache.put(TACHE_ID, t.getIdTache());
-		valeursTache.put(TACHE_DATE_JOUR, t.getDate().getDay());
+		valeursTache.put(TACHE_DATE_JOUR, t.getDate().getDate());
 		valeursTache.put(TACHE_DATE_MOIS, t.getDate().getMonth());
 		valeursTache.put(TACHE_DATE_ANNEE, t.getDate().getYear());
+		valeursTache.put(TACHE_DATE_HEURE, t.getDate().getHours());
+		valeursTache.put(TACHE_DATE_MINUTE, t.getDate().getMinutes());
 		if(t.getEtat())
 			valeursTache.put(TACHE_ETAT, 1);
 		else
@@ -109,7 +118,8 @@ public class BDDTache extends SQLiteOpenHelper {
 		
 		if(c.moveToNext()){
 			t.setNom(c.getString(c.getColumnIndex(TACHE_NAME)));
-			t.setDate(new Date(c.getInt(c.getColumnIndex(TACHE_DATE_JOUR)), c.getInt(c.getColumnIndex(TACHE_DATE_MOIS)), c.getInt(c.getColumnIndex(TACHE_DATE_ANNEE))));
+			t.setDate(new Date(c.getInt(c.getColumnIndex(TACHE_DATE_ANNEE)), c.getInt(c.getColumnIndex(TACHE_DATE_MOIS)), c.getInt(c.getColumnIndex(TACHE_DATE_JOUR)),
+							   c.getInt(c.getColumnIndex(TACHE_DATE_HEURE)), c.getInt(c.getColumnIndex(TACHE_DATE_MINUTE))));
 			t.setDescription(c.getString(c.getColumnIndex(TACHE_DESCRIPTION)));
 			if(c.getInt(c.getColumnIndex(TACHE_ETAT)) == 1)
 				t.setEtat(true);

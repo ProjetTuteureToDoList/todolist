@@ -128,8 +128,8 @@ public class ListeTacheAdapter extends BaseAdapter{
 	}
 	
 	
-	public void ajoutTacheAdapter(String nouvelleTache){
-		lt.ajoutTache(new Tache(nouvelleTache));
+	public void ajoutTacheAdapter(Tache t){
+		lt.ajoutTache(t);
 	}
 	
 	public void suppressionTacheAdapter(int position){

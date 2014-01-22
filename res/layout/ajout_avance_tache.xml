@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:focusableInTouchMode="true">
+ 	android:focusableInTouchMode="true"
+    android:id="@id/allScreen">
     
      
 	<LinearLayout
@@ -34,163 +36,125 @@
 	    
     </LinearLayout>
 
-	<ScrollView
-	    android:id="@+id/scrollaat"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical" >
+        <EditText
+            android:lines="1"
+            android:inputType="text"
+            android:id="@+id/nomDeTache"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nom de la Tâche"  />
 
-	        <EditText
-	            android:lines="1"
-	            android:inputType="text"
-	            android:id="@+id/nomDeTache"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:ems="10"
-	            android:hint="Nom de la Tâche"  />
-
-	        <Button 
-	            android:layout_width="200dp"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center"
-	            android:id="@+id/boutonDate"
-	            android:text="Changer la date"
-	            android:contentDescription="@string/text" />
-	        
-	        <!-- Layout correspondant au texte + croix_suppr en dessous du bouton Date -->
-	        <LinearLayout 
+        <Button 
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/boutonDate"
+            android:text="Changer la date"
+            android:contentDescription="@string/text" />
+        
+        <!-- Layout correspondant au texte + croix_suppr en dessous du bouton Date -->
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            
+            <TextView
+	            android:id="@+id/dateChoisie"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:orientation="horizontal"
-	            android:layout_gravity="center"
-	            android:paddingTop="5dp"
-	            android:paddingBottom="5dp">
-	            
-	            <TextView
-		            android:id="@+id/dateChoisie"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:textSize="12sp"
-		            android:text="@string/text" />
-	            
-	            <ImageView
-	                android:id="@+id/croixDate"
-	                android:src="@drawable/croix_suppr"
-	                android:layout_height="fill_parent"
-	                android:layout_width="wrap_content" 	                
-	                android:contentDescription="@string/text" />
-	            
-	        </LinearLayout>
-	        
-	        
-	        
-	        <Button 
-	            android:layout_width="200dp"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center"
-	            android:id="@+id/boutonHeure"
-	            android:text="Changer l'heure"
-	            android:contentDescription="@string/text" />
-	        
-	        <!-- Layout correspondant au texte + croix_suppr en dessous du bouton Heure -->
-	        <LinearLayout 
+	            android:textSize="12sp"
+	            android:text="@string/text" />
+            
+            <ImageView
+                android:id="@+id/croixDate"
+                android:src="@drawable/croix_suppr"
+                android:layout_height="fill_parent"
+                android:layout_width="wrap_content" 	                
+                android:contentDescription="@string/text" />
+            
+        </LinearLayout>
+        
+        
+        
+        <Button 
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/boutonHeure"
+            android:text="Changer l'heure"
+            android:contentDescription="@string/text" />
+        
+        <!-- Layout correspondant au texte + croix_suppr en dessous du bouton Heure -->
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            
+	        <TextView
+	            android:id="@+id/heureChoisie"
 	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:orientation="horizontal"
-	            android:layout_gravity="center"
-	            android:paddingTop="5dp"
-	            android:paddingBottom="5dp">
-	            
-		        <TextView
-		            android:id="@+id/heureChoisie"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:gravity="center"
-			        android:textSize="12sp"
-		            android:text="@string/text" />
-		        
-		        <ImageView
-	                android:id="@+id/croixHeure"
-	                android:src="@drawable/croix_suppr"
-	                android:layout_height="fill_parent"
-	                android:layout_width="wrap_content" 	                
-	                android:contentDescription="@string/text" />
-		        
-	        </LinearLayout>
-
-	        <!-- <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:gravity="center"
-	            android:text="Date" />
+		        android:textSize="12sp"
+	            android:text="@string/text" />
+	        
+	        <ImageView
+                android:id="@+id/croixHeure"
+                android:src="@drawable/croix_suppr"
+                android:layout_height="fill_parent"
+                android:layout_width="wrap_content" 	                
+                android:contentDescription="@string/text" />
+	        
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/importanceTacheText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/text" />
 
-	        <EditText
-	            android:id="@+id/dateTache"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:ems="10"
-	            android:inputType="date" 
-	   		    android:text="Ex : 28/2/2014" />
+        <RatingBar
+            android:id="@+id/importanceTache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
-	        <TextView
-	            android:id="@+id/textView2"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:text="Heure" />
+        <EditText
+            android:id="@+id/detailTache"
+            android:lines="3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="top|left"
+            android:hint="Détails de la tâche" />
 
-	        <EditText
-	            android:id="@+id/heureTache"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:ems="10"
-	            android:inputType="time"
-	      	  	android:text="Ex 08:15am" />-->
+        <TextView
+            android:id="@+id/listeTagstext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Liste des tags" />
 
-	        <TextView
-	            android:id="@+id/importanceTacheText"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="Importance de la tâche (1 à 10)" />
+        <Button
+            android:id="@+id/Creer"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Créer" />
 
-	        <RatingBar
-	            android:id="@+id/importanceTache"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center" />
-
-	        <EditText
-	            android:id="@+id/detailTache"
-	            android:inputType="text"
-	            android:layout_width="fill_parent"
-	            android:layout_height="102dp"
-	            android:ems="10"
-	            android:gravity="top|left"
-	            android:hint="Details de la tâche" >
-	        </EditText>
-
-	        <TextView
-	            android:id="@+id/listeTagstext"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="Liste des tags" />
-
-	        <Button
-	            android:id="@+id/Creer"
-	            android:layout_width="180dp"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center"
-	            android:text="Créer" />
-
-	    </LinearLayout>
-
-	</ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

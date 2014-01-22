@@ -1,5 +1,6 @@
 package com.Activites;
 
+import gestionDesTaches.Tache;
 import Adapters.ListeTacheAdapter;
 import Adapters.MenuAdapter;
 import Autres.OnSwipeTouchListener;
@@ -100,9 +101,21 @@ public class MainActivity extends Activity{
 	    lta = new ListeTacheAdapter(this);
 	    
 	    	//vérification si une tâche a été supprimé sur l'activité DescriptifTache
-	    int tacheASuppr = getIntent().getIntExtra("id", -1);
+	    int tacheASuppr = getIntent().getIntExtra("descriptif_tache_id", -1);
 	    if(tacheASuppr != -1)
 			lta.suppressionTacheAdapter(tacheASuppr);
+	    
+	    	//vérification si une tâche à été créée sur l'activité AjoutAvanceTache
+	    int tacheAAjouter = getIntent().getIntExtra("ajout_avancee", -1);
+	    if(tacheAAjouter == 1)
+	    	lta.ajoutTacheAdapter(new Tache(getIntent().getStringExtra("nom"),
+	    									getIntent().getIntExtra("dateJour", 0),
+											getIntent().getIntExtra("dateMois", 0),
+											getIntent().getIntExtra("dateAnnee", 0),
+											getIntent().getIntExtra("dateHeure", 0),
+											getIntent().getIntExtra("dateMinute", 0),
+	    									getIntent().getIntExtra("importance", 0),
+	    									getIntent().getStringExtra("description")));
 	    
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);
@@ -131,7 +144,7 @@ public class MainActivity extends Activity{
 			switch(v.getId()) {
 			    case R.id.bouton:
 			    	if(entreeText.getText().toString().replace(" ", "").length() > 0){
-			    		lta.ajoutTacheAdapter(entreeText.getText().toString());
+			    		lta.ajoutTacheAdapter(new Tache(entreeText.getText().toString()));
 				    	entreeText.setText(null);
 				    	entreeText.clearFocus();
 				    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -192,7 +205,7 @@ public class MainActivity extends Activity{
 									if(nbTacheSelectionnees == 1)
 										confirmationSuppr.setTitle("Êtes-vous sûr de vouloir supprimer cette tâche ?");
 									else
-										confirmationSuppr.setTitle("Êtes-vous sûr de vouloir supprimer " + nbTacheSelectionnees + " tâches ?");
+										confirmationSuppr.setTitle("Êtes-vous sûr de vouloir supprimer les tâches ?");
 									
 									confirmationSuppr.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface dialog, int id){
@@ -271,9 +284,11 @@ public class MainActivity extends Activity{
 					donneesTache.putInt("id",lta.getItem(position).getIdTache());
 					donneesTache.putString("nom", lta.getItem(position).getNom());
 					donneesTache.putString("description", lta.getItem(position).getDescription());
-					donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDay());
+					donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDate());
 					donneesTache.putInt("dateMois", lta.getItem(position).getDate().getMonth());
 					donneesTache.putInt("dateAnnee", lta.getItem(position).getDate().getYear());
+					donneesTache.putInt("dateHeure", lta.getItem(position).getDate().getHours());
+					donneesTache.putInt("dateMinute", lta.getItem(position).getDate().getMinutes());
 					donneesTache.putInt("importance", lta.getItem(position).getImportance());
 					donneesTache.putBoolean("etat", lta.getItem(position).getEtat());
 					descriptifTache.putExtras(donneesTache);

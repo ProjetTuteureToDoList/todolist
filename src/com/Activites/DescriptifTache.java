@@ -1,31 +1,16 @@
 package com.Activites;
 
-import Adapters.ListeTacheAdapter;
-import Adapters.MenuAdapter;
-import Autres.OnSwipeTouchListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.todolist.R;
 
@@ -57,9 +42,11 @@ public class DescriptifTache extends Activity {
 		tache.setText("Id: " + getIntent().getIntExtra("id", 1) + "\nNom: "
 				+ getIntent().getStringExtra("nom") + "\nDescription : "
 				+ getIntent().getStringExtra("description") + "\nDate : "
-				+ getIntent().getIntExtra("date", 1) + "/"
+				+ getIntent().getIntExtra("dateJour", 1) + "/"
 				+ getIntent().getIntExtra("dateMois", 1) + "/"
-				+ getIntent().getIntExtra("dateAnnee", 1970) + "\nPriorité : "
+				+ getIntent().getIntExtra("dateAnnee", 1970) + " à "
+				+ getIntent().getIntExtra("dateHeure", 0) + "h"
+				+ getIntent().getIntExtra("dateMinute", 0) + "\nPriorité : "
 				+ getIntent().getIntExtra("importance", 1) + "\nEtat : ");
 		if (getIntent().getBooleanExtra("etat", true))
 			tache.setText(tache.getText() + "Fait");
@@ -106,7 +93,7 @@ public class DescriptifTache extends Activity {
 													DescriptifTache.this,
 													MainActivity.class);
 											Bundle Idsuppr = new Bundle();
-											Idsuppr.putInt("id", getIntent()
+											Idsuppr.putInt("descriptif_tache_id", getIntent()
 													.getIntExtra("id", 1));
 											MainActivity.putExtras(Idsuppr);
 											startActivity(MainActivity);

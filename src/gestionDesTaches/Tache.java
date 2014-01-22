@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import android.util.Log;
 
 public class Tache {
 	private String nom;
@@ -46,9 +45,9 @@ public class Tache {
 		this.description = "Pas de description";
 	}
 	// constructeur complet
-	public Tache(String nom, Date d, int importance, String description){
+	public Tache(String nom, int jour, int mois, int annee, int heure, int minute, int importance, String description){
 		this.nom = nom;
-		this.date = new Date(d.getYear(), d.getMonth(), d.getDay(), d.getMinutes(), d.getSeconds());
+		this.date = new Date(annee, mois, jour, heure, minute);
 		this.etat = false;
 		this.importance = importance;
 		this.description = description;		
