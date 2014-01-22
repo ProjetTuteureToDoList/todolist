@@ -48,7 +48,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Nom de la Tâche"  />
+            android:hint="Nom de la tâche"  />
 
         <Button 
             android:layout_width="200dp"

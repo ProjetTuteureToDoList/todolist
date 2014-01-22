@@ -24,6 +24,7 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.RatingBar;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.todolist.R;
 
@@ -32,8 +33,8 @@ public class AjoutAvanceTache extends Activity{
 	String nomDeTache = null;
 	String details = null;
 	int importance;
-	int jour, mois, annee;
-	int heure, minute;
+	int jour = -1, mois = -1, annee = -1;
+	int heure = -1, minute = -1;
 	
 	Button boutonCreation = null;
 	Button boutonDate = null;
@@ -101,19 +102,24 @@ public class AjoutAvanceTache extends Activity{
 					nomDeTache = (((EditText) findViewById(R.id.nomDeTache)).getText()).toString();
 					details = (((EditText) findViewById(R.id.detailTache)).getText()).toString();
 					
-					Intent mainActivity = new Intent(AjoutAvanceTache.this, MainActivity.class);
-					Bundle donneesTache = new Bundle();
-					donneesTache.putInt("ajout_avancee", 1);
-					donneesTache.putString("nom", nomDeTache);
-					donneesTache.putString("description", details);
-					donneesTache.putInt("dateJour", jour);
-					donneesTache.putInt("dateMois", mois);
-					donneesTache.putInt("dateAnnee", annee);
-					donneesTache.putInt("dateHeure", heure);
-					donneesTache.putInt("dateMinute", minute);
-					donneesTache.putInt("importance", importance);
-					mainActivity.putExtras(donneesTache);
-					startActivity(mainActivity);
+					if(nomDeTache.replace(" ", "").length() > 0){
+						Intent mainActivity = new Intent(AjoutAvanceTache.this, MainActivity.class);
+						Bundle donneesTache = new Bundle();
+						donneesTache.putInt("ajout_avancee", 1);
+						donneesTache.putString("nom", nomDeTache);
+						donneesTache.putString("description", details);
+						donneesTache.putInt("dateJour", jour);
+						donneesTache.putInt("dateMois", mois);
+						donneesTache.putInt("dateAnnee", annee);
+						donneesTache.putInt("dateHeure", heure);
+						donneesTache.putInt("dateMinute", minute);
+						donneesTache.putInt("importance", importance);
+						mainActivity.putExtras(donneesTache);
+						startActivity(mainActivity);
+					}
+					else
+						Toast.makeText(AjoutAvanceTache.this, "Votre tâche n'a pas de nom !", Toast.LENGTH_SHORT).show();
+					
 					break;
 				
 				case R.id.boutonDate:
@@ -135,11 +141,16 @@ public class AjoutAvanceTache extends Activity{
 				
 				case R.id.croixDate:
 					dateChoisie.setText("");
+					jour = -1;
+					mois = -1;
+					annee = -1;
 					changerVisibilityDateEtHeure();
 					break;
 				
 				case R.id.croixHeure:
 					heureChoisie.setText("");
+					heure = -1;
+					minute = -1;
 					changerVisibilityDateEtHeure();
 					break;
 				

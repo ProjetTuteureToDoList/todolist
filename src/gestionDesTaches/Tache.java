@@ -15,6 +15,8 @@ public class Tache {
 //	Date faitLe; 					//date de la création de la tâche
 	
 	private int numTache;			//permettra de facilement retrouver une tâche dans le tableau pour modif/suppr
+	private boolean hasDate;		//indique si la tâche à une date donnée ou non
+	private boolean hasHour;		//indique si la tâche à une heure donnée ou non
 	
 	
 	private List<String> tag;		//Liste des tags d'une tâche spécifique
@@ -40,6 +42,8 @@ public class Tache {
 	public Tache(String nom){
 		this.nom = nom;
 		this.date = new Date();
+		this.hasDate = false;
+		this.hasHour = false;
 		this.etat = false;
 		this.importance = 1;
 		this.description = "Pas de description";
@@ -47,6 +51,16 @@ public class Tache {
 	// constructeur complet
 	public Tache(String nom, int jour, int mois, int annee, int heure, int minute, int importance, String description){
 		this.nom = nom;
+		
+		if(jour == -1)
+			this.hasDate = false;
+		else
+			this.hasDate = true;
+		if(heure == -1)
+			this.hasHour = false;
+		else
+			this.hasHour = true;
+		
 		this.date = new Date(annee, mois, jour, heure, minute);
 		this.etat = false;
 		this.importance = importance;
@@ -84,6 +98,12 @@ public class Tache {
 	public int getIdTache(){
 		return numTache;
 	}
+	public boolean getHasDate(){
+		return hasDate;
+	}
+	public boolean getHasHour(){
+		return hasHour;
+	}
 	public boolean getAnimation(){
 		return animation;
 	}
@@ -109,6 +129,12 @@ public class Tache {
 	}
 	public void setIdTache(int idTache){
 		this.numTache = idTache;
+	}
+	public void setHasDate(boolean rep){
+		this.hasDate = rep;
+	}
+	public void setHasHour(boolean rep){
+		this.hasHour = rep;
 	}
 	public void setAnimation(boolean animTache){
 		this.animation = animTache;
