@@ -38,7 +38,7 @@
         </activity>
         
         <activity
-            android:name="com.Activites.gererTags"
+            android:name="com.Activites.GererTags"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
         </activity>

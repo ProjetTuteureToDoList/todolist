@@ -9,5 +9,6 @@
     <string name="messageBouton">Ajouter !</string>
     <string name="text">Ce texte doit être programmé</string>
     <string name="Suppr">Suppr</string>
+    <string name="messageTagEditText">Un nouveau tag ?</string>
     
 </resources>

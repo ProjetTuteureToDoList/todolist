@@ -47,17 +47,19 @@ public final class R {
         public static final int icone_preference=0x7f020009;
         public static final int icone_retour=0x7f02000a;
         public static final int icone_tag=0x7f02000b;
+        public static final int vide=0x7f02000c;
     }
     public static final class id {
         public static final int Creer=0x7f0a001a;
-        public static final int action_settings=0x7f0a0020;
+        public static final int action_settings=0x7f0a0021;
         public static final int allScreen=0x7f0a0000;
         public static final int bouton=0x7f0a000d;
         public static final int boutonDate=0x7f0a0010;
         public static final int boutonHeure=0x7f0a0013;
-        public static final int caseCochee=0x7f0a001e;
-        public static final int caseNonCochee=0x7f0a001f;
+        public static final int caseCochee=0x7f0a001f;
+        public static final int caseNonCochee=0x7f0a0020;
         public static final int corbeille=0x7f0a0007;
+        public static final int couleur=0x7f0a001b;
         public static final int croixDate=0x7f0a0012;
         public static final int croixHeure=0x7f0a0015;
         public static final int dateChoisie=0x7f0a0011;
@@ -70,17 +72,17 @@ public final class R {
         public static final int icone_tags=0x7f0a0005;
         public static final int importanceTache=0x7f0a0017;
         public static final int importanceTacheText=0x7f0a0016;
-        public static final int itemMenu=0x7f0a001b;
+        public static final int itemMenu=0x7f0a001c;
         public static final int listeTagstext=0x7f0a0019;
         public static final int listview=0x7f0a000e;
         public static final int menu=0x7f0a000a;
         public static final int menuEtPrincipalLayout=0x7f0a0008;
         public static final int menuLayout=0x7f0a0009;
-        public static final int modification=0x7f0a001c;
+        public static final int modification=0x7f0a001d;
         public static final int nomDeTache=0x7f0a000f;
         public static final int principalLayout=0x7f0a000b;
         public static final int retour=0x7f0a0002;
-        public static final int tache=0x7f0a001d;
+        public static final int tache=0x7f0a001e;
         public static final int titre=0x7f0a0004;
     }
     public static final class layout {
@@ -100,6 +102,7 @@ public final class R {
         public static final int app_name=0x7f070000;
         public static final int messageBouton=0x7f070005;
         public static final int messageEditText=0x7f070003;
+        public static final int messageTagEditText=0x7f070008;
         public static final int text=0x7f070006;
         public static final int titre=0x7f070002;
         public static final int titreListe=0x7f070004;

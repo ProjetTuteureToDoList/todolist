@@ -346,9 +346,16 @@ public class MainActivity extends Activity{
 					startActivity(ajoutAvanceTache);
 					menuLayout.setVisibility(8);
 					principalLayout.setVisibility(0);
-					modeMenu = false;
-					
+					modeMenu = false;					
 					break;
+				case 1:
+					break;
+				case 2:
+					Intent gererTag = new Intent(MainActivity.this, GererTags.class);
+					startActivity(gererTag);
+					menuLayout.setVisibility(8);
+					principalLayout.setVisibility(0);
+					modeMenu = false;	
 			}
 		}
 		
