@@ -21,7 +21,7 @@ public class MenuAdapter extends BaseAdapter{
 		menuContent = new ArrayList<String>();
 		menuContent.add("Ajouter une tâche..");
 		menuContent.add("Afficher par tags..");
-		mInflater =LayoutInflater.from(context);
+		mInflater = LayoutInflater.from(context);
 	}
 	
 	@Override

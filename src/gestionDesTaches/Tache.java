@@ -1,8 +1,11 @@
 package gestionDesTaches;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import android.util.Log;
 
 
 public class Tache {
@@ -31,7 +34,10 @@ public class Tache {
 	// constructeur par Défaut
 	public Tache(){				
 		this.nom = "Anonyme";
-		this.date = new Date();				// initialise la date à la date actuel lors de la construction
+		Calendar dateActuelle = Calendar.getInstance(); 			// initialise la date à la date actuel lors de la construction
+		this.date = new Date(dateActuelle.get(Calendar.YEAR), dateActuelle.get(Calendar.MONTH) + 1, 
+							 dateActuelle.get(Calendar.DAY_OF_MONTH), dateActuelle.get(Calendar.HOUR_OF_DAY), 
+							 dateActuelle.get(Calendar.MINUTE));				
 		this.etat = false;
 		this.importance = 1;
 		this.description = "Pas de description";
@@ -41,7 +47,10 @@ public class Tache {
 	// constructeur de tâche "rapide"
 	public Tache(String nom){
 		this.nom = nom;
-		this.date = new Date();
+		Calendar dateActuelle = Calendar.getInstance(); 			// initialise la date à la date actuel lors de la construction
+		this.date = new Date(dateActuelle.get(Calendar.YEAR), dateActuelle.get(Calendar.MONTH), 
+							 dateActuelle.get(Calendar.DAY_OF_MONTH) + 1, dateActuelle.get(Calendar.HOUR_OF_DAY), 
+							 dateActuelle.get(Calendar.MINUTE));	
 		this.hasDate = false;
 		this.hasHour = false;
 		this.etat = false;
