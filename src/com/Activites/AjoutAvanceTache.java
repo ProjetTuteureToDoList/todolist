@@ -103,6 +103,7 @@ public class AjoutAvanceTache extends Activity{
 					details = (((EditText) findViewById(R.id.detailTache)).getText()).toString();
 					
 					if(nomDeTache.replace(" ", "").length() > 0){
+						Calendar dateActuelle = Calendar.getInstance();
 						Intent mainActivity = new Intent(AjoutAvanceTache.this, MainActivity.class);
 						Bundle donneesTache = new Bundle();
 						donneesTache.putInt("ajout_avancee", 1);
@@ -173,7 +174,7 @@ public class AjoutAvanceTache extends Activity{
 	};
 	
 	private DatePickerDialog.OnDateSetListener dateListener = new OnDateSetListener(){
-
+		
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {

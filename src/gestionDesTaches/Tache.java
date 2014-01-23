@@ -36,7 +36,7 @@ public class Tache {
 		this.nom = "Anonyme";
 		Calendar dateActuelle = Calendar.getInstance(); 			// initialise la date à la date actuel lors de la construction
 		this.date = new Date(dateActuelle.get(Calendar.YEAR), dateActuelle.get(Calendar.MONTH) + 1, 
-							 dateActuelle.get(Calendar.DAY_OF_MONTH), dateActuelle.get(Calendar.HOUR_OF_DAY), 
+							 dateActuelle.get(Calendar.DAY_OF_MONTH) + 1, dateActuelle.get(Calendar.HOUR_OF_DAY), 
 							 dateActuelle.get(Calendar.MINUTE));				
 		this.etat = false;
 		this.importance = 1;
