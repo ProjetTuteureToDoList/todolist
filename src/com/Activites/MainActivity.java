@@ -107,15 +107,19 @@ public class MainActivity extends Activity{
 	    
 	    	//vérification si une tâche à été créée sur l'activité AjoutAvanceTache
 	    int tacheAAjouter = getIntent().getIntExtra("ajout_avancee", -1);
-	    if(tacheAAjouter == 1)
-	    	lta.ajoutTacheAdapter(new Tache(getIntent().getStringExtra("nom"),
-	    									getIntent().getIntExtra("dateJour", 0),
-											getIntent().getIntExtra("dateMois", 0),
-											getIntent().getIntExtra("dateAnnee", 0),
-											getIntent().getIntExtra("dateHeure", 0),
-											getIntent().getIntExtra("dateMinute", 0),
-	    									getIntent().getIntExtra("importance", 0),
-	    									getIntent().getStringExtra("description")));
+	    if(tacheAAjouter == 1){
+	    	Tache t = new Tache(getIntent().getStringExtra("nom"),
+								getIntent().getIntExtra("dateJour", 0),
+								getIntent().getIntExtra("dateMois", 0),
+								getIntent().getIntExtra("dateAnnee", 0),
+								getIntent().getIntExtra("dateHeure", 0),
+								getIntent().getIntExtra("dateMinute", 0),
+								getIntent().getIntExtra("importance", 0),
+								getIntent().getStringExtra("description"));
+	    	t.setAnimation(true);
+	    	lta.ajoutTacheAdapter(t);
+	    }
+	    	
 	    
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);

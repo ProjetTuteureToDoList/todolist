@@ -104,19 +104,39 @@ public class AjoutAvanceTache extends Activity{
 					
 					if(nomDeTache.replace(" ", "").length() > 0){
 						Calendar dateActuelle = Calendar.getInstance();
-						Intent mainActivity = new Intent(AjoutAvanceTache.this, MainActivity.class);
-						Bundle donneesTache = new Bundle();
-						donneesTache.putInt("ajout_avancee", 1);
-						donneesTache.putString("nom", nomDeTache);
-						donneesTache.putString("description", details);
-						donneesTache.putInt("dateJour", jour);
-						donneesTache.putInt("dateMois", mois);
-						donneesTache.putInt("dateAnnee", annee);
-						donneesTache.putInt("dateHeure", heure);
-						donneesTache.putInt("dateMinute", minute);
-						donneesTache.putInt("importance", importance);
-						mainActivity.putExtras(donneesTache);
-						startActivity(mainActivity);
+						if(annee >= dateActuelle.get(Calendar.YEAR) || annee == -1){
+							if(mois >= dateActuelle.get(Calendar.MONTH) || mois == -1){
+								if(jour >= dateActuelle.get(Calendar.DAY_OF_MONTH) || jour == -1){
+									if(heure >= dateActuelle.get(Calendar.HOUR_OF_DAY) || heure == -1){
+										if(minute >= dateActuelle.get(Calendar.MINUTE) || minute == -1){
+											Intent mainActivity = new Intent(AjoutAvanceTache.this, MainActivity.class);
+											Bundle donneesTache = new Bundle();
+											donneesTache.putInt("ajout_avancee", 1);
+											donneesTache.putString("nom", nomDeTache);
+											donneesTache.putString("description", details);
+											donneesTache.putInt("dateJour", jour);
+											donneesTache.putInt("dateMois", mois);
+											donneesTache.putInt("dateAnnee", annee);
+											donneesTache.putInt("dateHeure", heure);
+											donneesTache.putInt("dateMinute", minute);
+											donneesTache.putInt("importance", importance);
+											mainActivity.putExtras(donneesTache);
+											startActivity(mainActivity);
+										}
+										else
+											Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : minutes", Toast.LENGTH_SHORT).show();	
+									}
+									else
+										Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : heures", Toast.LENGTH_SHORT).show();
+								}
+								else
+									Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : jour", Toast.LENGTH_SHORT).show();
+							}
+							else
+								Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : mois", Toast.LENGTH_SHORT).show();
+						}
+						else
+							Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : année", Toast.LENGTH_SHORT).show();
 					}
 					else
 						Toast.makeText(AjoutAvanceTache.this, "Votre tâche n'a pas de nom !", Toast.LENGTH_SHORT).show();

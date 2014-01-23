@@ -2,7 +2,7 @@ package gestionDesTags;
 
 public class Tag {
 	private String nom;			//	nom du tag
-	private String coul;			// 	couleur du tag
+	private String coul;		// 	couleur du tag
 	
 	public Tag(){
 		this.nom = "New Tag";
