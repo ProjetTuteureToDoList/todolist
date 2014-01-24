@@ -2,35 +2,46 @@ package gestionDesTags;
 
 public class Tag {
 	private String nom;			//	nom du tag
+	private int id;
 	private String coul;		// 	couleur du tag
+	static int idFinal = 0;
 	
 	public Tag(){
 		this.nom = "New Tag";
+		this.id = idFinal++;
 		this.coul = randomCoul();
 	}
 	
 	public Tag(String nom){
 		this.nom = nom;
+		this.id = idFinal++;
 		this.coul = randomCoul();
 	}
 	
 	public Tag(String nom, String coul){
 		this.nom = nom;
+		this.id = idFinal++;
 		this.coul = coul;
 	}
 	
 	
 	public String getNom() {
-		return nom;
+		return this.nom;
+	}
+	public int getId(){
+		return this.id;
+	}
+	public String getCoul() {
+		return this.coul;
+	}
+	public void setCoul(String coul) {
+		this.coul = coul;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public String getCoul() {
-		return coul;
-	}
-	public void setCoul(String coul) {
-		this.coul = coul;
+	public void setId(int id){
+		this.id = id;
 	}
 	
 	public String randomCoul(){
