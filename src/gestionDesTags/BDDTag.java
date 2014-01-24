@@ -8,13 +8,13 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-public class BDDTags extends SQLiteOpenHelper  {
+public class BDDTag extends SQLiteOpenHelper  {
 
 		
 		public static final String TAG_NAME = "Nom";
 		public static final String TAG_ID = "ID";
 		public static final String TAG_COULEUR = "Couleur";
-		public static final String TABLE_TAG_NAME = "Tache";
+		public static final String TABLE_TAG_NAME = "Tag";
 		
 		
 		public static final String TABLE_TAG_CREATE = "CREATE TAG" + TABLE_TAG_NAME + "(" +
@@ -25,7 +25,7 @@ public class BDDTags extends SQLiteOpenHelper  {
 		public static final String TABLE_TAG_DROP = "DROP TABLE IF EXISTS " + TABLE_TAG_NAME + ";";
 		
 		
-		public BDDTags(Context context, String name, CursorFactory factory,	int version) {
+		public BDDTag(Context context, String name, CursorFactory factory,	int version) {
 			super(context, name, factory, version);
 		}
 

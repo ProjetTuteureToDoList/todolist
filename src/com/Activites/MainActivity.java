@@ -201,7 +201,7 @@ public class MainActivity extends Activity{
 								case R.id.corbeille:
 									int nbTacheSelectionnees = 0;
 									for(int i = 0 ; i < lta.getCount() ; i++){
-							    		if(lta.getItem(i).getAfficheOption())
+							    		if(lta.getItem(i).getAfficheSelection())
 							    			nbTacheSelectionnees++;
 									}
 									
@@ -214,7 +214,7 @@ public class MainActivity extends Activity{
 									confirmationSuppr.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface dialog, int id){
 											for(int i = 0 ; i < lta.getCount() ; i++){
-									    		if(lta.getItem(i).getAfficheOption()){
+									    		if(lta.getItem(i).getAfficheSelection()){
 									    			lta.suppressionTacheAdapter(i);
 									    			i--;
 									    		}
@@ -301,7 +301,7 @@ public class MainActivity extends Activity{
 			}
 			else{
 				
-				if(!lta.getItem(position).getAfficheOption())
+				if(!lta.getItem(position).getAfficheSelection())
 		    		lta.getItem(position).setAfficheSelection(true);
 				else{
 		    		lta.getItem(position).setAfficheSelection(false);
@@ -318,7 +318,7 @@ public class MainActivity extends Activity{
 	private AdapterView.OnItemLongClickListener tacheLongListener = new AdapterView.OnItemLongClickListener() {
 		@Override
         public boolean onItemLongClick(AdapterView<?> arg0, View v, int position, long arg3) {
-			if(!lta.getItem(position).getAfficheOption()){
+			if(!lta.getItem(position).getAfficheSelection()){
 	    		lta.getItem(position).setAfficheSelection(true);
 				if(!modeSelection)
 					changerModeSelection();			

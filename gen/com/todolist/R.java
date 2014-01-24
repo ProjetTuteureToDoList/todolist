@@ -51,7 +51,7 @@ public final class R {
     }
     public static final class id {
         public static final int Creer=0x7f0a001a;
-        public static final int action_settings=0x7f0a0021;
+        public static final int action_settings=0x7f0a0022;
         public static final int allScreen=0x7f0a0000;
         public static final int bouton=0x7f0a000d;
         public static final int boutonDate=0x7f0a0010;
@@ -83,6 +83,7 @@ public final class R {
         public static final int principalLayout=0x7f0a000b;
         public static final int retour=0x7f0a0002;
         public static final int tache=0x7f0a001e;
+        public static final int tag=0x7f0a0021;
         public static final int titre=0x7f0a0004;
     }
     public static final class layout {
@@ -92,6 +93,7 @@ public final class R {
         public static final int menu=0x7f030003;
         public static final int tache_descriptif=0x7f030004;
         public static final int tache_page_principale=0x7f030005;
+        public static final int tag_gerer_tags=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f090000;

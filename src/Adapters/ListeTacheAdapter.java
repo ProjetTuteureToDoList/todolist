@@ -92,7 +92,7 @@ public class ListeTacheAdapter extends BaseAdapter{
 		ImageView caseCochee = (ImageView) layout.findViewById(R.id.caseCochee);
 		ImageView caseNonCochee = (ImageView) layout.findViewById(R.id.caseNonCochee);
 		if(isSelectionned()){
-			if(lt.getTabTache().get(position).getAfficheOption()){
+			if(lt.getTabTache().get(position).getAfficheSelection()){
 				caseCochee.setVisibility(0);
 				caseNonCochee.setVisibility(8);
 			}
@@ -140,7 +140,7 @@ public class ListeTacheAdapter extends BaseAdapter{
 		boolean result = false;
 		int i = 0;
 		while(i < this.getCount() && !result){
-			if(this.getItem(i).getAfficheOption())
+			if(this.getItem(i).getAfficheSelection())
 				result = true;
 			i++;
 		}

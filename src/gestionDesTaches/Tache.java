@@ -115,7 +115,7 @@ public class Tache {
 	public boolean getAnimation(){
 		return animation;
 	}
-	public boolean getAfficheOption(){
+	public boolean getAfficheSelection(){
 		return afficheSelection;
 	}
 	

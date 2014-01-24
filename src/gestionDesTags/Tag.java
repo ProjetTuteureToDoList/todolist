@@ -6,6 +6,8 @@ public class Tag {
 	private String coul;		// 	couleur du tag
 	static int idFinal = 0;
 	
+	private boolean afficheSelection; //permet de déterminer si la tache est en mode option ou non (affichage des icônes options après long clic)
+	
 	public Tag(){
 		this.nom = "New Tag";
 		this.id = idFinal++;
@@ -34,6 +36,10 @@ public class Tag {
 	public String getCoul() {
 		return this.coul;
 	}
+	public boolean getAfficheSelection(){
+		return afficheSelection;
+	}
+	
 	public void setCoul(String coul) {
 		this.coul = coul;
 	}
@@ -42,6 +48,9 @@ public class Tag {
 	}
 	public void setId(int id){
 		this.id = id;
+	}
+	public void setAfficheSelection(boolean option){
+		this.afficheSelection = option;
 	}
 	
 	public String randomCoul(){

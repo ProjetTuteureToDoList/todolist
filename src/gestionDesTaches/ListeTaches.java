@@ -41,15 +41,4 @@ public class ListeTaches {
 	public ArrayList<Tache> getTabTache(){
 		return tabTache;
 	}
-
-	
-	public String toutesLesTachesStr(){ //mets les tâches en string pour les afficher dans un seul TextView tout moche avec une anim toute moche
-		int i = 0;
-		String toutesLesTaches = new String();
-		while(i<compteurTache){
-			toutesLesTaches = toutesLesTaches + "\n\t" + tabTache.get(i).getNom();
-			i++;
-		}
-		return toutesLesTaches;
-	}
 }

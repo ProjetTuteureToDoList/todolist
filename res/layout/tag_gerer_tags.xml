@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <ImageView 
+        android:layout_height="fill_parent"
+        android:layout_width="10dip"
+        android:id="@id/couleur"
+        android:contentDescription="@string/text"
+        android:src="@drawable/vide"/>
+    
+    <TextView
+        android:layout_weight="1"
+   		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id = "@+id/tag"
+		android:text="@string/text"
+        android:textSize="20sp"
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp" >
+	</TextView>
+	
+     <ImageView
+	   		android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content" 
+	    	android:layout_gravity="clip_vertical"
+	    	android:layout_marginRight="8dp"
+	    	android:id="@+id/caseCochee"
+	    	android:contentDescription="@string/text"
+	    	android:src="@drawable/case_cochee" />
+     <ImageView
+	   		android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content" 
+	    	android:layout_gravity="clip_vertical"
+	    	android:layout_marginRight="8dp"
+	    	android:id="@+id/caseNonCochee"
+	    	android:contentDescription="@string/text"
+	    	android:src="@drawable/case_non_cochee" />
+		
+	
+
+</LinearLayout>
