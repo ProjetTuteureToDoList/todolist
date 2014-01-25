@@ -136,6 +136,10 @@ public class ListeTacheAdapter extends BaseAdapter{
 		lt.suppressionTache(position);
 	}
 	
+	public void modificationTacheAdapter(Tache t){
+		lt.modificationTache(t);
+	}
+	
 	public boolean isSelectionned(){
 		boolean result = false;
 		int i = 0;

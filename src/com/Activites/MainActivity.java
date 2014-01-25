@@ -280,6 +280,7 @@ public class MainActivity extends Activity{
 							lta.getItem(position).setEtat(true);
 						else
 							lta.getItem(position).setEtat(false);
+						lta.modificationTacheAdapter(lta.getItem(position));
 					}
 				}
 				else{

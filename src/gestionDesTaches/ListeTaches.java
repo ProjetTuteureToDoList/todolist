@@ -38,6 +38,10 @@ public class ListeTaches {
 		
 	}
 	
+	public void modificationTache(Tache t){
+		db.modifier(t);
+	}
+	
 	public ArrayList<Tache> getTabTache(){
 		return tabTache;
 	}
