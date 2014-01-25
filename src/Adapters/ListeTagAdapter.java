@@ -22,7 +22,7 @@ public class ListeTagAdapter extends BaseAdapter{
 	
 	public ListeTagAdapter(Context context){
 		this.listeContexte = context;
-		BDDTag db = new BDDTag(context, "Tache", null, 1);
+		BDDTag db = new BDDTag(context, "Tag", null, 1);
 		this.lt = new ListeTags(db);
 		this.mInflater = LayoutInflater.from(this.listeContexte);
 	}
@@ -89,7 +89,7 @@ public class ListeTagAdapter extends BaseAdapter{
 		return layout;	
 	}
 	
-	private boolean isSelectionned() {
+	public boolean isSelectionned() {
 		boolean result = false;
 		int i = 0;
 		while(i < this.getCount() && !result){

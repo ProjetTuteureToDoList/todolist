@@ -17,10 +17,10 @@ public class BDDTag extends SQLiteOpenHelper  {
 		public static final String TABLE_TAG_NAME = "Tag";
 		
 		
-		public static final String TABLE_TAG_CREATE = "CREATE TAG" + TABLE_TAG_NAME + "(" +
-															TAG_NAME + "TEXT NOT NULL, " + 
-															TAG_ID + "INTEGER NOT NULL, " +
-															TAG_COULEUR + "TEXT NOT NULL );";
+		public static final String TABLE_TAG_CREATE = "CREATE TABLE " + TABLE_TAG_NAME + "(" +
+															TAG_NAME + " TEXT NOT NULL, " + 
+															TAG_ID + " INTEGER NOT NULL, " +
+															TAG_COULEUR + " TEXT NOT NULL);";
 		
 		public static final String TABLE_TAG_DROP = "DROP TABLE IF EXISTS " + TABLE_TAG_NAME + ";";
 		

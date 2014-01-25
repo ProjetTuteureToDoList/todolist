@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -24,7 +25,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.util.Log;
 
 import com.chiralcode.colorpicker.ColorPickerDialog;
 import com.chiralcode.colorpicker.ColorPickerDialog.OnColorSelectedListener;
@@ -32,7 +32,7 @@ import com.todolist.R;
 
 public class GererTags extends Activity{
 	
-	private int couleur;
+	private int couleur = - 1;
 	
 	private ImageView couleurTag = null;
 	private Button ajouterTag = null;
@@ -81,6 +81,9 @@ public class GererTags extends Activity{
 		retour = (ImageView) findViewById(R.id.retour);
 		retour.setOnTouchListener(touchClick);		
 		
+		//Initialisation du layout allScreen
+		findViewById(R.id.allScreen).setOnClickListener(click);
+		
 	}
 	
 	private OnClickListener click = new OnClickListener(){
@@ -102,15 +105,23 @@ public class GererTags extends Activity{
 					
 				case R.id.bouton:
 					if(texteNomTag.getText().toString().replace(" ", "").length() > 0){
-						Log.e("coucou", Integer.toHexString(couleur));
-						lta.ajoutTagAdapter(new Tag(texteNomTag.getText().toString(), Integer.toHexString(couleur)));
+						if(couleur != -1)
+							lta.ajoutTagAdapter(new Tag(texteNomTag.getText().toString(), Integer.toHexString(couleur)));
+						else
+							lta.ajoutTagAdapter(new Tag(texteNomTag.getText().toString()));
+						
 						texteNomTag.setText(null);
-						actualiserListe();
 						texteNomTag.clearFocus();
 				    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				    	inputMethodManager.hideSoftInputFromWindow(texteNomTag.getWindowToken(), 0);
 				    	actualiserListe();
 					}
+					
+				case R.id.allScreen:
+			    	texteNomTag.clearFocus();	
+			    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			    	inputMethodManager.hideSoftInputFromWindow(texteNomTag.getWindowToken(), 0);
+			    	break;
 					
 				  
 			}
@@ -175,11 +186,18 @@ public class GererTags extends Activity{
 							    	break;
 							    	
 								case R.id.retour:
-							    	for(int i = 0 ; i < lta.getCount() ; i++)
-							    		lta.getItem(i).setAfficheSelection(false);
-							    	changerModeSelection();
+									if(modeSelection){
+								    	for(int i = 0 ; i < lta.getCount() ; i++)
+								    		lta.getItem(i).setAfficheSelection(false);
+								    	changerModeSelection();
+									}
+									else{
+										Intent mainActivity = new Intent(GererTags.this, MainActivity.class);
+										startActivity(mainActivity);
+									}
 							    	break;	
 							}
+							
 							actualiserListe();
 						}
 						break;
@@ -204,8 +222,16 @@ public class GererTags extends Activity{
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View v, int position,
 				long arg3) {
-			
-			
+			if(modeSelection){
+				if(!lta.getItem(position).getAfficheSelection())
+					lta.getItem(position).setAfficheSelection(true);
+				else{
+					lta.getItem(position).setAfficheSelection(false);
+					if(!lta.isSelectionned())
+						changerModeSelection();
+				}
+			}
+			actualiserListe();
 		}
 		
 	};
@@ -213,9 +239,21 @@ public class GererTags extends Activity{
 	private OnItemLongClickListener tagLongClick = new OnItemLongClickListener(){
 
 		@Override
-		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-				int arg2, long arg3) {
-			// TODO Auto-generated method stub
+		public boolean onItemLongClick(AdapterView<?> arg0, View v,
+				int position, long arg3) {
+			if(modeSelection){
+				if(!lta.getItem(position).getAfficheSelection())
+					lta.getItem(position).setAfficheSelection(true);
+				else{
+					lta.getItem(position).setAfficheSelection(false);
+					if(!lta.isSelectionned())
+						changerModeSelection();
+				}
+			}
+				
+			else
+				changerModeSelection();
+			actualiserListe();
 			return false;
 		}
 		
