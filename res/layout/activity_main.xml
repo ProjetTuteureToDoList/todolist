@@ -87,7 +87,7 @@
 			android:layout_height="fill_parent"
 			android:orientation="vertical"
 			android:id="@+id/menuLayout"
-			android:background="@drawable/border">
+			android:background="@drawable/border_left">
 			
 		    <ListView
 			   	android:layout_width="fill_parent"

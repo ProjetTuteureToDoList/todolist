@@ -99,6 +99,12 @@ public class GererTags extends Activity{
 				        	couleur = color;
 				            couleurTag.setBackgroundColor(couleur);
 				        }
+
+						@Override
+						public void onColorRefused() {
+							couleur = -1;
+							couleurTag.setBackgroundResource(R.drawable.border);
+						}
 					});
 					colorPickerDialog.show();
 					break;
@@ -110,6 +116,7 @@ public class GererTags extends Activity{
 						else
 							lta.ajoutTagAdapter(new Tag(texteNomTag.getText().toString()));
 						
+						couleurTag.setBackgroundResource(R.drawable.border);
 						texteNomTag.setText(null);
 						texteNomTag.clearFocus();
 				    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

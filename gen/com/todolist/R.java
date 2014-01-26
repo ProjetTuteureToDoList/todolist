@@ -36,18 +36,19 @@ public final class R {
     }
     public static final class drawable {
         public static final int border=0x7f020000;
-        public static final int case_cochee=0x7f020001;
-        public static final int case_non_cochee=0x7f020002;
-        public static final int croix_suppr=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int icone_alerte=0x7f020005;
-        public static final int icone_corbeille=0x7f020006;
-        public static final int icone_menu=0x7f020007;
-        public static final int icone_modif=0x7f020008;
-        public static final int icone_preference=0x7f020009;
-        public static final int icone_retour=0x7f02000a;
-        public static final int icone_tag=0x7f02000b;
-        public static final int vide=0x7f02000c;
+        public static final int border_left=0x7f020001;
+        public static final int case_cochee=0x7f020002;
+        public static final int case_non_cochee=0x7f020003;
+        public static final int croix_suppr=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int icone_alerte=0x7f020006;
+        public static final int icone_corbeille=0x7f020007;
+        public static final int icone_menu=0x7f020008;
+        public static final int icone_modif=0x7f020009;
+        public static final int icone_preference=0x7f02000a;
+        public static final int icone_retour=0x7f02000b;
+        public static final int icone_tag=0x7f02000c;
+        public static final int vide=0x7f02000d;
     }
     public static final class id {
         public static final int Creer=0x7f0a001a;

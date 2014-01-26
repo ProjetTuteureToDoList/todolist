@@ -84,7 +84,7 @@
 	        android:id = "@+id/couleur"
 	    	android:contentDescription="@string/text"
 	    	android:src="@drawable/vide"
-	    	android:background="@color/bleuSelection" />
+	    	android:background="@drawable/border" />
 	        
 	    
 	    <Button
