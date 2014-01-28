@@ -3,18 +3,23 @@ package com.Activites;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.AlertDialog.Builder;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -45,6 +50,7 @@ public class AjoutAvanceTache extends Activity{
 	TextView heureChoisie = null;
 	ImageView croixDate = null;
 	ImageView croixHeure = null;
+	ImageView boutonRetour = null;
 	
 	
 	@Override
@@ -89,6 +95,10 @@ public class AjoutAvanceTache extends Activity{
 		
 		//Initialisation Listener sur allScreen
 		findViewById(R.id.allScreen).setOnClickListener(click);
+		
+		//Initialisation bouton retour
+		boutonRetour  = (ImageView)  findViewById(R.id.retour);
+		boutonRetour.setOnTouchListener(touchClick);
 	}
 	
 	private OnClickListener click = new OnClickListener(){
@@ -256,5 +266,55 @@ public class AjoutAvanceTache extends Activity{
 			heureChoisie.setVisibility(View.VISIBLE);
 			croixHeure.setVisibility(View.VISIBLE);
 		}
+	
 	}
+	
+	private View.OnTouchListener touchClick = new OnTouchListener(){
+		boolean isInside = true;
+		float viewLargeur = 0;
+		float viewHauteur = 0;
+		
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			
+			if( v.getId() == R.id.retour){
+				switch(event.getAction()){
+					case MotionEvent.ACTION_DOWN:
+						viewLargeur = v.getRight() - v.getLeft();
+						viewHauteur = v.getBottom() - v.getTop();
+						v.setBackgroundResource(R.color.bleuSelection);
+						break;
+					case MotionEvent.ACTION_UP:
+						v.setBackgroundResource(R.color.bleu);
+						if(isInside){
+							switch(v.getId()){
+						
+								case R.id.retour:
+							    		Intent MainActivity = new Intent(
+												AjoutAvanceTache.this,
+												MainActivity.class);
+										startActivity(MainActivity);
+										break;
+
+							}
+						}
+						break;
+						
+					case MotionEvent.ACTION_MOVE:
+						if(event.getX() < viewLargeur && event.getY() < viewHauteur && event.getX() > 0 && event.getY() > 0)
+							isInside = true;
+						else
+							isInside = false;
+						break;
+				}
+				
+				return true;
+			}
+			else
+				return false;
+		}
+		
+	};
+	
+	
 }

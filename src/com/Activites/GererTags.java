@@ -100,11 +100,12 @@ public class GererTags extends Activity{
 				            couleurTag.setBackgroundColor(couleur);
 				        }
 
-						@Override
+		/*				@Override
 						public void onColorRefused() {
 							couleur = -1;
 							couleurTag.setBackgroundResource(R.drawable.border);
 						}
+		*/
 					});
 					colorPickerDialog.show();
 					break;
