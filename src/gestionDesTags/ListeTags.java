@@ -7,6 +7,12 @@ public class ListeTags {
 	private int compteurTag;
 	private BDDTag db;
 	
+	//constructeur pour listeTag d'une tâche
+	public ListeTags(){
+		compteurTag = 0;
+	}
+	
+	//constructeur pour listeTag complète
 	public ListeTags(BDDTag bdd){
 		compteurTag = bdd.getSize();
 		this.db = bdd;
@@ -18,10 +24,11 @@ public class ListeTags {
 		
 	}
 	
-	public void ajoutTag(Tag t){
+	public void ajoutTag(Tag t, boolean tache){
 		t.setId(compteurTag);
 		tabTag.add(t);
-		db.ajouter(t);
+		if(!tache)
+			db.ajouter(t);
 		compteurTag++;
 	}
 	

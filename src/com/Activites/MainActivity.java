@@ -1,6 +1,8 @@
 package com.Activites;
 
 import gestionDesTaches.Tache;
+import gestionDesTags.BDDTag;
+import gestionDesTags.ListeTags;
 import Adapters.ListeTacheAdapter;
 import Adapters.MenuAdapter;
 import Autres.OnSwipeTouchListener;
@@ -12,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +38,7 @@ public class MainActivity extends Activity{
 	Button boutonAjouter = null;		//la variable du bouton	"Ajouter !"		
 	EditText entreeText = null;			//enntrée de texte pour le rajout de tâche
 	ListeTacheAdapter lta = null;		//représente la listView adapté pour la ListeTache
+	ListeTags lTags = null;				//représente la liste des tags complète
 	LinearLayout allScreen = null;		//représente le layout englobant tout l'écran
 	ListView menu = null;				//représente la listView du menu après clic sur iconeMenu
 	LinearLayout menuLayout = null;		//représente le layout englobant le menu
@@ -138,6 +142,9 @@ public class MainActivity extends Activity{
 	    boutonAjouter = (Button) findViewById(R.id.bouton);
 	    boutonAjouter.setOnClickListener(petitClick);
 	    
+	    //Initialisation de la liste complètes des tags 
+	    lTags = new ListeTags(new BDDTag(this, "Tag", null, 1));
+	    
 	}
 
 	//////EVENEMENTS LISTENERS
@@ -148,6 +155,14 @@ public class MainActivity extends Activity{
 			switch(v.getId()) {
 			    case R.id.bouton:
 			    	if(entreeText.getText().toString().replace(" ", "").length() > 0){
+			    		//RAJOUT TEMPORAIRE
+				    	/*Tache t = new Tache(entreeText.getText().toString());
+				    	t.ajouterTag(lTags.getTabTag().get(0));
+				    	t.ajouterTag(lTags.getTabTag().get(1));
+				    	t.ajouterTag(lTags.getTabTag().get(2));
+				    	t.ajouterTag(lTags.getTabTag().get(3));
+				    	
+			    		lta.ajoutTacheAdapter(t);*/
 			    		lta.ajoutTacheAdapter(new Tache(entreeText.getText().toString()));
 				    	entreeText.setText(null);
 				    	entreeText.clearFocus();

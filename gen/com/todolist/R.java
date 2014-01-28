@@ -23,6 +23,7 @@ public final class R {
         public static final int bleu=0x7f050000;
         public static final int bleuSelection=0x7f050002;
         public static final int gris=0x7f050003;
+        public static final int noir=0x7f050004;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -52,7 +53,7 @@ public final class R {
     }
     public static final class id {
         public static final int Creer=0x7f0a001a;
-        public static final int action_settings=0x7f0a0022;
+        public static final int action_settings=0x7f0a0026;
         public static final int allScreen=0x7f0a0000;
         public static final int bouton=0x7f0a000d;
         public static final int boutonDate=0x7f0a0010;
@@ -84,7 +85,11 @@ public final class R {
         public static final int principalLayout=0x7f0a000b;
         public static final int retour=0x7f0a0002;
         public static final int tache=0x7f0a001e;
-        public static final int tag=0x7f0a0021;
+        public static final int tag=0x7f0a0025;
+        public static final int tag1=0x7f0a0021;
+        public static final int tag2=0x7f0a0022;
+        public static final int tag3=0x7f0a0023;
+        public static final int tag4=0x7f0a0024;
         public static final int titre=0x7f0a0004;
     }
     public static final class layout {

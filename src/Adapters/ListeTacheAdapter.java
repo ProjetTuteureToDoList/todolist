@@ -116,6 +116,36 @@ public class ListeTacheAdapter extends BaseAdapter{
 	 		tacheNom.setTextColor(Color.parseColor("#000000"));
 		}
 		
+		//Affichage des tags : 3 maxi
+		TextView tag1 = (TextView) layout.findViewById(R.id.tag1);
+		TextView tag2 = (TextView) layout.findViewById(R.id.tag2);
+		TextView tag3 = (TextView) layout.findViewById(R.id.tag3);
+		TextView tag4 = (TextView) layout.findViewById(R.id.tag4);
+	
+		tag1.setVisibility(View.GONE);
+		tag2.setVisibility(View.GONE);
+		tag3.setVisibility(View.GONE);
+		tag4.setVisibility(View.GONE);
+		
+		
+		if(lt.getTabTache().get(position).getListeTags().getTabTag().size() >= 1){
+			tag1.setVisibility(View.VISIBLE);
+			tag1.setBackgroundColor(Color.parseColor("#" + lt.getTabTache().get(position).getListeTags().getTabTag().get(0).getCoul()));
+			tag1.setText(lt.getTabTache().get(position).getListeTags().getTabTag().get(0).getNom());
+			if(lt.getTabTache().get(position).getListeTags().getTabTag().size() >= 2){
+				tag2.setVisibility(View.VISIBLE);
+				tag2.setBackgroundColor(Color.parseColor("#" + lt.getTabTache().get(position).getListeTags().getTabTag().get(1).getCoul()));
+				tag2.setText(lt.getTabTache().get(position).getListeTags().getTabTag().get(1).getNom());
+				if(lt.getTabTache().get(position).getListeTags().getTabTag().size() >= 3){
+					tag3.setVisibility(View.VISIBLE);
+					tag3.setBackgroundColor(Color.parseColor("#" + lt.getTabTache().get(position).getListeTags().getTabTag().get(2).getCoul()));
+					tag3.setText(lt.getTabTache().get(position).getListeTags().getTabTag().get(2).getNom());
+					if(lt.getTabTache().get(position).getListeTags().getTabTag().size() >= 4)
+						tag4.setVisibility(View.VISIBLE);
+				}
+			}
+		}
+		
 		return layout;	
 	}
 	

@@ -102,7 +102,7 @@ public class ListeTagAdapter extends BaseAdapter{
 	}
 
 	public void ajoutTagAdapter(Tag t){
-		lt.ajoutTag(t);
+		lt.ajoutTag(t, false);
 	}
 	
 	public void suppressionTagAdapter(int position){

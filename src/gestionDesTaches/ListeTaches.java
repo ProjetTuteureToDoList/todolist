@@ -1,5 +1,7 @@
 package gestionDesTaches;
 
+import gestionDesTags.ListeTags;
+
 import java.util.ArrayList;
 
 public class ListeTaches {
@@ -12,6 +14,7 @@ public class ListeTaches {
 		for(int i = 0 ; i < compteurTache ; i++){
 			Tache t = db.selectionner(i);
 			t.setAnimation(true);
+			t.setListeTags(new ListeTags());
 			tabTache.add(t);
 		}
 		this.db = db;

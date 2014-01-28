@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -57,6 +58,7 @@ public class GererTags extends Activity{
 		//Initialisation de l'ImageView représentant la couleur du tag
 		couleurTag = (ImageView) findViewById(R.id.couleur);
 		couleurTag.setOnClickListener(click);
+		couleurTag.setOnLongClickListener(longClick);
 		
 		//Initialisation du bouton pour l'ajout de tag
 		ajouterTag = (Button) findViewById(R.id.bouton);
@@ -99,13 +101,7 @@ public class GererTags extends Activity{
 				        	couleur = color;
 				            couleurTag.setBackgroundColor(couleur);
 				        }
-
-		/*				@Override
-						public void onColorRefused() {
-							couleur = -1;
-							couleurTag.setBackgroundResource(R.drawable.border);
-						}
-		*/
+				        
 					});
 					colorPickerDialog.show();
 					break;
@@ -134,6 +130,21 @@ public class GererTags extends Activity{
 				  
 			}
 
+		}
+		
+	};
+	
+	private OnLongClickListener longClick = new OnLongClickListener(){
+
+		@Override
+		public boolean onLongClick(View v) {
+			switch(v.getId()){
+				case R.id.couleur : 
+					couleur = -1;
+					couleurTag.setBackgroundResource(R.drawable.border);
+					break;
+			}
+			return true;
 		}
 		
 	};
@@ -259,10 +270,12 @@ public class GererTags extends Activity{
 				}
 			}
 				
-			else
+			else{
 				changerModeSelection();
+				lta.getItem(position).setAfficheSelection(true);
+			}
 			actualiserListe();
-			return false;
+			return true;
 		}
 		
 	};
@@ -276,6 +289,8 @@ public class GererTags extends Activity{
 		
 		if(modeSelection){
 			modeSelection = false;
+			for(int i = 0 ; i < lta.getCount() ; i++)
+				lta.getItem(i).setAfficheSelection(false);
 			suppr.setVisibility(View.GONE);
 			preference.startAnimation(animApparition);
 			preference.setVisibility(View.VISIBLE);
