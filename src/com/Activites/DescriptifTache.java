@@ -10,12 +10,24 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
 import com.todolist.R;
 
 public class DescriptifTache extends Activity {
-
+	
+	TextView nom = null;
+	TextView description = null;
+	TextView descriptionr = null ;
+	TextView date = null;
+	TextView dater = null; 
+	TextView etat = null;
+	TextView etatr = null;
+	TextView importancetext = null;
+	RatingBar importance = null;
 	ImageView retour = null;
 	ImageView modification = null;
 	ImageView suppr = null;
@@ -38,20 +50,29 @@ public class DescriptifTache extends Activity {
 		modification.setOnTouchListener(touchClick);
 		suppr.setOnTouchListener(touchClick);
 
-		TextView tache = (TextView) findViewById(R.id.tache);
-		tache.setText("Id: " + getIntent().getIntExtra("id", 1) + "\nNom: "
-				+ getIntent().getStringExtra("nom") + "\nDescription : "
-				+ getIntent().getStringExtra("description") + "\nDate : "
-				+ getIntent().getIntExtra("dateJour", 1) + "/"
-				+ getIntent().getIntExtra("dateMois", 1) + "/"
-				+ getIntent().getIntExtra("dateAnnee", 1970) + " à "
-				+ getIntent().getIntExtra("dateHeure", 0) + "h"
-				+ getIntent().getIntExtra("dateMinute", 0) + "\nPriorité : "
-				+ getIntent().getIntExtra("importance", 1) + "\nEtat : ");
+		String datecomplte=(String.valueOf(getIntent().getIntExtra("dateJour", 1)))+ "/" + (String.valueOf(getIntent().getIntExtra("dateMois", 1)))+ "/" +(String.valueOf(getIntent().getIntExtra("dateAnnee", 1970)))+ "  " + (String.valueOf(getIntent().getIntExtra("dateHeure", 0))) + " : "+ (String.valueOf(getIntent().getIntExtra("dateMinute", 0)));
+		
+		nom= (TextView) findViewById(R.id.nom);
+		nom.setText(getIntent().getStringExtra("nom"));
+		description = (TextView) findViewById(R.id.description);
+		description.setText("Description: ");
+		descriptionr = (TextView) findViewById(R.id.descriptionr);
+		descriptionr.setText(getIntent().getStringExtra("description"));
+		date = (TextView) findViewById(R.id.date);
+		date.setText("Date");
+		dater = (TextView) findViewById(R.id.dater);
+		dater.setText(datecomplte);
+		importancetext = (TextView) findViewById(R.id.importancetext);
+		importancetext.setText("Importance de la tâche");
+		importance= (RatingBar) findViewById(R.id.importance);
+		importance.setRating((float) ((getIntent().getIntExtra("importance", 0))*0.5));
+		etat = (TextView) findViewById(R.id.etat);
+		etat.setText("Etat: ");
+		etatr = (TextView) findViewById(R.id.etatr);
 		if (getIntent().getBooleanExtra("etat", true))
-			tache.setText(tache.getText() + "Fait");
+			etatr.setText("Fait");
 		else
-			tache.setText(tache.getText() + "Non fait");
+			etatr.setText("Non fait");
 
 	}
 

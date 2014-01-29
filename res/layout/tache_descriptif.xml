@@ -55,8 +55,63 @@
         android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
         android:text="@string/text" 
-        android:id="@+id/tache"	/>
-
+        android:gravity="center"
+        android:id="@+id/nom"	/>
+    <TextView
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:id="@+id/description"	/>
+    <TextView
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:id="@+id/descriptionr"	/>
+    <TextView
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:gravity="center"
+        android:id="@+id/date"	/>
+    <TextView
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:text="@string/text"
+        android:gravity="center" 
+        android:id="@+id/dater"	/>
+    
+  <LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:layout_marginTop="5dp"
+  		android:focusableInTouchMode="true" >
+    
+    <TextView
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:id="@+id/etat"	/>
+    <TextView
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:id="@+id/etatr"	/>
+    
+    </LinearLayout>
+     <TextView
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:gravity="center"
+        android:id="@+id/importancetext"	/>
+     <RatingBar
+        android:id="@+id/importance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" 
+        android:isIndicator="true"/>
+    
 
 
 
