@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
     
      
@@ -52,33 +52,43 @@
     </LinearLayout>
     
     <TextView
+        android:id="@+id/nom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:text="@string/text"
+        android:textSize="25sp"/>
+
+
+    <TextView
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:id="@+id/description"	
+        android:textSize="20sp"
+        android:paddingTop="50dp" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+        android:text="@string/text" 
+        android:id="@+id/descriptionr"/>
+    
+    <TextView
         android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
         android:text="@string/text" 
         android:gravity="center"
-        android:id="@+id/nom"	/>
-    <TextView
-        android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-        android:text="@string/text" 
-        android:id="@+id/description"	/>
-    <TextView
-        android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-        android:text="@string/text" 
-        android:id="@+id/descriptionr"	/>
-    <TextView
-        android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-        android:text="@string/text" 
-        android:gravity="center"
-        android:id="@+id/date"	/>
+        android:id="@+id/date"	
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
+    
     <TextView
         android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
         android:text="@string/text"
         android:gravity="center" 
-        android:id="@+id/dater"	/>
+        android:id="@+id/dater"/>
     
   <LinearLayout 
 	    android:layout_width="fill_parent"
@@ -91,7 +101,9 @@
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
         android:text="@string/text" 
-        android:id="@+id/etat"	/>
+        android:id="@+id/etat"	
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
     <TextView
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -104,7 +116,8 @@
 		android:layout_height="wrap_content"
         android:text="@string/text" 
         android:gravity="center"
-        android:id="@+id/importancetext"	/>
+        android:id="@+id/importancetext"	
+        android:textSize="25sp"/>
      <RatingBar
         android:id="@+id/importance"
         android:layout_width="wrap_content"
