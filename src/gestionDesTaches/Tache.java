@@ -6,6 +6,8 @@ import gestionDesTags.Tag;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.util.Log;
+
 
 
 public class Tache {
@@ -68,11 +70,11 @@ public class Tache {
 			this.hasHour = false;
 		else
 			this.hasHour = true;
-		
 		this.date = new Date(annee, mois, jour, heure, minute);
 		this.etat = false;
 		this.importance = importance;
 		this.description = description;	
+		this.lt = new ListeTags();
 	}
 	
 		// liste des méthodes:
