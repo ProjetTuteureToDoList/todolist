@@ -1,9 +1,9 @@
 package com.Activites;
 
 import gestionDesTaches.Tache;
-import gestionDesTags.BDDTag;
-import gestionDesTags.ListeTags;
+import android.util.Log;
 import Adapters.ListeTacheAdapter;
+import Adapters.ListeTagAdapter;
 import Adapters.MenuAdapter;
 import Autres.OnSwipeTouchListener;
 import android.app.Activity;
@@ -14,7 +14,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,11 +37,12 @@ public class MainActivity extends Activity{
 	Button boutonAjouter = null;		//la variable du bouton	"Ajouter !"		
 	EditText entreeText = null;			//enntrée de texte pour le rajout de tâche
 	ListeTacheAdapter lta = null;		//représente la listView adapté pour la ListeTache
-	ListeTags lTags = null;				//représente la liste des tags complète
+	ListeTagAdapter lTagsAdapter = null;//représente la lsite complète des tags
 	LinearLayout allScreen = null;		//représente le layout englobant tout l'écran
 	ListView menu = null;				//représente la listView du menu après clic sur iconeMenu
 	LinearLayout menuLayout = null;		//représente le layout englobant le menu
 	LinearLayout principalLayout = null;//représente le layout englobant la page principal hors menu
+	
 	
 	//Elément de la barre d'en haut
 	ImageView retour = null;
@@ -142,9 +142,8 @@ public class MainActivity extends Activity{
 	    boutonAjouter = (Button) findViewById(R.id.bouton);
 	    boutonAjouter.setOnClickListener(petitClick);
 	    
-	    //Initialisation de la liste complètes des tags 
-	    lTags = new ListeTags(new BDDTag(this, "Tag", null, 1));
-	    
+	    //Initialisation de l'adapter de la liste complète des tags
+	    lTagsAdapter = new ListeTagAdapter(this);
 	}
 
 	//////EVENEMENTS LISTENERS
@@ -155,14 +154,6 @@ public class MainActivity extends Activity{
 			switch(v.getId()) {
 			    case R.id.bouton:
 			    	if(entreeText.getText().toString().replace(" ", "").length() > 0){
-			    		//RAJOUT TEMPORAIRE
-				    	/*Tache t = new Tache(entreeText.getText().toString());
-				    	t.ajouterTag(lTags.getTabTag().get(0));
-				    	t.ajouterTag(lTags.getTabTag().get(1));
-				    	t.ajouterTag(lTags.getTabTag().get(2));
-				    	t.ajouterTag(lTags.getTabTag().get(3));
-				    	
-			    		lta.ajoutTacheAdapter(t);*/
 			    		lta.ajoutTacheAdapter(new Tache(entreeText.getText().toString()));
 				    	entreeText.setText(null);
 				    	entreeText.clearFocus();
@@ -252,12 +243,97 @@ public class MainActivity extends Activity{
 							    		lta.getItem(i).setAfficheSelection(false);
 							    	changerModeSelection();
 							    	actualiserHeader();	
+							    	actualiserListe();
 							    	break;	
 							    
 								case R.id.icone_tags:
+									ListView lv = new ListView(MainActivity.this);
+									lv.setAdapter(lTagsAdapter);
+									lv.setBackgroundColor(getResources().getColor(R.color.blanc));
+									
+									int nbTacheSelectionnes = 0, positionTache = -1;
+									
+									for(int i = 0 ; i < lta.getCount() ; i++){
+										if(lta.getItem(i).getAfficheSelection()){
+											nbTacheSelectionnes++;
+											positionTache = i;
+										}
+									}
+									
+									Log.e("nbTache " + String.valueOf(nbTacheSelectionnes), String.valueOf(positionTache));
+									
+									if(nbTacheSelectionnes == 1){
+										int nbTag = lta.getItem(positionTache).getListeTags().getTabTag().size();
+										for(int i = 0 ; i < nbTag ; i++){
+											for(int j = 0 ; j < lTagsAdapter.getCount() ; j++){
+												if(lTagsAdapter.getItem(j).getNom().equals(lta.getItem(positionTache).getListeTags().getTabTag().get(i).getNom())
+												 && lTagsAdapter.getItem(j).getCoul().equals(lta.getItem(positionTache).getListeTags().getTabTag().get(i).getCoul())){
+													lTagsAdapter.getItem(j).setAfficheSelection(true);
+												}
+											}
+										}
+										
+									}						
+								
+									
+									lv.setOnItemClickListener(new ListView.OnItemClickListener(){
+										@Override
+										public void onItemClick(
+											AdapterView<?> av, View v, int position, long arg3) {
+												if(lTagsAdapter.getItem(position).getAfficheSelection())
+													lTagsAdapter.getItem(position).setAfficheSelection(false);
+												else
+													lTagsAdapter.getItem(position).setAfficheSelection(true);
+												lTagsAdapter.notifyDataSetChanged();
+										}
+									});
+									
+									AlertDialog.Builder listeTags = new AlertDialog.Builder(MainActivity.this);
+									listeTags.setTitle("Choisissez le/les tags");
+									listeTags.setCancelable(false);
+									listeTags.setView(lv);
+									
+									listeTags.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+										@Override
+										public void onClick(
+											DialogInterface dialog, int position) {
+												for(int i = 0 ; i < lta.getCount() ; i++){
+													if(lta.getItem(i).getAfficheSelection()){
+														for(int j = 0 ; j < lTagsAdapter.getCount() ; j++){
+															if(lTagsAdapter.getItem(j).getAfficheSelection()){
+																lta.getItem(i).ajouterTag(lTagsAdapter.getItem(j));
+															}
+														}
+													}
+												}
+												
+												for(int i = 0 ; i < lTagsAdapter.getCount() ; i++){
+													lTagsAdapter.getItem(i).setAfficheSelection(false);
+												}
+												changerModeSelection();
+										    	actualiserHeader();
+										    	actualiserListe();
+										}
+									});
+									
+									listeTags.setNegativeButton("Annuler", new DialogInterface.OnClickListener(){
+										@Override
+										public void onClick(
+											DialogInterface dialog, int position) {
+												dialog.dismiss();
+												for(int i = 0 ; i < lTagsAdapter.getCount() ; i++){
+													lTagsAdapter.getItem(i).setAfficheSelection(false);
+												}
+												changerModeSelection();
+										    	actualiserHeader();
+										    	actualiserListe();
+										}
+									});
+									
+									listeTags.create().show();
 									break;
 							}
-							actualiserListe();
+							
 						}
 						break;
 						
@@ -399,6 +475,11 @@ public class MainActivity extends Activity{
 		
 		if(modeSelection){
 			modeSelection = false;
+			
+			for(int i = 0 ; i < lta.getCount() ; i++){
+				lta.getItem(i).setAfficheSelection(false);
+			}
+			
 			iconeMenu.startAnimation(animApparition);
 			preference.startAnimation(animApparition);
 			titre.startAnimation(animDecalageLR);

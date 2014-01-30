@@ -115,6 +115,7 @@ public class GererTags extends Activity{
 						
 						couleurTag.setBackgroundResource(R.drawable.border);
 						texteNomTag.setText(null);
+						couleur = -1;
 						texteNomTag.clearFocus();
 				    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				    	inputMethodManager.hideSoftInputFromWindow(texteNomTag.getWindowToken(), 0);

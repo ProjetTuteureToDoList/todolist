@@ -6,8 +6,6 @@ import gestionDesTags.Tag;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.util.Log;
-
 
 
 public class Tache {

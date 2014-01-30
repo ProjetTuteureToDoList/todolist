@@ -47,18 +47,18 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
 	    android:gravity="right"
-	    android:paddingRight="10dp" >
+	    android:paddingRight="25dp" >
 	     
 		<TextView 
 		       android:layout_width="wrap_content"
 		       android:layout_height="wrap_content"
-		       android:textSize="15sp"
+		       android:textSize="13sp"
 		       android:id="@+id/tag1"
 		       android:text="@string/text" 
-		       android:paddingTop="3dp"
-		       android:paddingBottom="3dp"
-		       android:paddingRight="10dp"
-		       android:paddingLeft="10dp"
+		       android:paddingTop="2dp"
+		       android:paddingBottom="2dp"
+		       android:paddingRight="8dp"
+		       android:paddingLeft="8dp"
 		/>
 		<TextView 
 		       android:layout_width="wrap_content"
@@ -74,24 +74,24 @@
 		<TextView 
 		       android:layout_width="wrap_content"
 		       android:layout_height="wrap_content"
-		       android:textSize="15sp"
+		       android:textSize="13sp"
 		       android:id="@+id/tag3"
 		       android:text="@string/text"
-		       android:paddingTop="5dp"
-		       android:paddingBottom="5dp"
+		       android:paddingTop="2dp"
+		       android:paddingBottom="2dp"
 		       android:paddingRight="8dp"
 		       android:paddingLeft="8dp"
 		 />
 		<TextView 
 		       android:layout_width="wrap_content"
 		       android:layout_height="wrap_content"
-		       android:textSize="15sp"
+		       android:textSize="13sp"
 		       android:id="@+id/tag4"
 		       android:text="..."
 		       android:textColor="@color/blanc"
 		       android:background="@color/noir"
-		       android:paddingTop="5dp"
-		       android:paddingBottom="5dp"
+		       android:paddingTop="2dp"
+		       android:paddingBottom="2dp"
 		       android:paddingRight="8dp"
 		       android:paddingLeft="8dp"
 		 />

@@ -45,7 +45,6 @@ public class ListeTagAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LinearLayout layout = null;
-
 		// Si la vue est recyclée, il contient déjà le bon layout, donc pas besoin de la recréer
 		// pour des soucis d'optimisation du processus
 		if(convertView != null)
