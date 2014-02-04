@@ -18,6 +18,7 @@ import com.todolist.R;
 
 public class DescriptifTache extends Activity {
 	
+	Boolean modif= false;
 	TextView nom = null;
 	TextView description = null;
 	TextView descriptionr = null ;
@@ -96,6 +97,21 @@ public class DescriptifTache extends Activity {
 					if (isInside) {
 						switch (v.getId()) {
 						case R.id.modification:
+							modif=true;
+							Intent ajoutAvanceTache = new Intent(DescriptifTache.this, AjoutAvanceTache.class);
+							Bundle modification = new Bundle();
+							modification.putInt("descriptif_tache_id", getIntent().getIntExtra("id", 1));
+							modification.putString("nom", getIntent().getStringExtra("nom"));
+							modification.putString("description",getIntent().getStringExtra("description"));
+							modification.putInt("dateJour", getIntent().getIntExtra("dateJour", 1));
+							modification.putInt("dateMois", getIntent().getIntExtra("dateMois", 1));
+							modification.putInt("dateAnnee", getIntent().getIntExtra("dateAnnee", 1));
+							modification.putInt("dateHeure", getIntent().getIntExtra("dateHeure", 1));
+							modification.putInt("dateMinute", getIntent().getIntExtra("dateMinute", 1));
+							modification.putInt("importance", (int) ((getIntent().getIntExtra("importance", 0))*0.5));
+							modification.putBoolean("etat", getIntent().getBooleanExtra("etat", true));
+							ajoutAvanceTache.putExtras(modification);
+							startActivity(ajoutAvanceTache);
 							
 							break;
 						case R.id.corbeille:
