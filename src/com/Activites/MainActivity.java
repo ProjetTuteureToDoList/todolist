@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -303,13 +302,13 @@ public class MainActivity extends Activity{
 												for(int i = 0 ; i < lta.getCount() ; i++){
 													if(lta.getItem(i).getAfficheSelection()){
 														for(int j = 0 ; j < lTagsAdapter.getCount() ; j++){
+															if(lTagsAdapter.getItem(j).getAfficheSelection() && 
+																	!lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId()))
+																lta.getItem(i).ajouterTag(lTagsAdapter.getItem(j));
 															if(!lTagsAdapter.getItem(j).getAfficheSelection() &&
 																	lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId()) &&
 																	nbTacheSelectionnes == 1)
 																lta.getItem(i).supprimerTag(lTagsAdapter.getItem(j).getId());
-															if(lTagsAdapter.getItem(j).getAfficheSelection() && 
-																	!lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId()))
-																lta.getItem(i).ajouterTag(lTagsAdapter.getItem(j));
 														}
 													}
 												}

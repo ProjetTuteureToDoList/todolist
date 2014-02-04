@@ -34,23 +34,22 @@ public class ListeTags {
 	}
 	
 	public void suppressionTag(int id, boolean tache){
-			int i = 0;
-			boolean suppr = false;
-			while(i < this.getTabTag().size() && !suppr){
-				if(this.getTabTag().get(i).getId() == id){
-					this.getTabTag().remove(i);
-					suppr = true;
-				}
+		int i = 0;
+		boolean suppr = false;
+		while(i < this.getTabTag().size() && !suppr){
+			if(tabTag.get(i).getId() == id){
+				tabTag.remove(i);
+				suppr = true;
 			}
-			tabTag.remove(id);	
-			compteurTag--;
-			if(!tache){
-				db.toutSupprimer();
-				for(i = 0 ; i < compteurTag ; i++){
-					tabTag.get(i).setId(i);
-					db.ajouter(tabTag.get(i));
-				}
-			}				
+		}
+		compteurTag--;
+		if(!tache){
+			db.toutSupprimer();
+			for(i = 0 ; i < compteurTag ; i++){
+				tabTag.get(i).setId(i);
+				db.ajouter(tabTag.get(i));
+			}
+		}				
 	}
 	
 	public ArrayList<Tag> getTabTag(){
