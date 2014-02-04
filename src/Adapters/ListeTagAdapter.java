@@ -105,7 +105,7 @@ public class ListeTagAdapter extends BaseAdapter{
 	}
 	
 	public void suppressionTagAdapter(int position){
-		lt.suppressionTag(position);
+		lt.suppressionTag(position, false);
 	}
 
 }

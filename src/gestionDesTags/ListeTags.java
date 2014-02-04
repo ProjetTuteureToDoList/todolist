@@ -25,28 +25,47 @@ public class ListeTags {
 	}
 	
 	public void ajoutTag(Tag t, boolean tache){
-		t.setId(compteurTag);
-		tabTag.add(t);
-		if(!tache)
+		if(!tache){
+			t.setId(compteurTag);
 			db.ajouter(t);
+		}
+		tabTag.add(t);
 		compteurTag++;
 	}
 	
-	public void suppressionTag(int position){		
-		if(tabTag.size() > position){
-			tabTag.remove(position);	
-			db.toutSupprimer();
-			compteurTag--;
-			for(int i = 0 ; i < compteurTag ; i++){
-				tabTag.get(i).setId(i);
-				db.ajouter(tabTag.get(i));
+	public void suppressionTag(int id, boolean tache){
+			int i = 0;
+			boolean suppr = false;
+			while(i < this.getTabTag().size() && !suppr){
+				if(this.getTabTag().get(i).getId() == id){
+					this.getTabTag().remove(i);
+					suppr = true;
+				}
 			}
-			
-		}
-		
+			tabTag.remove(id);	
+			compteurTag--;
+			if(!tache){
+				db.toutSupprimer();
+				for(i = 0 ; i < compteurTag ; i++){
+					tabTag.get(i).setId(i);
+					db.ajouter(tabTag.get(i));
+				}
+			}				
 	}
 	
 	public ArrayList<Tag> getTabTag(){
 		return tabTag;
+	}
+	
+	public boolean isInside(int id){
+		boolean result = false;
+		int i = 0;
+		while(i < this.getTabTag().size() && !result){
+			if(this.getTabTag().get(i).getId() == id)
+				result = true;
+			i++;
+		}
+		
+		return result;
 	}
 }

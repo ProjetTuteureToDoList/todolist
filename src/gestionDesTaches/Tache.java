@@ -89,6 +89,10 @@ public class Tache {
 	public void ajouterTag(Tag t){
 		this.lt.ajoutTag(t, true);
 	}
+	
+	public void supprimerTag(int id){
+		this.lt.suppressionTag(id, true);
+	}
 		
 		// liste des Getters
 	public String getNom() {

@@ -144,8 +144,7 @@ public class AjoutAvanceTache extends Activity{
 								else if (jour == dateActuelle.get(Calendar.DAY_OF_MONTH) || jour == -1 ){
 									if (heure > dateActuelle.get(Calendar.HOUR_OF_DAY)) thatBool = true;
 									else if (heure == dateActuelle.get(Calendar.HOUR_OF_DAY) || heure == -1){
-										if (minute >= dateActuelle.get(Calendar.MINUTE)|| minute == -1){
-										}
+										if (minute >= dateActuelle.get(Calendar.MINUTE)|| minute == -1) thatBool = true;										
 										else Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : minutes", Toast.LENGTH_SHORT).show();
 									}
 									else Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : heures", Toast.LENGTH_SHORT).show();

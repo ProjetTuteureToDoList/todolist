@@ -1,7 +1,6 @@
 package com.Activites;
 
 import gestionDesTaches.Tache;
-import android.util.Log;
 import Adapters.ListeTacheAdapter;
 import Adapters.ListeTagAdapter;
 import Adapters.MenuAdapter;
@@ -14,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -259,15 +259,12 @@ public class MainActivity extends Activity{
 											positionTache = i;
 										}
 									}
-									
-									Log.e("nbTache " + String.valueOf(nbTacheSelectionnes), String.valueOf(positionTache));
-									
+																		
 									if(nbTacheSelectionnes == 1){
 										int nbTag = lta.getItem(positionTache).getListeTags().getTabTag().size();
 										for(int i = 0 ; i < nbTag ; i++){
 											for(int j = 0 ; j < lTagsAdapter.getCount() ; j++){
-												if(lTagsAdapter.getItem(j).getNom().equals(lta.getItem(positionTache).getListeTags().getTabTag().get(i).getNom())
-												 && lTagsAdapter.getItem(j).getCoul().equals(lta.getItem(positionTache).getListeTags().getTabTag().get(i).getCoul())){
+												if(lTagsAdapter.getItem(j).getId() == lta.getItem(positionTache).getListeTags().getTabTag().get(i).getId()){
 													lTagsAdapter.getItem(j).setAfficheSelection(true);
 												}
 											}
@@ -297,12 +294,22 @@ public class MainActivity extends Activity{
 										@Override
 										public void onClick(
 											DialogInterface dialog, int position) {
+												int nbTacheSelectionnes = 0;
+												for(int i = 0 ; i < lta.getCount() ; i++){
+													if(lta.getItem(i).getAfficheSelection())
+														nbTacheSelectionnes++;
+												}
+												
 												for(int i = 0 ; i < lta.getCount() ; i++){
 													if(lta.getItem(i).getAfficheSelection()){
 														for(int j = 0 ; j < lTagsAdapter.getCount() ; j++){
-															if(lTagsAdapter.getItem(j).getAfficheSelection()){
+															if(!lTagsAdapter.getItem(j).getAfficheSelection() &&
+																	lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId()) &&
+																	nbTacheSelectionnes == 1)
+																lta.getItem(i).supprimerTag(lTagsAdapter.getItem(j).getId());
+															if(lTagsAdapter.getItem(j).getAfficheSelection() && 
+																	!lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId()))
 																lta.getItem(i).ajouterTag(lTagsAdapter.getItem(j));
-															}
 														}
 													}
 												}
