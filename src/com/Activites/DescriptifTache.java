@@ -17,13 +17,13 @@ import android.widget.TextView;
 import com.todolist.R;
 
 public class DescriptifTache extends Activity {
-	
-	Boolean modif= false;
+
+	Boolean modif = false;
 	TextView nom = null;
 	TextView description = null;
-	TextView descriptionr = null ;
+	TextView descriptionr = null;
 	TextView date = null;
-	TextView dater = null; 
+	TextView dater = null;
 	TextView etat = null;
 	TextView etatr = null;
 	TextView importancetext = null;
@@ -50,9 +50,18 @@ public class DescriptifTache extends Activity {
 		modification.setOnTouchListener(touchClick);
 		suppr.setOnTouchListener(touchClick);
 
-		String datecomplte=(String.valueOf(getIntent().getIntExtra("dateJour", 1)))+ "/" + (String.valueOf(getIntent().getIntExtra("dateMois", 1)))+ "/" +(String.valueOf(getIntent().getIntExtra("dateAnnee", 1970)))+ "  " + (String.valueOf(getIntent().getIntExtra("dateHeure", 0))) + " : "+ (String.valueOf(getIntent().getIntExtra("dateMinute", 0)));
-		
-		nom= (TextView) findViewById(R.id.nom);
+		String datecomplte = (String.valueOf(getIntent().getIntExtra(
+				"dateJour", 1)))
+				+ "/"
+				+ (String.valueOf(getIntent().getIntExtra("dateMois", 1)))
+				+ "/"
+				+ (String.valueOf(getIntent().getIntExtra("dateAnnee", 1970)))
+				+ "  "
+				+ (String.valueOf(getIntent().getIntExtra("dateHeure", 0)))
+				+ " : "
+				+ (String.valueOf(getIntent().getIntExtra("dateMinute", 0)));
+
+		nom = (TextView) findViewById(R.id.nom);
 		nom.setText(getIntent().getStringExtra("nom"));
 		description = (TextView) findViewById(R.id.description);
 		description.setText("Description: ");
@@ -64,8 +73,9 @@ public class DescriptifTache extends Activity {
 		dater.setText(datecomplte);
 		importancetext = (TextView) findViewById(R.id.importancetext);
 		importancetext.setText("Importance de la tâche");
-		importance= (RatingBar) findViewById(R.id.importance);
-		importance.setRating((float) ((getIntent().getIntExtra("importance", 0))*0.5));
+		importance = (RatingBar) findViewById(R.id.importance);
+		importance
+				.setRating((float) ((getIntent().getIntExtra("importance", 0)) * 0.5));
 		etat = (TextView) findViewById(R.id.etat);
 		etat.setText("Etat: ");
 		etatr = (TextView) findViewById(R.id.etatr);
@@ -97,23 +107,36 @@ public class DescriptifTache extends Activity {
 					if (isInside) {
 						switch (v.getId()) {
 						case R.id.modification:
-							modif=true;
-							Intent ajoutAvanceTache = new Intent(DescriptifTache.this, AjoutAvanceTache.class);
+							modif = true;
+							Intent ajoutAvanceTache = new Intent(
+									DescriptifTache.this,
+									AjoutAvanceTache.class);
 							Bundle modification = new Bundle();
-							modification.putBoolean("modif" , true);
-							modification.putInt("descriptif_tache_id", getIntent().getIntExtra("id", 1));
-							modification.putString("nom", getIntent().getStringExtra("nom"));
-							modification.putString("description",getIntent().getStringExtra("description"));
-							modification.putInt("dateJour", getIntent().getIntExtra("dateJour", 1));
-							modification.putInt("dateMois", getIntent().getIntExtra("dateMois", 1));
-							modification.putInt("dateAnnee", getIntent().getIntExtra("dateAnnee", 1));
-							modification.putInt("dateHeure", getIntent().getIntExtra("dateHeure", 1));
-							modification.putInt("dateMinute", getIntent().getIntExtra("dateMinute", 1));
-							modification.putInt("importance", (int) ((getIntent().getIntExtra("importance", 0))));
-							modification.putBoolean("etat", getIntent().getBooleanExtra("etat", true));
+							modification.putBoolean("modif", true);
+							modification.putInt("descriptif_tache_id",
+									getIntent().getIntExtra("id", 1));
+							modification.putString("nom", getIntent()
+									.getStringExtra("nom"));
+							modification.putString("description", getIntent()
+									.getStringExtra("description"));
+							modification.putInt("dateJour", getIntent()
+									.getIntExtra("dateJour", 1));
+							modification.putInt("dateMois", getIntent()
+									.getIntExtra("dateMois", 1));
+							modification.putInt("dateAnnee", getIntent()
+									.getIntExtra("dateAnnee", 1));
+							modification.putInt("dateHeure", getIntent()
+									.getIntExtra("dateHeure", 1));
+							modification.putInt("dateMinute", getIntent()
+									.getIntExtra("dateMinute", 1));
+							modification.putInt("importance",
+									(int) ((getIntent().getIntExtra(
+											"importance", 0))));
+							modification.putBoolean("etat", getIntent()
+									.getBooleanExtra("etat", true));
 							ajoutAvanceTache.putExtras(modification);
 							startActivity(ajoutAvanceTache);
-							
+
 							break;
 						case R.id.corbeille:
 
@@ -130,8 +153,10 @@ public class DescriptifTache extends Activity {
 													DescriptifTache.this,
 													MainActivity.class);
 											Bundle Idsuppr = new Bundle();
-											Idsuppr.putInt("descriptif_tache_id", getIntent()
-													.getIntExtra("id", 1));
+											Idsuppr.putInt(
+													"descriptif_tache_id",
+													getIntent().getIntExtra(
+															"id", 1));
 											MainActivity.putExtras(Idsuppr);
 											startActivity(MainActivity);
 										}
@@ -150,8 +175,7 @@ public class DescriptifTache extends Activity {
 
 						case R.id.retour:
 							Intent MainActivity = new Intent(
-									DescriptifTache.this,
-									MainActivity.class);
+									DescriptifTache.this, MainActivity.class);
 							startActivity(MainActivity);
 							break;
 
