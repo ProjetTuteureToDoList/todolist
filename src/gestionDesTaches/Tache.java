@@ -56,7 +56,7 @@ public class Tache {
 		this.lt = new ListeTags();
 		
 	}
-	// constructeur complet
+	// constructeur (presque) complet
 	public Tache(String nom, int jour, int mois, int annee, int heure, int minute, int importance, String description){
 		this.nom = nom;
 		
@@ -73,6 +73,26 @@ public class Tache {
 		this.importance = importance;
 		this.description = description;	
 		this.lt = new ListeTags();
+	}
+	
+	// constructeur complet
+	public Tache(int id, String nom, int jour, int mois, int annee, int heure, int minute, int importance, String description){
+		this.nom = nom;
+		
+		if(jour == -1)
+			this.hasDate = false;
+		else
+			this.hasDate = true;
+		if(heure == -1)
+			this.hasHour = false;
+		else
+			this.hasHour = true;
+		this.date = new Date(annee, mois, jour, heure, minute);
+		this.etat = false;
+		this.importance = importance;
+		this.description = description;	
+		this.lt = new ListeTags();
+		this.numTache = id;
 	}
 	
 		// liste des méthodes:
@@ -92,6 +112,30 @@ public class Tache {
 	
 	public void supprimerTag(int id){
 		this.lt.suppressionTag(id, true);
+	}
+	
+	public String writeTags(){
+		String tagsInString = new String();
+		for(int i = 0 ; i < lt.getTabTag().size() ; i++){
+			tagsInString.concat(" " + lt.getTabTag().get(i).getNom());
+		}
+		return tagsInString;
+	}
+	
+	public int [] readTags(String tagsInString){
+		int i = 0, indiceTab = 0;
+		int [] tabIdTag;
+		boolean finString = false;
+		String tag = "";
+		while(i < tagsInString.length() && !finString){
+			if(tagsInString.charAt(i) == ' ' || tagsInString.charAt(i) != '\n')	
+				tag.concat(String.valueOf(tagsInString.charAt(i)));
+			/*else if(tagsInString.charAt(i) == ' '){
+				tabIdTag[indiceTab++] = */
+			//}
+			i++;
+		}
+		return null;
 	}
 		
 		// liste des Getters
