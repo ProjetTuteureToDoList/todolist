@@ -24,6 +24,7 @@ public final class R {
         public static final int bleuSelection=0x7f050002;
         public static final int gris=0x7f050003;
         public static final int noir=0x7f050004;
+        public static final int vert=0x7f050005;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
