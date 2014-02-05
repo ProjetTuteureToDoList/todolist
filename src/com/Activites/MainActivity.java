@@ -132,8 +132,8 @@ public class MainActivity extends Activity{
 					getIntent().getIntExtra("dateHeure", 0),
 					getIntent().getIntExtra("dateMinute", 0),
 					getIntent().getIntExtra("importance", 0),
-					getIntent().getStringExtra("description"));
-	    			getIntent().getBooleanExtra("etat", false);
+					getIntent().getStringExtra("description"),
+	    			getIntent().getBooleanExtra("etat", false));
 	    	t.setAnimation(true);
 	    	lta.modificationTacheAdapter(t);
 	    	
