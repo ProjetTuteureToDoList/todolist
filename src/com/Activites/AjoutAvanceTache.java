@@ -160,13 +160,18 @@ public class AjoutAvanceTache extends Activity{
 						*/
 						
 						if (annee > dateActuelle.get(Calendar.YEAR)) thatBool = true;
-						 else if(annee == dateActuelle.get(Calendar.YEAR) || annee == -1){
-						 	if (mois > dateActuelle.get(Calendar.MONTH)) thatBool = true;
-							else if (mois == dateActuelle.get(Calendar.MONTH) || mois == -1){
-								if(jour > dateActuelle.get(Calendar.DAY_OF_MONTH)) thatBool = true;
-								else if (jour == dateActuelle.get(Calendar.DAY_OF_MONTH) || jour == -1 ){
+						 else if(annee == dateActuelle.get(Calendar.YEAR) || annee == -1)
+						 {
+						 	if (mois > dateActuelle.get(Calendar.MONTH) + 1) thatBool = true;
+							else if (mois == dateActuelle.get(Calendar.MONTH) + 1 || mois == -1)
+							{
+								if(jour > dateActuelle.get(Calendar.DAY_OF_MONTH)) thatBool = true;	
+								else if (jour == dateActuelle.get(Calendar.DAY_OF_MONTH) || jour == -1 )
+								{
+
 									if (heure > dateActuelle.get(Calendar.HOUR_OF_DAY)) thatBool = true;
-									else if (heure == dateActuelle.get(Calendar.HOUR_OF_DAY) || heure == -1){
+									else if (heure == dateActuelle.get(Calendar.HOUR_OF_DAY) || heure == -1)
+									{
 										if (minute >= dateActuelle.get(Calendar.MINUTE)|| minute == -1) thatBool = true;										
 										else Toast.makeText(AjoutAvanceTache.this, "Vous venez du passé ? Erreur : minutes", Toast.LENGTH_SHORT).show();
 									}
