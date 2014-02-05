@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -96,16 +97,38 @@ public class AjoutAvanceTache extends Activity{
 		//Initialisation bouton retour
 		boutonRetour  = (ImageView)  findViewById(R.id.retour);
 		boutonRetour.setOnTouchListener(touchClick);
+		
+		
+		if ((getIntent().getBooleanExtra("modif", false))==true){
+			boutonCreation.setText("Modifier");
+			EditText edittext_nom = (EditText)findViewById(R.id.nomDeTache);
+			edittext_nom.setText((getIntent().getStringExtra("nom")));
+			EditText edittext_details= (EditText)findViewById(R.id.detailTache);
+			edittext_details.setText((getIntent().getStringExtra("description")));
+			jour = getIntent().getIntExtra("dateJour", 1);
+			mois = getIntent().getIntExtra("dateMois", 1);;			//Les mois vont de 0 à 11 (+ 1)
+			annee = getIntent().getIntExtra("dateAnnee", 1970);
+			dateChoisie.setText("Date choisie : " + jour + "/" + mois + "/" + annee);
+			heure= getIntent().getIntExtra("dateHeure", 0);
+			minute= getIntent().getIntExtra("dateMinute" , 0);
+			heureChoisie.setText("Heure choisie : " + heure + "h" + minute);
+			changerVisibilityDateEtHeure();
+			
+			RatingBar importancer= (RatingBar) findViewById(R.id.importanceTache);
+			importancer.setRating((float) ((getIntent().getIntExtra("importance", 0))*0.5));
+			
+		}
 	}
 	
 	private OnClickListener click = new OnClickListener(){
 
 		@Override
-		public void onClick(View v) {
-
-			Calendar calender = Calendar.getInstance();
+	public void onClick(View v) {
+		Calendar calender = Calendar.getInstance();
+			
 			switch(v.getId()){
 				case R.id.Creer:
+					
 					nomDeTache = (((EditText) findViewById(R.id.nomDeTache)).getText()).toString();
 					details = (((EditText) findViewById(R.id.detailTache)).getText()).toString();
 					boolean thatBool = false;
@@ -158,11 +181,18 @@ public class AjoutAvanceTache extends Activity{
 					}		
 					else
 						Toast.makeText(AjoutAvanceTache.this, "Votre tâche n'a pas de nom !", Toast.LENGTH_SHORT).show();
-									
-				if (thatBool) {
+					
+					
+					if (thatBool) {
 					Intent mainActivity = new Intent(AjoutAvanceTache.this, MainActivity.class);
-					Bundle donneesTache = new Bundle();
-					donneesTache.putInt("ajout_avancee", 1);
+					Bundle donneesTache = new Bundle();					
+					if(getIntent().getBooleanExtra("modif", false)== true){	
+						donneesTache.putInt("modification", 1);
+						donneesTache.putInt("id", getIntent().getIntExtra("id", 1));
+					}
+					else{
+						donneesTache.putInt("ajout_avancee", 1);
+					}
 					donneesTache.putString("nom", nomDeTache);
 					donneesTache.putString("description", details);
 					donneesTache.putInt("dateJour", jour);

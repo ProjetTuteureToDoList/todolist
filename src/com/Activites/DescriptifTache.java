@@ -100,6 +100,7 @@ public class DescriptifTache extends Activity {
 							modif=true;
 							Intent ajoutAvanceTache = new Intent(DescriptifTache.this, AjoutAvanceTache.class);
 							Bundle modification = new Bundle();
+							modification.putBoolean("modif" , true);
 							modification.putInt("descriptif_tache_id", getIntent().getIntExtra("id", 1));
 							modification.putString("nom", getIntent().getStringExtra("nom"));
 							modification.putString("description",getIntent().getStringExtra("description"));
@@ -108,7 +109,7 @@ public class DescriptifTache extends Activity {
 							modification.putInt("dateAnnee", getIntent().getIntExtra("dateAnnee", 1));
 							modification.putInt("dateHeure", getIntent().getIntExtra("dateHeure", 1));
 							modification.putInt("dateMinute", getIntent().getIntExtra("dateMinute", 1));
-							modification.putInt("importance", (int) ((getIntent().getIntExtra("importance", 0))*0.5));
+							modification.putInt("importance", (int) ((getIntent().getIntExtra("importance", 0))));
 							modification.putBoolean("etat", getIntent().getBooleanExtra("etat", true));
 							ajoutAvanceTache.putExtras(modification);
 							startActivity(ajoutAvanceTache);
