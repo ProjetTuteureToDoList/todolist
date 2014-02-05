@@ -76,7 +76,7 @@ public class Tache {
 	}
 	
 	// constructeur complet
-	public Tache(int id, String nom, int jour, int mois, int annee, int heure, int minute, int importance, String description){
+	public Tache(int id, String nom, int jour, int mois, int annee, int heure, int minute, int importance, String description, boolean etat){
 		this.nom = nom;
 		
 		if(jour == -1)
@@ -93,6 +93,7 @@ public class Tache {
 		this.description = description;	
 		this.lt = new ListeTags();
 		this.numTache = id;
+		this.etat = etat;
 	}
 	
 		// liste des méthodes:
