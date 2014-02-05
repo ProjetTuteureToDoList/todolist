@@ -188,7 +188,7 @@ public class AjoutAvanceTache extends Activity{
 					Bundle donneesTache = new Bundle();					
 					if(getIntent().getBooleanExtra("modif", false)== true){	
 						donneesTache.putInt("modification", 1);
-						donneesTache.putInt("id", getIntent().getIntExtra("id", 1));
+						donneesTache.putInt("id", getIntent().getIntExtra("id", 0));
 					}
 					else{
 						donneesTache.putInt("ajout_avancee", 1);

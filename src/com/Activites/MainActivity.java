@@ -121,6 +121,19 @@ public class MainActivity extends Activity{
 								getIntent().getStringExtra("description"));
 	    	t.setAnimation(true);
 	    	lta.ajoutTacheAdapter(t);
+	    if(getIntent().getIntExtra("modification", -1)==1){
+	    	
+	    	t = new Tache(getIntent().getIntExtra("id", -1),
+	    			getIntent().getStringExtra("nom"),
+					getIntent().getIntExtra("dateJour", 0),
+					getIntent().getIntExtra("dateMois", 0),
+					getIntent().getIntExtra("dateAnnee", 0),
+					getIntent().getIntExtra("dateHeure", 0),
+					getIntent().getIntExtra("dateMinute", 0),
+					getIntent().getIntExtra("importance", 0),
+					getIntent().getStringExtra("description"));
+	    	
+	    }
 	    }
 	    	
 	    
