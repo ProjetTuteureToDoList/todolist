@@ -43,6 +43,7 @@ public class ListeTaches {
 	
 	public void modificationTache(Tache t){
 		db.modifier(t);
+		tabTache.set(t.getIdTache(), t);
 	}
 	
 	public ArrayList<Tache> getTabTache(){

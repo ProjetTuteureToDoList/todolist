@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -121,9 +122,9 @@ public class MainActivity extends Activity{
 								getIntent().getStringExtra("description"));
 	    	t.setAnimation(true);
 	    	lta.ajoutTacheAdapter(t);
+	    }
 	    if(getIntent().getIntExtra("modification", -1)==1){
-	    	
-	    	t = new Tache(getIntent().getIntExtra("id", -1),
+	    	Tache t = new Tache(getIntent().getIntExtra("id", -1),
 	    			getIntent().getStringExtra("nom"),
 					getIntent().getIntExtra("dateJour", 0),
 					getIntent().getIntExtra("dateMois", 0),
@@ -132,8 +133,10 @@ public class MainActivity extends Activity{
 					getIntent().getIntExtra("dateMinute", 0),
 					getIntent().getIntExtra("importance", 0),
 					getIntent().getStringExtra("description"));
+	    			getIntent().getBooleanExtra("etat", false);
+	    	t.setAnimation(true);
+	    	lta.modificationTacheAdapter(t);
 	    	
-	    }
 	    }
 	    	
 	    
