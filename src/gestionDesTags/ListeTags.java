@@ -35,13 +35,14 @@ public class ListeTags {
 	
 	public void suppressionTag(int id, boolean tache){
 		int i = 0;
-		boolean suppr = false;
-		while(i < this.getTabTag().size() && !suppr){
+		boolean find = false;
+		while(i < this.getTabTag().size() && !find){
 			if(tabTag.get(i).getId() == id){
-				tabTag.remove(i);
-				suppr = true;
+				find = true;
 			}
+			i++;
 		}
+		tabTag.remove(i - 1);
 		compteurTag--;
 		if(!tache){
 			db.toutSupprimer();
