@@ -20,6 +20,7 @@ public class BDDTache extends SQLiteOpenHelper {
 	public static final String TACHE_ETAT = "Etat";
 	public static final String TACHE_IMPORTANCE = "Importance";
 	public static final String TACHE_DESCRIPTION = "Description";
+	public static final String TACHE_LISTETAGS = "Liste_Tags";	
 	public static final String TABLE_TACHE_NAME = "Tache";
 	
 	public static final String TABLE_TACHE_CREATE = "CREATE TABLE " + TABLE_TACHE_NAME + "(" +
@@ -32,7 +33,8 @@ public class BDDTache extends SQLiteOpenHelper {
 														TACHE_DATE_MINUTE + " INTEGER NOT NULL, " +
 														TACHE_ETAT + " INTEGER NOT NULL DEFAULT 0, " +
 														TACHE_IMPORTANCE + " INTEGER NOT NULL DEFAULT 1, " +
-														TACHE_DESCRIPTION + " TEXT NOT NULL DEFAULT \"Pas de description\");";
+														TACHE_DESCRIPTION + " TEXT NOT NULL DEFAULT \"Pas de description\", " + 
+														TACHE_LISTETAGS + " TEXT NOT NULL)";
 	
 	public static final String TABLE_TACHE_DROP = "DROP TABLE IF EXISTS " + TABLE_TACHE_NAME + ";";
 
@@ -71,6 +73,7 @@ public class BDDTache extends SQLiteOpenHelper {
 
 		valeursTache.put(TACHE_IMPORTANCE, t.getImportance());
 		valeursTache.put(TACHE_DESCRIPTION, t.getDescription());
+		valeursTache.put(TACHE_LISTETAGS, t.getListeTagsString());
 		db.insert(TABLE_TACHE_NAME, null, valeursTache);
 		this.close();
 	}
@@ -105,6 +108,7 @@ public class BDDTache extends SQLiteOpenHelper {
 			valeursTache.put(TACHE_ETAT, 0);
 		valeursTache.put(TACHE_IMPORTANCE, t.getImportance());
 		valeursTache.put(TACHE_DESCRIPTION, t.getDescription());
+		valeursTache.put(TACHE_LISTETAGS, t.getListeTagsString());
 		
 		db.update(TABLE_TACHE_NAME, valeursTache, TACHE_ID + " = ?", new String[] {String.valueOf(t.getIdTache())});
 		db.close();
@@ -126,6 +130,7 @@ public class BDDTache extends SQLiteOpenHelper {
 				t.setEtat(false);
 			t.setIdTache(c.getInt(c.getColumnIndex(TACHE_ID)));
 			t.setImportance(c.getInt(c.getColumnIndex(TACHE_IMPORTANCE)));
+			t.setListeTagsString(c.getString(c.getColumnIndex(TACHE_LISTETAGS)));
 		}
 		
 		c.close();

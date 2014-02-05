@@ -1,5 +1,7 @@
 package com.Activites;
 
+import java.util.ArrayList;
+
 import gestionDesTaches.Tache;
 import Adapters.ListeTacheAdapter;
 import Adapters.ListeTagAdapter;
@@ -101,8 +103,21 @@ public class MainActivity extends Activity{
 		//Initialisation EditText pour la gestion les évenèments
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
 	    
+	    //Initialisation de l'adapter de la liste complète des tags
+	    lTagsAdapter = new ListeTagAdapter(this);
+	    
 	    //Liste des choses à faire, initialisation de la ListeTacheAdapter, liaison à une ListView
 	    lta = new ListeTacheAdapter(this);
+	    
+	    
+	    	//ajout des éventuels tags aux tâches
+	    for(int i = 0 ; i < lta.getCount() ; i++){
+	    	ArrayList<Integer> lTags = lta.getItem(i).readTags();
+	    	if(lTags.size() != 0){
+	    		for(int j = 0 ; j < lTags.size() ; j++)
+		    		lta.getItem(i).ajouterTag(lTagsAdapter.getItem(lTags.get(j)));
+	    	}
+	    }
 	    
 	    	//vérification si une tâche a été supprimé sur l'activité DescriptifTache
 	    int tacheASuppr = getIntent().getIntExtra("descriptif_tache_id", -1);
@@ -136,7 +151,6 @@ public class MainActivity extends Activity{
 	    			getIntent().getBooleanExtra("etat", false));
 	    	t.setAnimation(true);
 	    	lta.modificationTacheAdapter(t);
-	    	
 	    }
 	    	
 	    
@@ -156,9 +170,6 @@ public class MainActivity extends Activity{
 	    //Initialisation et gestion de l'évènement clic du bouton ajouter
 	    boutonAjouter = (Button) findViewById(R.id.bouton);
 	    boutonAjouter.setOnClickListener(petitClick);
-	    
-	    //Initialisation de l'adapter de la liste complète des tags
-	    lTagsAdapter = new ListeTagAdapter(this);
 	}
 
 	//////EVENEMENTS LISTENERS
@@ -317,15 +328,28 @@ public class MainActivity extends Activity{
 												
 												for(int i = 0 ; i < lta.getCount() ; i++){
 													if(lta.getItem(i).getAfficheSelection()){
+														boolean haveAModificationTag = false;
 														for(int j = 0 ; j < lTagsAdapter.getCount() ; j++){
+															
+															//cochage
 															if(lTagsAdapter.getItem(j).getAfficheSelection() && 
-																	!lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId()))
+																	!lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId())){
 																lta.getItem(i).ajouterTag(lTagsAdapter.getItem(j));
+																haveAModificationTag = true;
+															}
+															
+															//décochage
 															if(!lTagsAdapter.getItem(j).getAfficheSelection() &&
 																	lta.getItem(i).getListeTags().isInside(lTagsAdapter.getItem(j).getId()) &&
-																	nbTacheSelectionnes == 1)
+																	nbTacheSelectionnes == 1){
 																lta.getItem(i).supprimerTag(lTagsAdapter.getItem(j).getId());
+																haveAModificationTag = true;
+															}
+																
 														}
+														
+														if(haveAModificationTag)
+															lta.modificationTacheAdapter(lta.getItem(i));
 													}
 												}
 												

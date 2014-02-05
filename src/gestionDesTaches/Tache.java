@@ -6,7 +6,10 @@ import gestionDesTags.Tag;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.util.Log;
 
+
+import java.util.ArrayList;
 
 public class Tache {
 	private String nom;
@@ -22,7 +25,8 @@ public class Tache {
 	private boolean hasHour;		//indique si la tâche à une heure donnée ou non
 	
 	
-	private ListeTags lt;
+	private ListeTags lt;			//liste tags de la tâche
+	private String ltString;		//liste de tags de la tâche en string pour la BDDTâche
 	
 	private boolean animation; 		//permet de déterminer si elle a été animé ou non
 	private boolean afficheSelection; 	//permet de déterminer si la tache est en mode option ou non (affichage des icônes options après long clic)
@@ -39,6 +43,8 @@ public class Tache {
 		this.importance = 1;
 		this.description = "Pas de description";
 		this.animation = false;
+		this.lt = new ListeTags();
+		writeTags();
 	}
 	
 	// constructeur de tâche "rapide"
@@ -54,6 +60,7 @@ public class Tache {
 		this.importance = 1;
 		this.description = "Pas de description";
 		this.lt = new ListeTags();
+		writeTags();
 		
 	}
 	// constructeur (presque) complet
@@ -73,6 +80,7 @@ public class Tache {
 		this.importance = importance;
 		this.description = description;	
 		this.lt = new ListeTags();
+		writeTags();
 	}
 	
 	// constructeur complet
@@ -94,6 +102,7 @@ public class Tache {
 		this.lt = new ListeTags();
 		this.numTache = id;
 		this.etat = etat;
+		writeTags();
 	}
 	
 		// liste des méthodes:
@@ -102,41 +111,44 @@ public class Tache {
 		// sonnerie + élément visuel envoyés à l'utilisateur	
 	}
 	
-	public void valider(){
-		// permet de valider une tâche (passer de l'état non-fait à fait)
-		this.etat = true;
-	}
-	
 	public void ajouterTag(Tag t){
 		this.lt.ajoutTag(t, true);
+		writeTags();
 	}
 	
 	public void supprimerTag(int id){
 		this.lt.suppressionTag(id, true);
+		writeTags();
 	}
 	
-	public String writeTags(){
-		String tagsInString = new String();
-		for(int i = 0 ; i < lt.getTabTag().size() ; i++){
-			tagsInString.concat(" " + lt.getTabTag().get(i).getNom());
+	public void writeTags(){
+		ltString = "";
+		if(lt.getTabTag().size() > 0){
+			for(int i = 0 ; i < lt.getTabTag().size() ; i++)
+				ltString = ltString.concat(String.valueOf(lt.getTabTag().get(i).getId()) + "/");
+			
+			ltString = ltString.concat("\n");
 		}
-		return tagsInString;
 	}
 	
-	public int [] readTags(String tagsInString){
-		int i = 0, indiceTab = 0;
-		int [] tabIdTag;
+	public ArrayList<Integer> readTags(){
+		int i = 0;
+		ArrayList<Integer> tabIdTag = new ArrayList<Integer>();
 		boolean finString = false;
 		String tag = "";
-		while(i < tagsInString.length() && !finString){
-			if(tagsInString.charAt(i) == ' ' || tagsInString.charAt(i) != '\n')	
-				tag.concat(String.valueOf(tagsInString.charAt(i)));
-			/*else if(tagsInString.charAt(i) == ' '){
-				tabIdTag[indiceTab++] = */
-			//}
+		while(i < ltString.length() && !finString){
+			if(ltString.charAt(i) != '/' && ltString.charAt(i) != '\n')	{
+				tag = tag.concat(String.valueOf(ltString.charAt(i)));
+			}
+			if(ltString.charAt(i) == '/'){
+				tabIdTag.add(Integer.parseInt(tag));
+				tag = "";
+			}
+			if(ltString.charAt(i) == '\n')
+				finString = true;
 			i++;
 		}
-		return null;
+		return tabIdTag;
 	}
 		
 		// liste des Getters
@@ -173,6 +185,9 @@ public class Tache {
 	public ListeTags getListeTags(){
 		return lt;
 	}
+	public String getListeTagsString(){
+		return ltString;
+	}
 	
 		// liste des Setters
 	public void setNom(String nom) {
@@ -207,5 +222,8 @@ public class Tache {
 	}
 	public void setListeTags(ListeTags lt){
 		this.lt = lt;
+	}
+	public void setListeTagsString(String ltString){
+		this.ltString = ltString;
 	}
 }
