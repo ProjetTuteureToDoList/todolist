@@ -15,7 +15,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -426,6 +425,8 @@ public class MainActivity extends Activity{
 					donneesTache.putInt("id",lta.getItem(position).getIdTache());
 					donneesTache.putString("nom", lta.getItem(position).getNom());
 					donneesTache.putString("description", lta.getItem(position).getDescription());
+					donneesTache.putBoolean("hasDate", lta.getItem(position).getHasDate());
+					donneesTache.putBoolean("hasHeure", lta.getItem(position).getHasHour());
 					donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDate());
 					donneesTache.putInt("dateMois", lta.getItem(position).getDate().getMonth());
 					donneesTache.putInt("dateAnnee", lta.getItem(position).getDate().getYear());

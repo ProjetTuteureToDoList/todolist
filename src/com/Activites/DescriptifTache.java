@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -49,18 +50,26 @@ public class DescriptifTache extends Activity {
 		retour.setOnTouchListener(touchClick);
 		modification.setOnTouchListener(touchClick);
 		suppr.setOnTouchListener(touchClick);
-
-		String datecomplte = (String.valueOf(getIntent().getIntExtra(
-				"dateJour", 1)))
-				+ "/"
-				+ (String.valueOf(getIntent().getIntExtra("dateMois", 1)))
-				+ "/"
-				+ (String.valueOf(getIntent().getIntExtra("dateAnnee", 1970)))
-				+ "  "
-				+ (String.valueOf(getIntent().getIntExtra("dateHeure", 0)))
-				+ " : "
-				+ (String.valueOf(getIntent().getIntExtra("dateMinute", 0)));
-
+		
+		String datecomplte;
+		
+		Log.e(String.valueOf(getIntent().getBooleanExtra("hasDate", true)), String.valueOf(getIntent().getBooleanExtra("hasHour", true)));
+		
+		if(!getIntent().getBooleanExtra("hasDate", true))
+			datecomplte = "Tous les jours";
+		else
+			datecomplte = (String.valueOf(getIntent().getIntExtra(
+					"dateJour", 1)))
+					+ "/"
+					+ (String.valueOf(getIntent().getIntExtra("dateMois", 1)))
+					+ "/"
+					+ (String.valueOf(getIntent().getIntExtra("dateAnnee", 1970)));		
+		
+		if(getIntent().getBooleanExtra("hasHour", true))
+			datecomplte = datecomplte.concat(" à  " + (String.valueOf(getIntent().getIntExtra("dateHeure", 0)))
+					+ " : "	+ (String.valueOf(getIntent().getIntExtra("dateMinute", 0))));
+		
+		
 		nom = (TextView) findViewById(R.id.nom);
 		nom.setText(getIntent().getStringExtra("nom"));
 		description = (TextView) findViewById(R.id.description);
