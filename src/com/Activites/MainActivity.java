@@ -128,7 +128,7 @@ public class MainActivity extends Activity{
 	    	t.setAnimation(true);
 	    	lta.ajoutTacheAdapter(t);
 	    }
-	    if(getIntent().getIntExtra("modification", -1)==1){
+	    if(getIntent().getIntExtra("modification", -1) == 1){
 	    	Tache t = new Tache(getIntent().getIntExtra("id", -1),
 	    			getIntent().getStringExtra("nom"),
 					getIntent().getIntExtra("dateJour", 0),

@@ -203,7 +203,7 @@ public class AjoutAvanceTache extends Activity {
 					if (getIntent().getBooleanExtra("modif", false) == true) {
 						donneesTache.putInt("modification", 1);
 						donneesTache.putInt("id",
-								getIntent().getIntExtra("id", 0));
+								getIntent().getIntExtra("descriptif_tache_id", 0));
 						donneesTache.putBoolean("etat", getIntent()
 								.getBooleanExtra("etat", false));
 					} else {
