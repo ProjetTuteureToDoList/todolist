@@ -6,9 +6,6 @@ import gestionDesTags.Tag;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.util.Log;
-
-
 import java.util.ArrayList;
 
 public class Tache {
@@ -126,17 +123,14 @@ public class Tache {
 		if(lt.getTabTag().size() > 0){
 			for(int i = 0 ; i < lt.getTabTag().size() ; i++)
 				ltString = ltString.concat(String.valueOf(lt.getTabTag().get(i).getId()) + "/");
-			
-			ltString = ltString.concat("\n");
 		}
 	}
 	
 	public ArrayList<Integer> readTags(){
 		int i = 0;
 		ArrayList<Integer> tabIdTag = new ArrayList<Integer>();
-		boolean finString = false;
 		String tag = "";
-		while(i < ltString.length() && !finString){
+		while(i < ltString.length()){
 			if(ltString.charAt(i) != '/' && ltString.charAt(i) != '\n')	{
 				tag = tag.concat(String.valueOf(ltString.charAt(i)));
 			}
@@ -144,11 +138,17 @@ public class Tache {
 				tabIdTag.add(Integer.parseInt(tag));
 				tag = "";
 			}
-			if(ltString.charAt(i) == '\n')
-				finString = true;
 			i++;
 		}
 		return tabIdTag;
+	}
+	
+	public boolean contientTag(int id){
+		ArrayList<Integer>tabIdTag = readTags();
+		if(tabIdTag.contains((Integer) id))
+			return true;
+		else
+			return false;
 	}
 		
 		// liste des Getters

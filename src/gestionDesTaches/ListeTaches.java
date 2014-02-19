@@ -4,19 +4,22 @@ import gestionDesTags.ListeTags;
 
 import java.util.ArrayList;
 
-import android.util.Log;
 
 public class ListeTaches {
 	private ArrayList<Tache> tabTache = new ArrayList<Tache>();
 	private int compteurTache;
 	private BDDTache db;
 	
-	public ListeTaches(BDDTache db){
+	public ListeTaches(BDDTache db, ListeTags lTags){
 		compteurTache = db.getSize();
 		for(int i = 0 ; i < compteurTache ; i++){
 			Tache t = db.selectionner(i);
 			t.setAnimation(true);
-			t.setListeTags(new ListeTags());
+			ArrayList<Integer> tabTagId = t.readTags();
+			for(int id : tabTagId){
+				if(lTags.isInside(id))
+					t.ajouterTag(lTags.getTag(id));
+			}
 			tabTache.add(t);
 		}
 		this.db = db;
@@ -44,7 +47,6 @@ public class ListeTaches {
 	}
 	
 	public void modificationTache(Tache t){
-		Log.e("coucou2", t.getListeTagsString());
 		db.modifier(t);
 		tabTache.set(t.getIdTache(), t);
 	}

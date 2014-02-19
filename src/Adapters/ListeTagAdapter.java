@@ -14,16 +14,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import gestionDesTaches.*;
 
 public class ListeTagAdapter extends BaseAdapter{
 	LayoutInflater mInflater;
 	ListeTags lt = null;
+	ListeTaches lTaches = null;			//besoin d'instancier la liste de Tache en cas de suppression de tag, 
 	Context listeContexte;
 	
 	public ListeTagAdapter(Context context){
 		this.listeContexte = context;
 		BDDTag db = new BDDTag(context, "Tag", null, 1);
 		this.lt = new ListeTags(db);
+		this.lTaches = new ListeTaches(new BDDTache(context, "Tache", null, 1), lt);
 		this.mInflater = LayoutInflater.from(this.listeContexte);
 	}
 	
@@ -105,7 +108,18 @@ public class ListeTagAdapter extends BaseAdapter{
 	}
 	
 	public void suppressionTagAdapter(int position){
+		for(int i = 0 ; i < lTaches.getTabTache().size() ; i++){
+			if(lTaches.getTabTache().get(i).contientTag(lt.getTabTag().get(position).getId())){
+				lTaches.getTabTache().get(i).supprimerTag(lt.getTabTag().get(position).getId());
+				lTaches.modificationTache(lTaches.getTabTache().get(i));
+			}
+		}
+
 		lt.suppressionTag(position, false);
+	}
+	
+	public ListeTags getListeTag(){
+		return lt;
 	}
 
 }

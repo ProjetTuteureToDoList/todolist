@@ -2,6 +2,7 @@ package gestionDesTags;
 
 import java.util.ArrayList;
 
+
 public class ListeTags {
 	private ArrayList<Tag> tabTag = new ArrayList<Tag>();
 	private int compteurTag;
@@ -37,20 +38,19 @@ public class ListeTags {
 		int i = 0;
 		boolean find = false;
 		while(i < this.getTabTag().size() && !find){
-			if(tabTag.get(i).getId() == id){
+			if(tabTag.get(i).getId() == id)
 				find = true;
-			}
 			i++;
 		}
-		tabTag.remove(i - 1);
-		compteurTag--;
-		if(!tache){
-			db.toutSupprimer();
-			for(i = 0 ; i < compteurTag ; i++){
-				tabTag.get(i).setId(i);
-				db.ajouter(tabTag.get(i));
-			}
-		}				
+		if(find){
+			tabTag.remove(i - 1);
+			compteurTag--;
+			if(!tache){
+				db.toutSupprimer();
+				for(i = 0 ; i < compteurTag ; i++)
+					db.ajouter(tabTag.get(i));
+			}	
+		}
 	}
 	
 	public ArrayList<Tag> getTabTag(){
@@ -67,5 +67,19 @@ public class ListeTags {
 		}
 		
 		return result;
+	}
+	
+	public Tag getTag(int id){
+		Tag t = null;
+		int i = 0;
+		boolean find = false;
+		while(i < getTabTag().size() && !find){
+			if(getTabTag().get(i).getId() == id){
+				t = getTabTag().get(i);
+				find = true;
+			}
+			i++;
+		}
+		return t;
 	}
 }

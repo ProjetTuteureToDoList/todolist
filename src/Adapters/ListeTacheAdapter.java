@@ -3,6 +3,8 @@ package Adapters;
 import gestionDesTaches.BDDTache;
 import gestionDesTaches.ListeTaches;
 import gestionDesTaches.Tache;
+import gestionDesTags.BDDTag;
+import gestionDesTags.ListeTags;
 
 import com.todolist.R;
 
@@ -21,12 +23,14 @@ import android.widget.TextView;
 public class ListeTacheAdapter extends BaseAdapter{
 	LayoutInflater mInflater;
 	ListeTaches lt = null;
+	ListeTags lTags = null;
 	Context listeContexte;
 	
 	public ListeTacheAdapter(Context context){
 		this.listeContexte = context;
 		BDDTache db = new BDDTache(context, "Tache", null, 1);
-		this.lt = new ListeTaches(db);
+		lTags = new ListeTags(new BDDTag(context, "Tag", null, 1));
+		this.lt = new ListeTaches(db, lTags);
 		this.mInflater = LayoutInflater.from(this.listeContexte);
 	}
 	

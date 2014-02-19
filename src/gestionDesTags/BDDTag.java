@@ -77,16 +77,22 @@ public class BDDTag extends SQLiteOpenHelper  {
 			db.close();
 		}
 		
-		public Tag selectionner(int id){
+		public Tag selectionner(int position){
 			SQLiteDatabase db = this.getWritableDatabase();
-			Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TAG_NAME + " WHERE " + TAG_ID + " = ?", new String[]{String.valueOf(id)});
+			Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TAG_NAME, null);
 			Tag t = new Tag();
+			int i = 0;
 			
 			if(c.moveToNext()){
-				t.setNom(c.getString(c.getColumnIndex(TAG_NAME)));
-				t.setId(c.getInt(c.getColumnIndex(TAG_ID)));
-				t.setCoul(c.getString(c.getColumnIndex(TAG_COULEUR)));
+				while(i < position && c.moveToNext()){
+					i++;
+				}
 			}
+			
+			t.setNom(c.getString(c.getColumnIndex(TAG_NAME)));
+			t.setId(c.getInt(c.getColumnIndex(TAG_ID)));
+			t.setCoul(c.getString(c.getColumnIndex(TAG_COULEUR)));
+			
 			
 			c.close();
 			db.close();

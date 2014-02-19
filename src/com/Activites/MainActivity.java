@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -107,16 +108,6 @@ public class MainActivity extends Activity{
 	    
 	    //Liste des choses à faire, initialisation de la ListeTacheAdapter, liaison à une ListView
 	    lta = new ListeTacheAdapter(this);
-	    
-	    
-	    	//ajout des éventuels tags aux tâches
-	    for(int i = 0 ; i < lta.getCount() ; i++){
-	    	ArrayList<Integer> lTags = lta.getItem(i).readTags();
-	    	if(lTags.size() != 0){
-	    		for(int j = 0 ; j < lTags.size() ; j++)
-		    		lta.getItem(i).ajouterTag(lTagsAdapter.getItem(lTags.get(j)));
-	    	}
-	    }
 	    
 	    	//vérification si une tâche a été supprimé sur l'activité DescriptifTache
 	    int tacheASuppr = getIntent().getIntExtra("descriptif_tache_id", -1);
