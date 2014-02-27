@@ -1,7 +1,5 @@
 package com.Activites;
 
-import java.util.ArrayList;
-
 import gestionDesTaches.Tache;
 import Adapters.ListeTacheAdapter;
 import Adapters.ListeTagAdapter;
@@ -128,6 +126,7 @@ public class MainActivity extends Activity{
 	    	t.setAnimation(true);
 	    	lta.ajoutTacheAdapter(t);
 	    }
+	    	//vérification si une tâche à été modifié sur l'activité AjoutAvanceTache
 	    if(getIntent().getIntExtra("modification", -1) == 1){
 	    	Tache t = new Tache(getIntent().getIntExtra("id", -1),
 	    			getIntent().getStringExtra("nom"),
@@ -139,17 +138,20 @@ public class MainActivity extends Activity{
 					getIntent().getIntExtra("importance", 0),
 					getIntent().getStringExtra("description"),
 	    			getIntent().getBooleanExtra("etat", false));
+	    	t.setListeTagsString(getIntent().getStringExtra("listeTags"));
 	    	t.setAnimation(true);
 	    	lta.modificationTacheAdapter(t);
-	    }
+	    	Log.e("ListeTags", t.getListeTagsString());
 	    	
+	    }
+	    
 	    
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);
 	    checkList.setOnItemClickListener(tacheListener);
 	    checkList.setOnItemLongClickListener(tacheLongListener);
 	    checkList.setOnTouchListener(tacheSwipeListener);
-	    
+	   
 	    //Initialisation d'un LinearLayout représentant la totalité de l'écran
 	    allScreen = (LinearLayout) findViewById(R.id.allScreen);
 	    allScreen.setOnClickListener(petitClick);
@@ -425,6 +427,7 @@ public class MainActivity extends Activity{
 					donneesTache.putInt("dateMinute", lta.getItem(position).getDate().getMinutes());
 					donneesTache.putInt("importance", lta.getItem(position).getImportance());
 					donneesTache.putBoolean("etat", lta.getItem(position).getEtat());
+					donneesTache.putString("listeTags", lta.getItem(position).getListeTagsString());
 					descriptifTache.putExtras(donneesTache);
 					startActivity(descriptifTache);
 				}

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -52,8 +51,6 @@ public class DescriptifTache extends Activity {
 		suppr.setOnTouchListener(touchClick);
 		
 		String datecomplte;
-		
-		Log.e(String.valueOf(getIntent().getBooleanExtra("hasDate", true)), String.valueOf(getIntent().getBooleanExtra("hasHour", true)));
 		
 		if(!getIntent().getBooleanExtra("hasDate", true))
 			datecomplte = "Tous les jours";
@@ -143,6 +140,8 @@ public class DescriptifTache extends Activity {
 											"importance", 0))));
 							modification.putBoolean("etat", getIntent()
 									.getBooleanExtra("etat", true));
+							modification.putString("listeTags", getIntent()
+									.getStringExtra("listeTags"));
 							ajoutAvanceTache.putExtras(modification);
 							startActivity(ajoutAvanceTache);
 

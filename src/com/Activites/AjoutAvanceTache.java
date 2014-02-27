@@ -43,6 +43,7 @@ public class AjoutAvanceTache extends Activity {
 	Button boutonDate = null;
 	Button boutonHeure = null;
 	TextView importanceText = null;
+	String listeTags = null;
 
 	TextView dateChoisie = null;
 	TextView heureChoisie = null;
@@ -92,12 +93,15 @@ public class AjoutAvanceTache extends Activity {
 		croixHeure = (ImageView) findViewById(R.id.croixHeure);
 		croixDate.setOnClickListener(click);
 		croixHeure.setOnClickListener(click);
-
+		
 		changerVisibilityDateEtHeure();
 
 		// Initialisation Listener sur allScreen
 		findViewById(R.id.allScreen).setOnClickListener(click);
 
+		//Initialisation de la liste en String des tags de la tâche
+		listeTags = "";
+		
 		// Initialisation bouton retour
 		boutonRetour = (ImageView) findViewById(R.id.retour);
 		boutonRetour.setOnTouchListener(touchClick);
@@ -123,6 +127,8 @@ public class AjoutAvanceTache extends Activity {
 			RatingBar importancer = (RatingBar) findViewById(R.id.importanceTache);
 			importancer.setRating((float) ((getIntent().getIntExtra(
 					"importance", 0)) * 0.5));
+			
+			listeTags = getIntent().getStringExtra("listeTags");
 
 		}
 	}
@@ -217,6 +223,7 @@ public class AjoutAvanceTache extends Activity {
 					donneesTache.putInt("dateHeure", heure);
 					donneesTache.putInt("dateMinute", minute);
 					donneesTache.putInt("importance", importance);
+					donneesTache.putString("listeTags", listeTags);
 					mainActivity.putExtras(donneesTache);
 					startActivity(mainActivity);
 				}

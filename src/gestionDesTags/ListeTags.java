@@ -2,6 +2,8 @@ package gestionDesTags;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 
 public class ListeTags {
 	private ArrayList<Tag> tabTag = new ArrayList<Tag>();
@@ -40,10 +42,15 @@ public class ListeTags {
 		while(i < this.getTabTag().size() && !find){
 			if(tabTag.get(i).getId() == id)
 				find = true;
-			i++;
+			else
+				i++;
 		}
 		if(find){
-			tabTag.remove(i - 1);
+			if(tache)
+				Log.e("ListeTags", "Suppression tag id " + String.valueOf(id) + " et position " + String.valueOf(i) + " dans tâche");
+			else
+				Log.e("ListeTags", "Suppression tag id " + String.valueOf(id) + " et position " + String.valueOf(i) + " dans la liste complète");
+			tabTag.remove(i);
 			compteurTag--;
 			if(!tache){
 				db.toutSupprimer();

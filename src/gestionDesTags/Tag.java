@@ -1,5 +1,7 @@
 package gestionDesTags;
 
+import android.util.Log;
+
 public class Tag {
 	private String nom;			//	nom du tag
 	private int id;
@@ -18,12 +20,14 @@ public class Tag {
 		this.nom = nom;
 		this.id = idFinal++;
 		this.coul = randomCoul();
+		Log.e("New Tag", "Nom : " + nom + " Coul : " + coul + " id : " + String.valueOf(id));
 	}
 	
 	public Tag(String nom, String coul){
 		this.nom = nom;
 		this.id = idFinal++;
 		this.coul = coul;
+		Log.e("New Tag", "Nom : " + nom + " Coul : " + coul + " id : " + String.valueOf(id));
 	}
 	
 	
@@ -55,7 +59,7 @@ public class Tag {
 	
 	public String randomCoul(){
 		String random = new String();
-		char tmp =' ';
+		char tmp = ' ';
 		int temp;
 		for (int i = 0; i<6 ; i++){
 			temp = (int) (Math.random() * 16);

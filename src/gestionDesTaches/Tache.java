@@ -5,8 +5,9 @@ import gestionDesTags.Tag;
 
 import java.util.Calendar;
 import java.util.Date;
-
 import java.util.ArrayList;
+
+import android.util.Log;
 
 public class Tache {
 	private String nom;
@@ -114,6 +115,7 @@ public class Tache {
 	}
 	
 	public void supprimerTag(int id){
+		Log.e("Tache", "Suppression tag pour tache id " + String.valueOf(id) + " et nom " + nom);
 		this.lt.suppressionTag(id, true);
 		writeTags();
 	}
@@ -124,6 +126,7 @@ public class Tache {
 			for(int i = 0 ; i < lt.getTabTag().size() ; i++)
 				ltString = ltString.concat(String.valueOf(lt.getTabTag().get(i).getId()) + "/");
 		}
+		Log.e("Tache", "writeTags après suppression, résultat : " + ltString);
 	}
 	
 	public ArrayList<Integer> readTags(){
@@ -225,5 +228,6 @@ public class Tache {
 	}
 	public void setListeTagsString(String ltString){
 		this.ltString = ltString;
+		writeTags();
 	}
 }

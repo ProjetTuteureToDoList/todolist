@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -189,6 +190,7 @@ public class GererTags extends Activity{
 										public void onClick(DialogInterface dialog, int id){
 											for(int i = 0 ; i < lta.getCount() ; i++){
 									    		if(lta.getItem(i).getAfficheSelection()){
+									    			Log.e("GérerTags", "Suppression du tag position " + String.valueOf(i));
 									    			lta.suppressionTagAdapter(i);
 									    			i--;
 									    		}
@@ -243,8 +245,10 @@ public class GererTags extends Activity{
 		public void onItemClick(AdapterView<?> arg0, View v, int position,
 				long arg3) {
 			if(modeSelection){
-				if(!lta.getItem(position).getAfficheSelection())
+				if(!lta.getItem(position).getAfficheSelection()){
 					lta.getItem(position).setAfficheSelection(true);
+					Log.e("GérerTags", "item selectionné " + String.valueOf(position));
+				}
 				else{
 					lta.getItem(position).setAfficheSelection(false);
 					if(!lta.isSelectionned())
