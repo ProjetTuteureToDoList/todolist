@@ -140,7 +140,7 @@ public class MainActivity extends Activity{
 	    			getIntent().getBooleanExtra("etat", false));
 	    	t.setListeTagsString(getIntent().getStringExtra("listeTags"));
 	    	t.setAnimation(true);
-	    	lta.modificationTacheAdapter(t);
+	    	lta.modificationTacheAdapter(t, lta.findPositionWithId(t.getIdTache()));
 	    	Log.e("ListeTags", t.getListeTagsString());
 	    	
 	    }
@@ -341,7 +341,7 @@ public class MainActivity extends Activity{
 														}
 														
 														if(haveAModificationTag)
-															lta.modificationTacheAdapter(lta.getItem(i));
+															lta.modificationTacheAdapter(lta.getItem(i), i);
 													}
 												}
 												
@@ -409,7 +409,7 @@ public class MainActivity extends Activity{
 							lta.getItem(position).setEtat(true);
 						else
 							lta.getItem(position).setEtat(false);
-						lta.modificationTacheAdapter(lta.getItem(position));
+						lta.modificationTacheAdapter(lta.getItem(position), position);
 					}
 				}
 				else{

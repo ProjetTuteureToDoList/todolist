@@ -4,7 +4,6 @@ import gestionDesTags.ListeTags;
 
 import java.util.ArrayList;
 
-import android.util.Log;
 
 
 public class ListeTaches {
@@ -48,10 +47,9 @@ public class ListeTaches {
 		
 	}
 	
-	public void modificationTache(Tache t){
-		Log.e("ListeTache", "Modification tache id "  + String.valueOf(t.getIdTache()));
+	public void modificationTache(Tache t, int position){
 		db.modifier(t);
-		tabTache.set(t.getIdTache(), t);
+		tabTache.set(position, t);
 	}
 	
 	public ArrayList<Tache> getTabTache(){

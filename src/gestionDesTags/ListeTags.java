@@ -2,7 +2,6 @@ package gestionDesTags;
 
 import java.util.ArrayList;
 
-import android.util.Log;
 
 
 public class ListeTags {
@@ -28,15 +27,22 @@ public class ListeTags {
 	}
 	
 	public void ajoutTag(Tag t, boolean tache){
-		if(!tache){
-			t.setId(compteurTag);
+		if(!tache)
 			db.ajouter(t);
-		}
 		tabTag.add(t);
 		compteurTag++;
 	}
 	
-	public void suppressionTag(int id, boolean tache){
+	public void suppressionTagByPosition(int position){
+		tabTag.remove(position);
+		compteurTag--;
+		db.toutSupprimer();
+		for(int i = 0 ; i < compteurTag ; i++)
+			db.ajouter(tabTag.get(i));
+				
+	}
+	
+	public void suppressionTagById(int id){
 		int i = 0;
 		boolean find = false;
 		while(i < this.getTabTag().size() && !find){
@@ -46,17 +52,8 @@ public class ListeTags {
 				i++;
 		}
 		if(find){
-			if(tache)
-				Log.e("ListeTags", "Suppression tag id " + String.valueOf(id) + " et position " + String.valueOf(i) + " dans tâche");
-			else
-				Log.e("ListeTags", "Suppression tag id " + String.valueOf(id) + " et position " + String.valueOf(i) + " dans la liste complète");
 			tabTag.remove(i);
 			compteurTag--;
-			if(!tache){
-				db.toutSupprimer();
-				for(i = 0 ; i < compteurTag ; i++)
-					db.ajouter(tabTag.get(i));
-			}	
 		}
 	}
 	

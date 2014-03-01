@@ -7,7 +7,6 @@ import gestionDesTags.ListeTags;
 import gestionDesTags.Tag;
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,18 +110,12 @@ public class ListeTagAdapter extends BaseAdapter{
 	public void suppressionTagAdapter(int position){
 		for(int i = 0 ; i < lTaches.getTabTache().size() ; i++){
 			if(lTaches.getTabTache().get(i).contientTag(lt.getTabTag().get(position).getId())){
-				Log.e("ListeTagAdapter", "Suppresion tag position " + String.valueOf(position) + " et id " + String.valueOf(lt.getTabTag().get(position).getId()) 
-						+ "pour tache position " + String.valueOf(i));
 				lTaches.getTabTache().get(i).supprimerTag(lt.getTabTag().get(position).getId());
-				Log.e("ListeTagAdapter", "Modification tache BDD après suppression des tags qu'il contenait pour tache position " + String.valueOf(i));
-				lTaches.modificationTache(lTaches.getTabTache().get(i));
+				lTaches.modificationTache(lTaches.getTabTache().get(i), i);
 			}
 		}
 		
-
-		Log.e("ListeTagAdapter", "Suppression du tag dans la liste de tag, tag position " + String.valueOf(position) + " et id " 
-		+ String.valueOf(lt.getTabTag().get(position).getId()));
-		lt.suppressionTag(lt.getTabTag().get(position).getId(), false);
+		lt.suppressionTagByPosition(position);
 	}
 	
 	public ListeTags getListeTag(){

@@ -173,8 +173,8 @@ public class ListeTacheAdapter extends BaseAdapter{
 		lt.suppressionTache(position);
 	}
 	
-	public void modificationTacheAdapter(Tache t){
-		lt.modificationTache(t);
+	public void modificationTacheAdapter(Tache t, int position){
+		lt.modificationTache(t, position);
 	}
 	
 	public boolean isSelectionned(){
@@ -196,5 +196,21 @@ public class ListeTacheAdapter extends BaseAdapter{
 			return "000000";
 		else
 			return "FFFFFF";
+	}
+	
+	public int findPositionWithId(int id){
+		int i = 0;
+		boolean find = false;
+		while(!find && i < lt.getTabTache().size()){
+			if(lt.getTabTache().get(i).getIdTache() == id)
+				find = true;
+			else
+				i++;
+		}
+		
+		if(!find)
+			return -1;
+		else
+			return i;
 	}
 }

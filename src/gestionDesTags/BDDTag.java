@@ -60,9 +60,13 @@ public class BDDTag extends SQLiteOpenHelper  {
 		}
 		
 		public void toutSupprimer(){
-			int tailleBDD = this.getSize();
-			for(int i = 0 ; i < tailleBDD ; i++)
-				supprimer(i);
+			SQLiteDatabase db = this.getWritableDatabase();
+			Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TAG_NAME, null);
+			while(c.moveToNext()){
+				supprimer(c.getInt(c.getColumnIndex(TAG_ID)));
+			}
+			c.close();
+			db.close();
 		}
 		
 		public void modifier(Tag t){					

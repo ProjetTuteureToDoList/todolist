@@ -85,9 +85,13 @@ public class BDDTache extends SQLiteOpenHelper {
 	}
 	
 	public void toutSupprimer(){
-		int tailleBDD = this.getSize();
-		for(int i = 0 ; i < tailleBDD ; i++)
-			supprimer(i);
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TACHE_NAME, null);
+		while(c.moveToNext()){
+			supprimer(c.getInt(c.getColumnIndex(TACHE_ID)));
+		}
+		c.close();
+		db.close();
 	}
 	
 	public void modifier(Tache t){					
