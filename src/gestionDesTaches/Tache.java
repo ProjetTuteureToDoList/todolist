@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
-import android.util.Log;
 
 public class Tache {
 	private String nom;
@@ -125,7 +124,6 @@ public class Tache {
 			for(int i = 0 ; i < lt.getTabTag().size() ; i++)
 				ltString = ltString.concat(String.valueOf(lt.getTabTag().get(i).getId()) + "/");
 		}
-		Log.e("Tache", "writeTags, résultat : " + ltString);
 	}
 	
 	public ArrayList<Integer> readTags(){
@@ -227,6 +225,5 @@ public class Tache {
 	}
 	public void setListeTagsString(String ltString){
 		this.ltString = ltString;
-		writeTags();
 	}
 }

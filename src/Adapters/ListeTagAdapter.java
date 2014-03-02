@@ -19,7 +19,7 @@ import gestionDesTaches.*;
 public class ListeTagAdapter extends BaseAdapter{
 	LayoutInflater mInflater;
 	ListeTags lt = null;
-	ListeTaches lTaches = null;			//besoin d'instancier la liste de Tache en cas de suppression de tag, 
+	ListeTaches lTaches = null;			//besoin d'instancier la liste de Tache en cas de suppression de tag
 	Context listeContexte;
 	
 	public ListeTagAdapter(Context context){

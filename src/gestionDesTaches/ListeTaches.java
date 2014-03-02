@@ -4,6 +4,8 @@ import gestionDesTags.ListeTags;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 
 
 public class ListeTaches {
@@ -17,6 +19,7 @@ public class ListeTaches {
 			Tache t = db.selectionner(i);
 			t.setAnimation(true);
 			ArrayList<Integer> tabTagId = t.readTags();
+			Log.e("nb tag tache", t.getNom() + " : " + tabTagId.size());
 			for(int id : tabTagId){
 				if(lTags.isInside(id))
 					t.ajouterTag(lTags.getTag(id));

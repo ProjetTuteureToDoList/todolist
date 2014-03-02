@@ -98,7 +98,6 @@ public class BDDTache extends SQLiteOpenHelper {
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues valeursTache = new ContentValues();
-		
 		valeursTache.put(TACHE_NAME, t.getNom());
 		valeursTache.put(TACHE_ID, t.getIdTache());
 		valeursTache.put(TACHE_DATE_JOUR, t.getDate().getDate());
@@ -114,28 +113,33 @@ public class BDDTache extends SQLiteOpenHelper {
 		valeursTache.put(TACHE_DESCRIPTION, t.getDescription());
 		valeursTache.put(TACHE_LISTETAGS, t.getListeTagsString());
 		
-		db.update(TABLE_TACHE_NAME, valeursTache, TACHE_ID + " = ?", new String[] {String.valueOf(t.getIdTache())});
+		db.update(TABLE_TACHE_NAME, valeursTache, TACHE_ID + " = ?", new String[] {String.valueOf(t.getIdTache())});		
 		db.close();
 	}
 	
-	public Tache selectionner(int id){
+	public Tache selectionner(int position){
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TACHE_NAME + " WHERE " + TACHE_ID + " = ?", new String[]{String.valueOf(id)});
+		Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TACHE_NAME, null);
+		int i = 0;
 		Tache t = new Tache();
 		
 		if(c.moveToNext()){
-			t.setNom(c.getString(c.getColumnIndex(TACHE_NAME)));
-			t.setDate(new Date(c.getInt(c.getColumnIndex(TACHE_DATE_ANNEE)), c.getInt(c.getColumnIndex(TACHE_DATE_MOIS)), c.getInt(c.getColumnIndex(TACHE_DATE_JOUR)),
-							   c.getInt(c.getColumnIndex(TACHE_DATE_HEURE)), c.getInt(c.getColumnIndex(TACHE_DATE_MINUTE))));
-			t.setDescription(c.getString(c.getColumnIndex(TACHE_DESCRIPTION)));
-			if(c.getInt(c.getColumnIndex(TACHE_ETAT)) == 1)
-				t.setEtat(true);
-			else
-				t.setEtat(false);
-			t.setIdTache(c.getInt(c.getColumnIndex(TACHE_ID)));
-			t.setImportance(c.getInt(c.getColumnIndex(TACHE_IMPORTANCE)));
-			t.setListeTagsString(c.getString(c.getColumnIndex(TACHE_LISTETAGS)));
+			while(i < position && c.moveToNext()){
+				i++;
+			}
 		}
+		
+		t.setNom(c.getString(c.getColumnIndex(TACHE_NAME)));
+		t.setDate(new Date(c.getInt(c.getColumnIndex(TACHE_DATE_ANNEE)), c.getInt(c.getColumnIndex(TACHE_DATE_MOIS)), c.getInt(c.getColumnIndex(TACHE_DATE_JOUR)),
+						   c.getInt(c.getColumnIndex(TACHE_DATE_HEURE)), c.getInt(c.getColumnIndex(TACHE_DATE_MINUTE))));
+		t.setDescription(c.getString(c.getColumnIndex(TACHE_DESCRIPTION)));
+		if(c.getInt(c.getColumnIndex(TACHE_ETAT)) == 1)
+			t.setEtat(true);
+		else
+			t.setEtat(false);
+		t.setIdTache(c.getInt(c.getColumnIndex(TACHE_ID)));
+		t.setImportance(c.getInt(c.getColumnIndex(TACHE_IMPORTANCE)));
+		t.setListeTagsString(c.getString(c.getColumnIndex(TACHE_LISTETAGS)));
 		
 		c.close();
 		db.close();
