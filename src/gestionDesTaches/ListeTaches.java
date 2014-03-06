@@ -13,20 +13,22 @@ public class ListeTaches {
 	private int compteurTache;
 	private BDDTache db;
 	
-	public ListeTaches(BDDTache db, ListeTags lTags){
+	public ListeTaches(BDDTache db){
 		compteurTache = db.getSize();
 		for(int i = 0 ; i < compteurTache ; i++){
 			Tache t = db.selectionner(i);
 			t.setAnimation(true);
-			ArrayList<Integer> tabTagId = t.readTags();
-			Log.e("nb tag tache", t.getNom() + " : " + tabTagId.size());
-			for(int id : tabTagId){
-				if(lTags.isInside(id))
-					t.ajouterTag(lTags.getTag(id));
-			}
 			tabTache.add(t);
 		}
 		this.db = db;
+	}
+	
+	public void ajouterAllTags(Tache t, ListeTags lTags){
+		ArrayList<Integer> tabTagId = t.readTags();
+		for(int id : tabTagId){
+			if(lTags.isInside(id))
+				t.ajouterTag(lTags.getTag(id));
+		}
 	}
 	
 	public void ajoutTache(Tache t){

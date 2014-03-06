@@ -102,7 +102,7 @@ public class MainActivity extends Activity{
 	    entreeText = (EditText) findViewById(R.id.entreeTexte);
 	    
 	    //Initialisation de l'adapter de la liste complète des tags
-	    lTagsAdapter = new ListeTagAdapter(this);
+	    lTagsAdapter = new ListeTagAdapter(this, 0);
 	    
 	    //Liste des choses à faire, initialisation de la ListeTacheAdapter, liaison à une ListView
 	    lta = new ListeTacheAdapter(this);
@@ -145,6 +145,8 @@ public class MainActivity extends Activity{
 	    	
 	    }
 	    
+	    for(int i = 0 ; i < lta.getCount() ; i++)
+	    	lta.getListeTache().ajouterAllTags(lta.getItem(i), lTagsAdapter.getListeTag());
 	    
 	    checkList = (ListView) findViewById(R.id.listview);
 	    checkList.setAdapter(lta);

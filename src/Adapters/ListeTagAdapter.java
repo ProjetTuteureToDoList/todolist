@@ -22,11 +22,18 @@ public class ListeTagAdapter extends BaseAdapter{
 	ListeTaches lTaches = null;			//besoin d'instancier la liste de Tache en cas de suppression de tag
 	Context listeContexte;
 	
-	public ListeTagAdapter(Context context){
+	public ListeTagAdapter(Context context){			//Constructeur pour GérerTags, car besoin de la ListeTache pour la suppresion de tag
 		this.listeContexte = context;
 		BDDTag db = new BDDTag(context, "Tag", null, 1);
 		this.lt = new ListeTags(db);
-		this.lTaches = new ListeTaches(new BDDTache(context, "Tache", null, 1), lt);
+		this.lTaches = new ListeTaches(new BDDTache(context, "Tache", null, 1));
+		this.mInflater = LayoutInflater.from(this.listeContexte);
+	}
+	
+	public ListeTagAdapter(Context context, int flags){	//Constructeur pour les autres activités
+		this.listeContexte = context;
+		BDDTag db = new BDDTag(context, "Tag", null, 1);
+		this.lt = new ListeTags(db);
 		this.mInflater = LayoutInflater.from(this.listeContexte);
 	}
 	
