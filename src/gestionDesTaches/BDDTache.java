@@ -113,7 +113,8 @@ public class BDDTache extends SQLiteOpenHelper {
 		valeursTache.put(TACHE_DESCRIPTION, t.getDescription());
 		valeursTache.put(TACHE_LISTETAGS, t.getListeTagsString());
 		
-		db.update(TABLE_TACHE_NAME, valeursTache, TACHE_ID + " = ?", new String[] {String.valueOf(t.getIdTache())});		
+		db.update(TABLE_TACHE_NAME, valeursTache, TACHE_ID + " = ?", new String[] {String.valueOf(t.getIdTache())});
+		
 		db.close();
 	}
 	

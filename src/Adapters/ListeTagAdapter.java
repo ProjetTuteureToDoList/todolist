@@ -27,6 +27,8 @@ public class ListeTagAdapter extends BaseAdapter{
 		BDDTag db = new BDDTag(context, "Tag", null, 1);
 		this.lt = new ListeTags(db);
 		this.lTaches = new ListeTaches(new BDDTache(context, "Tache", null, 1));
+		for(int i = 0 ; i < lTaches.getTabTache().size() ; i++)
+	    	lTaches.ajouterAllTags(lTaches.getTabTache().get(i), lt);
 		this.mInflater = LayoutInflater.from(this.listeContexte);
 	}
 	

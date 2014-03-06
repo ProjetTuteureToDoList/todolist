@@ -4,7 +4,6 @@ import gestionDesTags.ListeTags;
 
 import java.util.ArrayList;
 
-import android.util.Log;
 
 
 

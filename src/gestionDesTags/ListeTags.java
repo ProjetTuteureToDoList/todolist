@@ -51,6 +51,7 @@ public class ListeTags {
 			else
 				i++;
 		}
+				
 		if(find){
 			tabTag.remove(i);
 			compteurTag--;
