@@ -1,5 +1,7 @@
 package Adapters;
 
+import java.util.Calendar;
+
 import gestionDesTaches.BDDTache;
 import gestionDesTaches.ListeTaches;
 import gestionDesTaches.Tache;
@@ -91,7 +93,9 @@ public class ListeTacheAdapter extends BaseAdapter{
 		//Affichage de la case cochée/non cochée
 		ImageView caseCochee = (ImageView) layout.findViewById(R.id.caseCochee);
 		ImageView caseNonCochee = (ImageView) layout.findViewById(R.id.caseNonCochee);
+		ImageView logoRetard = (ImageView) layout.findViewById(R.id.icone_retard);
 		if(isSelectionned()){
+			logoRetard.setVisibility(8);
 			if(lt.getTabTache().get(position).getAfficheSelection()){
 				caseCochee.setVisibility(0);
 				caseNonCochee.setVisibility(8);
@@ -101,10 +105,95 @@ public class ListeTacheAdapter extends BaseAdapter{
 				caseNonCochee.setVisibility(0);
 			}
 		}
+		//Affichage du logo alerte à cause du retard si il y a retard dans la tâche
 		else{
 			caseCochee.setVisibility(8);
 			caseNonCochee.setVisibility(8);
+			Calendar dateActuelle = Calendar.getInstance();
+			boolean thatBool = false;
+			if(!lt.getTabTache().get(position).getEtat()){
+				if(lt.getTabTache().get(position).getHasDate() && lt.getTabTache().get(position).getHasHour()){ 				//Si la tâche a une date et une heure
+
+					if (lt.getTabTache().get(position).getDate().getYear() > dateActuelle.get(Calendar.YEAR))
+						thatBool = true;
+					else if (lt.getTabTache().get(position).getDate().getYear() == dateActuelle.get(Calendar.YEAR)
+							|| lt.getTabTache().get(position).getDate().getYear() == -1) {
+						if (lt.getTabTache().get(position).getDate().getMonth() > dateActuelle.get(Calendar.MONTH) + 1)
+							thatBool = true;
+						else if (lt.getTabTache().get(position).getDate().getMonth() == dateActuelle.get(Calendar.MONTH) + 1
+								|| lt.getTabTache().get(position).getDate().getMonth() == -1) {
+							if (lt.getTabTache().get(position).getDate().getDate() > dateActuelle.get(Calendar.DAY_OF_MONTH))
+								thatBool = true;
+							else if (lt.getTabTache().get(position).getDate().getDate() == dateActuelle
+									.get(Calendar.DAY_OF_MONTH) || lt.getTabTache().get(position).getDate().getDate() == -1) {
+								if (lt.getTabTache().get(position).getDate().getHours() > dateActuelle
+										.get(Calendar.HOUR_OF_DAY))
+									thatBool = true;
+								else if (lt.getTabTache().get(position).getDate().getHours() == dateActuelle
+										.get(Calendar.HOUR_OF_DAY)
+										|| lt.getTabTache().get(position).getDate().getHours() == -1) {
+									if (lt.getTabTache().get(position).getDate().getMinutes() >= dateActuelle
+											.get(Calendar.MINUTE)
+											|| lt.getTabTache().get(position).getDate().getMinutes() == -1)
+										thatBool = true;
+								}
+							}
+						}
+					}
+					
+					if(!thatBool)
+						logoRetard.setVisibility(0);
+					else
+						logoRetard.setVisibility(8);	
+				}
+				else if(lt.getTabTache().get(position).getHasDate()){
+																																	//Si une tâche a juste une date
+					if (lt.getTabTache().get(position).getDate().getYear() > dateActuelle.get(Calendar.YEAR))
+						thatBool = true;
+					else if (lt.getTabTache().get(position).getDate().getYear() == dateActuelle.get(Calendar.YEAR)
+							|| lt.getTabTache().get(position).getDate().getYear() == -1) {
+						if (lt.getTabTache().get(position).getDate().getMonth() > dateActuelle.get(Calendar.MONTH) + 1)
+							thatBool = true;
+						else if (lt.getTabTache().get(position).getDate().getMonth() == dateActuelle.get(Calendar.MONTH) + 1
+								|| lt.getTabTache().get(position).getDate().getMonth() == -1) {
+							if (lt.getTabTache().get(position).getDate().getDate() >= dateActuelle.get(Calendar.DAY_OF_MONTH))
+								thatBool = true;
+						}
+					}
+					
+					if(!thatBool)
+						logoRetard.setVisibility(0);
+					else
+						logoRetard.setVisibility(8);
+				}
+				
+				else if(lt.getTabTache().get(position).getHasHour()){
+																																//Si une tâche à juste une heure
+					if (lt.getTabTache().get(position).getDate().getHours() > dateActuelle
+							.get(Calendar.HOUR_OF_DAY))
+						thatBool = true;
+					else if (lt.getTabTache().get(position).getDate().getHours() == dateActuelle
+							.get(Calendar.HOUR_OF_DAY)
+							|| lt.getTabTache().get(position).getDate().getHours() == -1) {
+						if (lt.getTabTache().get(position).getDate().getMinutes() >= dateActuelle
+								.get(Calendar.MINUTE)
+								|| lt.getTabTache().get(position).getDate().getMinutes() == -1)
+							thatBool = true;
+					}
+					
+					if(!thatBool)
+						logoRetard.setVisibility(0);
+					else
+						logoRetard.setVisibility(8);
+				}
+				else
+					logoRetard.setVisibility(8);
+			}
+			else
+				logoRetard.setVisibility(8);
 		}
+		
+		
 		
 		//Affichage du texte barré et grisé si la tâche est effectué
 		if(getItem(position).getEtat()){

@@ -21,7 +21,6 @@ public class Tache {
 	private boolean hasDate;		//indique si la tâche à une date donnée ou non
 	private boolean hasHour;		//indique si la tâche à une heure donnée ou non
 	
-	
 	private ListeTags lt;			//liste tags de la tâche
 	private String ltString;		//liste de tags de la tâche en string pour la BDDTâche
 	
@@ -35,7 +34,9 @@ public class Tache {
 		Calendar dateActuelle = Calendar.getInstance(); 			// initialise la date à la date actuel lors de la construction
 		this.date = new Date(dateActuelle.get(Calendar.YEAR), dateActuelle.get(Calendar.MONTH) + 1, 
 							 dateActuelle.get(Calendar.DAY_OF_MONTH), dateActuelle.get(Calendar.HOUR_OF_DAY), 
-							 dateActuelle.get(Calendar.MINUTE));				
+							 dateActuelle.get(Calendar.MINUTE));
+		this.hasDate = false;
+		this.hasHour = false;
 		this.etat = false;
 		this.importance = 1;
 		this.description = "Pas de description";
@@ -47,7 +48,7 @@ public class Tache {
 	// constructeur de tâche "rapide"
 	public Tache(String nom){
 		this.nom = nom;
-		Calendar dateActuelle = Calendar.getInstance(); 			// initialise la date à la date actuel lors de la construction
+		Calendar dateActuelle = Calendar.getInstance(); 			// initialise la date à la date actuelle lors de la construction
 		this.date = new Date(dateActuelle.get(Calendar.YEAR), dateActuelle.get(Calendar.MONTH) + 1, 
 							 dateActuelle.get(Calendar.DAY_OF_MONTH), dateActuelle.get(Calendar.HOUR_OF_DAY), 
 							 dateActuelle.get(Calendar.MINUTE));	

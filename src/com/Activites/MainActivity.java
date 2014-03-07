@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -141,8 +140,6 @@ public class MainActivity extends Activity{
 	    	t.setListeTagsString(getIntent().getStringExtra("listeTags"));
 	    	t.setAnimation(true);
 	    	lta.modificationTacheAdapter(t, lta.findPositionWithId(t.getIdTache()));
-	    	Log.e("ListeTags", t.getListeTagsString());
-	    	
 	    }
 	    
 	    for(int i = 0 ; i < lta.getCount() ; i++)
@@ -421,7 +418,7 @@ public class MainActivity extends Activity{
 					donneesTache.putString("nom", lta.getItem(position).getNom());
 					donneesTache.putString("description", lta.getItem(position).getDescription());
 					donneesTache.putBoolean("hasDate", lta.getItem(position).getHasDate());
-					donneesTache.putBoolean("hasHeure", lta.getItem(position).getHasHour());
+					donneesTache.putBoolean("hasHour", lta.getItem(position).getHasHour());
 					donneesTache.putInt("dateJour", lta.getItem(position).getDate().getDate());
 					donneesTache.putInt("dateMois", lta.getItem(position).getDate().getMonth());
 					donneesTache.putInt("dateAnnee", lta.getItem(position).getDate().getYear());
@@ -430,6 +427,8 @@ public class MainActivity extends Activity{
 					donneesTache.putInt("importance", lta.getItem(position).getImportance());
 					donneesTache.putBoolean("etat", lta.getItem(position).getEtat());
 					donneesTache.putString("listeTags", lta.getItem(position).getListeTagsString());
+					donneesTache.putBoolean("hasDate", lta.getItem(position).getHasDate());
+					donneesTache.putBoolean("hasHour", lta.getItem(position).getHasHour());
 					descriptifTache.putExtras(donneesTache);
 					startActivity(descriptifTache);
 				}

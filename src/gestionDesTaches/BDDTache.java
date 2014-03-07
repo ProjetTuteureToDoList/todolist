@@ -15,8 +15,10 @@ public class BDDTache extends SQLiteOpenHelper {
 	public static final String TACHE_DATE_JOUR = "Date_Jour";
 	public static final String TACHE_DATE_MOIS = "Date_Mois";
 	public static final String TACHE_DATE_ANNEE = "Date_Annee";
+	public static final String TACHE_HASDATE = "HasDate";
 	public static final String TACHE_DATE_HEURE = "Date_Heure";
 	public static final String TACHE_DATE_MINUTE = "Date_Minute";
+	public static final String TACHE_HASHOUR = "HasHour";
 	public static final String TACHE_ETAT = "Etat";
 	public static final String TACHE_IMPORTANCE = "Importance";
 	public static final String TACHE_DESCRIPTION = "Description";
@@ -29,8 +31,10 @@ public class BDDTache extends SQLiteOpenHelper {
 														TACHE_DATE_JOUR + " INTEGER NOT NULL, " +
 														TACHE_DATE_MOIS + " INTEGER NOT NULL, " +
 														TACHE_DATE_ANNEE + " INTEGER NOT NULL, " +
+														TACHE_HASDATE + " INTEGER NOT NULL, " +
 														TACHE_DATE_HEURE + " INTEGER NOT NULL, " +
 														TACHE_DATE_MINUTE + " INTEGER NOT NULL, " +
+														TACHE_HASHOUR + " INTEGER NOT NULL, " +
 														TACHE_ETAT + " INTEGER NOT NULL DEFAULT 0, " +
 														TACHE_IMPORTANCE + " INTEGER NOT NULL DEFAULT 1, " +
 														TACHE_DESCRIPTION + " TEXT NOT NULL DEFAULT \"Pas de description\", " + 
@@ -64,8 +68,20 @@ public class BDDTache extends SQLiteOpenHelper {
 		valeursTache.put(TACHE_DATE_JOUR, t.getDate().getDate());
 		valeursTache.put(TACHE_DATE_MOIS, t.getDate().getMonth());
 		valeursTache.put(TACHE_DATE_ANNEE, t.getDate().getYear());
+		
+		if(t.getHasDate())
+			valeursTache.put(TACHE_HASDATE, 1);
+		else
+			valeursTache.put(TACHE_HASDATE, 0);
+		
 		valeursTache.put(TACHE_DATE_HEURE, t.getDate().getHours());
 		valeursTache.put(TACHE_DATE_MINUTE, t.getDate().getMinutes());
+		
+		if(t.getHasHour())
+			valeursTache.put(TACHE_HASHOUR, 1);
+		else
+			valeursTache.put(TACHE_HASHOUR, 0);
+		
 		if(t.getEtat())
 			valeursTache.put(TACHE_ETAT, 1);
 		else
@@ -103,8 +119,20 @@ public class BDDTache extends SQLiteOpenHelper {
 		valeursTache.put(TACHE_DATE_JOUR, t.getDate().getDate());
 		valeursTache.put(TACHE_DATE_MOIS, t.getDate().getMonth());
 		valeursTache.put(TACHE_DATE_ANNEE, t.getDate().getYear());
+		
+		if(t.getHasDate())
+			valeursTache.put(TACHE_HASDATE, 1);
+		else
+			valeursTache.put(TACHE_HASDATE, 0);
+		
 		valeursTache.put(TACHE_DATE_HEURE, t.getDate().getHours());
 		valeursTache.put(TACHE_DATE_MINUTE, t.getDate().getMinutes());
+		
+		if(t.getHasHour())
+			valeursTache.put(TACHE_HASHOUR, 1);
+		else
+			valeursTache.put(TACHE_HASHOUR, 0);
+		
 		if(t.getEtat())
 			valeursTache.put(TACHE_ETAT, 1);
 		else
@@ -133,6 +161,17 @@ public class BDDTache extends SQLiteOpenHelper {
 		t.setNom(c.getString(c.getColumnIndex(TACHE_NAME)));
 		t.setDate(new Date(c.getInt(c.getColumnIndex(TACHE_DATE_ANNEE)), c.getInt(c.getColumnIndex(TACHE_DATE_MOIS)), c.getInt(c.getColumnIndex(TACHE_DATE_JOUR)),
 						   c.getInt(c.getColumnIndex(TACHE_DATE_HEURE)), c.getInt(c.getColumnIndex(TACHE_DATE_MINUTE))));
+		
+		if(c.getInt(c.getColumnIndex(TACHE_HASDATE)) == 1)
+			t.setHasDate(true);
+		else
+			t.setHasDate(false);
+		
+		if(c.getInt(c.getColumnIndex(TACHE_HASHOUR)) == 1)
+			t.setHasHour(true);
+		else
+			t.setHasHour(false);
+		
 		t.setDescription(c.getString(c.getColumnIndex(TACHE_DESCRIPTION)));
 		if(c.getInt(c.getColumnIndex(TACHE_ETAT)) == 1)
 			t.setEtat(true);

@@ -105,22 +105,25 @@ public class AjoutAvanceTache extends Activity {
 		boutonRetour = (ImageView) findViewById(R.id.retour);
 		boutonRetour.setOnTouchListener(touchClick);
 
-		if ((getIntent().getBooleanExtra("modif", false)) == true) {
+		if ((getIntent().getBooleanExtra("modif", false))) {
 			boutonCreation.setText("Modifier");
 			EditText edittext_nom = (EditText) findViewById(R.id.nomDeTache);
 			edittext_nom.setText((getIntent().getStringExtra("nom")));
 			EditText edittext_details = (EditText) findViewById(R.id.detailTache);
 			edittext_details
 					.setText((getIntent().getStringExtra("description")));
-			jour = getIntent().getIntExtra("dateJour", 1);
-			mois = getIntent().getIntExtra("dateMois", 1);
-			; // Les mois vont de 0 à 11 (+ 1)
-			annee = getIntent().getIntExtra("dateAnnee", 1970);
-			dateChoisie.setText("Date choisie : " + jour + "/" + mois + "/"
-					+ annee);
-			heure = getIntent().getIntExtra("dateHeure", 0);
-			minute = getIntent().getIntExtra("dateMinute", 0);
-			heureChoisie.setText("Heure choisie : " + heure + "h" + minute);
+			if(getIntent().getBooleanExtra("hasDate", false)){
+				jour = getIntent().getIntExtra("dateJour", 1);
+				mois = getIntent().getIntExtra("dateMois", 1);
+				annee = getIntent().getIntExtra("dateAnnee", 1970);
+				dateChoisie.setText("Date choisie : " + jour + "/" + mois + "/"
+						+ annee);
+			}
+			if(getIntent().getBooleanExtra("hasHour", false)){
+				heure = getIntent().getIntExtra("dateHeure", 0);
+				minute = getIntent().getIntExtra("dateMinute", 0);
+				heureChoisie.setText("Heure choisie : " + heure + "h" + minute);
+			}
 			changerVisibilityDateEtHeure();
 
 			RatingBar importancer = (RatingBar) findViewById(R.id.importanceTache);
@@ -136,7 +139,7 @@ public class AjoutAvanceTache extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			Calendar calender = Calendar.getInstance();
+			Calendar dateActuelle = Calendar.getInstance();
 
 			switch (v.getId()) {
 			case R.id.Creer:
@@ -145,11 +148,9 @@ public class AjoutAvanceTache extends Activity {
 						.getText()).toString();
 				details = (((EditText) findViewById(R.id.detailTache))
 						.getText()).toString();
-				boolean thatBool = false;
-
+				boolean thatBool = false, justeHeure = false;
+				
 				if (nomDeTache.replace(" ", "").length() > 0) {
-
-					Calendar dateActuelle = Calendar.getInstance();
 					if (annee > dateActuelle.get(Calendar.YEAR))
 						thatBool = true;
 					else if (annee == dateActuelle.get(Calendar.YEAR)
@@ -162,9 +163,10 @@ public class AjoutAvanceTache extends Activity {
 								thatBool = true;
 							else if (jour == dateActuelle
 									.get(Calendar.DAY_OF_MONTH) || jour == -1) {
-
+								if(annee == -1 && mois == -1 && jour == -1)
+									justeHeure = true;
 								if (heure > dateActuelle
-										.get(Calendar.HOUR_OF_DAY))
+										.get(Calendar.HOUR_OF_DAY) || (heure != -1 && justeHeure))
 									thatBool = true;
 								else if (heure == dateActuelle
 										.get(Calendar.HOUR_OF_DAY)
@@ -230,9 +232,9 @@ public class AjoutAvanceTache extends Activity {
 
 			case R.id.boutonDate:
 				Dialog dateDialog = new DatePickerDialog(AjoutAvanceTache.this,
-						dateListener, calender.get(Calendar.YEAR),
-						calender.get(Calendar.MONTH),
-						calender.get(Calendar.DAY_OF_MONTH));
+						dateListener, dateActuelle.get(Calendar.YEAR),
+						dateActuelle.get(Calendar.MONTH),
+						dateActuelle.get(Calendar.DAY_OF_MONTH));
 
 				dateDialog.show();
 				break;
@@ -240,8 +242,8 @@ public class AjoutAvanceTache extends Activity {
 			case R.id.boutonHeure:
 				Dialog heureDialog = new TimePickerDialog(
 						AjoutAvanceTache.this, heureListener,
-						calender.get(Calendar.HOUR_OF_DAY),
-						calender.get(Calendar.MINUTE),
+						dateActuelle.get(Calendar.HOUR_OF_DAY),
+						dateActuelle.get(Calendar.MINUTE),
 						DateFormat.is24HourFormat(AjoutAvanceTache.this));
 				heureDialog.show();
 				break;

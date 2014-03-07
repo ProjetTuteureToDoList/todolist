@@ -142,6 +142,10 @@ public class DescriptifTache extends Activity {
 									.getBooleanExtra("etat", true));
 							modification.putString("listeTags", getIntent()
 									.getStringExtra("listeTags"));
+							modification.putBoolean("hasDate", getIntent()
+									.getBooleanExtra("hasDate", false));
+							modification.putBoolean("hasHour", getIntent()
+									.getBooleanExtra("hasHour", false));
 							ajoutAvanceTache.putExtras(modification);
 							startActivity(ajoutAvanceTache);
 
