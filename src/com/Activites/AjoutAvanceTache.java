@@ -1,14 +1,18 @@
 package com.Activites;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import Adapters.ListeTagAdapter;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,10 +22,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.RatingBar;
@@ -49,7 +55,12 @@ public class AjoutAvanceTache extends Activity {
 	ImageView croixDate = null;
 	ImageView croixHeure = null;
 	ImageView boutonRetour = null;
+	
+	TextView listeTagsView = null;
 
+	ListeTagAdapter lta = null;
+	ArrayList<Integer> tabIdTag = new ArrayList<Integer>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -104,6 +115,9 @@ public class AjoutAvanceTache extends Activity {
 		// Initialisation bouton retour
 		boutonRetour = (ImageView) findViewById(R.id.retour);
 		boutonRetour.setOnTouchListener(touchClick);
+		
+		//Initialisation bouton modifier tags
+		((Button) findViewById(R.id.ListeDesTagsBouton)).setOnClickListener(click);
 
 		if ((getIntent().getBooleanExtra("modif", false))) {
 			boutonCreation.setText("Modifier");
@@ -131,8 +145,15 @@ public class AjoutAvanceTache extends Activity {
 					"importance", 0)) * 0.5));
 			
 			listeTags = getIntent().getStringExtra("listeTags");
-
+			readTags();
 		}
+		
+		lta = new ListeTagAdapter(this, 1);
+		
+		//Initialisation du textView de la liste de tags 
+		listeTagsView = (TextView) findViewById(R.id.liste_tags_descriptif);
+		listeTagsView.setText(lta.getListeTag().getListeNomTag(listeTags));
+		
 	}
 
 	private OnClickListener click = new OnClickListener() {
@@ -277,6 +298,74 @@ public class AjoutAvanceTache extends Activity {
 							findViewById(R.id.detailTache).getWindowToken(), 0);
 				}
 				break;
+			
+			case R.id.ListeDesTagsBouton:
+				ListView lv = new ListView(AjoutAvanceTache.this);
+				lv.setAdapter(lta);
+				lv.setBackgroundColor(getResources().getColor(R.color.blanc));
+				
+				for(Integer id : tabIdTag)
+					lta.getItem(lta.findPositionWithId(id)).setAfficheSelection(true);
+				
+				
+				lv.setOnItemClickListener(new ListView.OnItemClickListener(){
+					@Override
+					public void onItemClick(
+						AdapterView<?> av, View v, int position, long arg3) {
+							if(lta.getItem(position).getAfficheSelection())
+								lta.getItem(position).setAfficheSelection(false);
+							else
+								lta.getItem(position).setAfficheSelection(true);
+							lta.notifyDataSetChanged();
+					}
+				});
+				
+				AlertDialog.Builder listeTags = new AlertDialog.Builder(AjoutAvanceTache.this);
+				listeTags.setTitle("Choisissez le/les tags");
+				listeTags.setCancelable(false);
+				listeTags.setView(lv);
+				
+				listeTags.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(
+						DialogInterface dialog, int position) {
+										
+							
+							for(int i = 0 ; i < lta.getCount() ; i++){
+								//cochage
+								if(lta.getItem(i).getAfficheSelection() && 
+										!tabIdTag.contains(lta.getItem(i).getId()))
+									tabIdTag.add(lta.getItem(i).getId());
+									
+								
+								//décochage
+								if(!lta.getItem(i).getAfficheSelection() &&
+										tabIdTag.contains(lta.getItem(i).getId()))
+									tabIdTag.remove(tabIdTag.indexOf(lta.getItem(i).getId()));
+									
+							}
+							
+							for(int i = 0 ; i < lta.getCount() ; i++){
+								lta.getItem(i).setAfficheSelection(false);
+							}
+							writeTags();
+							actualiserListeTags();
+					}
+				});
+				
+				listeTags.setNegativeButton("Annuler", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(
+						DialogInterface dialog, int position) {
+							dialog.dismiss();
+							for(int i = 0 ; i < lta.getCount() ; i++){
+								lta.getItem(i).setAfficheSelection(false);
+							}
+					}
+				});
+				
+				listeTags.create().show();
+				break;
 			}
 
 		}
@@ -395,5 +484,32 @@ public class AjoutAvanceTache extends Activity {
 		}
 
 	};
+	
+	public void readTags(){
+		int i = 0;
+		String tag = "";
+		while(i < listeTags.length()){
+			if(listeTags.charAt(i) != '/' && listeTags.charAt(i) != '\n')	{
+				tag = tag.concat(String.valueOf(listeTags.charAt(i)));
+			}
+			if(listeTags.charAt(i) == '/'){
+				tabIdTag.add(Integer.parseInt(tag));
+				tag = "";
+			}
+			i++;
+		}
+	}
+	
+	public void writeTags(){
+		listeTags = "";
+		if(tabIdTag.size() > 0){
+			for(int i = 0 ; i < tabIdTag.size() ; i++)
+				listeTags = listeTags.concat(String.valueOf(tabIdTag.get(i)) + "/");
+		}
+	}
+	
+	public void actualiserListeTags(){
+		listeTagsView.setText(lta.getListeTag().getListeNomTag(listeTags));
+	}
 
 }

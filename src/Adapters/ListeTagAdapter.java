@@ -127,6 +127,22 @@ public class ListeTagAdapter extends BaseAdapter{
 		lt.suppressionTagByPosition(position);
 	}
 	
+	public int findPositionWithId(int id){
+		int i = 0;
+		boolean find = false;
+		while(!find && i < lt.getTabTag().size()){
+			if(lt.getTabTag().get(i).getId() == id)
+				find = true;
+			else
+				i++;
+		}
+		
+		if(!find)
+			return -1;
+		else
+			return i;
+	}
+	
 	public ListeTags getListeTag(){
 		return lt;
 	}

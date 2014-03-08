@@ -122,6 +122,7 @@ public class MainActivity extends Activity{
 								getIntent().getIntExtra("dateMinute", 0),
 								getIntent().getIntExtra("importance", 0),
 								getIntent().getStringExtra("description"));
+	    	t.setListeTagsString(getIntent().getStringExtra("listeTags"));
 	    	t.setAnimation(true);
 	    	lta.ajoutTacheAdapter(t);
 	    }

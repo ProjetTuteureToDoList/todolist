@@ -87,4 +87,21 @@ public class ListeTags {
 		}
 		return t;
 	}
+	
+	public String getListeNomTag(String listeIdTags){
+		String result = "";
+		for(int i = 0 ; i < listeIdTags.length() ; i++){
+			String temp = "";
+			while(listeIdTags.charAt(i) != '/' && i < listeIdTags.length()){
+				temp = temp.concat(String.valueOf(listeIdTags.charAt(i)));
+				i++;
+			}
+			result = result.concat(getTag(Integer.parseInt(temp)).getNom() + ", ");
+		}
+		
+		if(!result.equals(""))
+			result = result.substring(0, result.length() - 2);
+		
+		return result;
+	}
 }

@@ -1,5 +1,7 @@
 package com.Activites;
 
+import gestionDesTags.BDDTag;
+import gestionDesTags.ListeTags;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -31,6 +33,8 @@ public class DescriptifTache extends Activity {
 	ImageView retour = null;
 	ImageView modification = null;
 	ImageView suppr = null;
+	
+	ListeTags lt = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,12 +87,22 @@ public class DescriptifTache extends Activity {
 		importance
 				.setRating((float) ((getIntent().getIntExtra("importance", 0)) * 0.5));
 		etat = (TextView) findViewById(R.id.etat);
-		etat.setText("Etat: ");
+		etat.setText("Etat : ");
 		etatr = (TextView) findViewById(R.id.etatr);
 		if (getIntent().getBooleanExtra("etat", true))
 			etatr.setText("Fait");
 		else
 			etatr.setText("Non fait");
+		
+		
+		lt = new ListeTags(new BDDTag(this, "Tag", null, 1));
+		String listeNomTags = lt.getListeNomTag(getIntent().getStringExtra("listeTags"));
+		if(!listeNomTags.equals(""))
+			((TextView) findViewById(R.id.liste_tags_descriptif)).setText(listeNomTags);
+		else
+			((TextView) findViewById(R.id.liste_tags_descriptif)).setText("Aucun");
+		
+		
 
 	}
 

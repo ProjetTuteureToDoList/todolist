@@ -137,21 +137,47 @@
         <View
             android:layout_height="2dp"
             android:background="@color/gris" />
-    </TableLayout>
 
-    <TextView
-        android:id="@+id/importancetext"
+	    <TextView
+	        android:id="@+id/importancetext"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="@string/text"
+	        android:textSize="20sp" />
+    </TableLayout>
+	
+	    <RatingBar
+	        android:id="@+id/importance"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:isIndicator="true" />
+	    
+	<TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/text"
-        android:textSize="20sp" />
-
-    <RatingBar
-        android:id="@+id/importance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:isIndicator="true" />
+        android:stretchColumns="1" >
+	    
+	    <View
+            android:layout_height="2dp"
+            android:background="@color/gris" />
+    
+	    <TextView
+	        android:id="@+id/liste_tags_titre"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="Liste des tags associés"
+	        android:textSize="20sp" />
+	    
+	    <TextView
+	        android:id="@+id/liste_tags_descriptif"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="@string/text" />
+    </TableLayout>
+    
 
 </LinearLayout>

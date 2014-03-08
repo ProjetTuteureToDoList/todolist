@@ -140,18 +140,35 @@
             android:ems="10"
             android:gravity="top|left"
             android:hint="Détails de la tâche" />
-
+        
         <TextView
-            android:id="@+id/listeTagstext"
-            android:layout_width="fill_parent"
+	        android:id="@+id/liste_tags_titre"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="Liste des tags associés"
+	        android:textSize="15sp" />
+        
+        <TextView
+	        android:id="@+id/liste_tags_descriptif"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="@string/text" />
+        
+        <Button
+            android:id="@+id/ListeDesTagsBouton"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Liste des tags" />
-
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Modifier les tags" />
+        
         <Button
             android:id="@+id/Creer"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:text="Créer" />
 
