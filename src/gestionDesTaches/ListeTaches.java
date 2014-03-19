@@ -22,6 +22,26 @@ public class ListeTaches {
 		this.db = db;
 	}
 	
+	public ListeTaches(BDDTache db, ArrayList<Integer> tabTagIdTri){
+		for(int i = 0 ; i < db.getSize() ; i++){
+			boolean estDedans = true;
+			Tache t = db.selectionner(i);
+			ArrayList<Integer> tabTagIdTache = t.readTags();
+			int j = 0;
+			while(j < tabTagIdTri.size()){
+				if(!tabTagIdTache.contains(tabTagIdTri.get(j)))
+					estDedans = false;
+				j++;
+			}
+			
+			if(estDedans){
+				t.setAnimation(true);
+				tabTache.add(t);
+			}
+		}
+		
+	}
+	
 	public void ajouterAllTags(Tache t, ListeTags lTags){
 		ArrayList<Integer> tabTagId = t.readTags();
 		for(int id : tabTagId){

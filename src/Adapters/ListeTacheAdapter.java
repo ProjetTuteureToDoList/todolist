@@ -1,5 +1,6 @@
 package Adapters;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import gestionDesTaches.BDDTache;
@@ -25,13 +26,19 @@ public class ListeTacheAdapter extends BaseAdapter{
 	ListeTaches lt = null;
 	Context listeContexte;
 	
-	public ListeTacheAdapter(Context context){
+	public ListeTacheAdapter(Context context){									//pour récupérer toutes les tâches
 		this.listeContexte = context;
 		BDDTache db = new BDDTache(context, "Tache", null, 1);
 		this.lt = new ListeTaches(db);
 		this.mInflater = LayoutInflater.from(this.listeContexte);
 	}
 	
+	public ListeTacheAdapter(Context context, ArrayList<Integer> tabTagIdTri){	//pour récupérer les tâches triés par les tags
+		this.listeContexte = context;
+		this.mInflater = LayoutInflater.from(this.listeContexte);
+		BDDTache db = new BDDTache(context, "Tache", null, 1);
+		this.lt = new ListeTaches(db, tabTagIdTri);		//On envoie la liste des ids des tags à la listeTaches pour procéder à la sélection des tâches
+	}
 	
 	/**
 	 * Récupère une tâche de la liste de tâche
@@ -65,7 +72,7 @@ public class ListeTacheAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LinearLayout layout = null;
-
+		
 		// Si la vue est recyclée, il contient déjà le bon layout, donc pas besoin de la recréer
 		// pour des soucis d'optimisation du processus
 		if(convertView != null)
@@ -302,4 +309,5 @@ public class ListeTacheAdapter extends BaseAdapter{
 	public ListeTaches getListeTache(){
 		return lt;
 	}
+	
 }

@@ -1,5 +1,7 @@
 package com.Activites;
 
+import java.util.ArrayList;
+
 import gestionDesTaches.Tache;
 import Adapters.ListeTacheAdapter;
 import Adapters.ListeTagAdapter;
@@ -58,13 +60,15 @@ public class MainActivity extends Activity{
 	
 	boolean modeSelection = false;		//Permet de savoir si au moins une tâche à été sélectionné ou non
 	boolean modeMenu = false;			//Permet de savoir si on est dans le menu où non
+	
+	ArrayList<Integer> tabTagIdTri = null; //ArrayList contenant les ids des tags pour le tri des tâches
+	boolean listeTacheTriee;			   //permet de savoir quand un tri a été effectué (pour enlever le force close de l'ajout,
+										   //suppression et modification
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		
 		
 		//Initilalisation de la barre d'en haut
 		//		- masquage des éléments inutiles au départ (retour, suppr, tag)
@@ -162,6 +166,10 @@ public class MainActivity extends Activity{
 	    //Initialisation et gestion de l'évènement clic du bouton ajouter
 	    boutonAjouter = (Button) findViewById(R.id.bouton);
 	    boutonAjouter.setOnClickListener(petitClick);
+	    
+	    //Initialisation de l'ArrayList tabTagIdTri contenant les ids des tags pour le tri des tâches
+	    tabTagIdTri = new ArrayList<Integer>();
+	    listeTacheTriee = false;
 	}
 
 	//////EVENEMENTS LISTENERS
@@ -172,12 +180,28 @@ public class MainActivity extends Activity{
 			switch(v.getId()) {
 			    case R.id.bouton:
 			    	if(entreeText.getText().toString().replace(" ", "").length() > 0){
-			    		lta.ajoutTacheAdapter(new Tache(entreeText.getText().toString()));
+			    		Tache t = new Tache(entreeText.getText().toString());
+			    		
+			    		if(listeTacheTriee){
+			    			lta = new ListeTacheAdapter(MainActivity.this);
+			    			for(int id : tabTagIdTri)
+			    				t.ajouterTag(lTagsAdapter.getItem(lTagsAdapter.findPositionWithId(id)));
+			    			checkList.setAdapter(lta);
+			    		}
+			    		
+			    		lta.ajoutTacheAdapter(t);			    		
 				    	entreeText.setText(null);
 				    	entreeText.clearFocus();
 				    	InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				    	inputMethodManager.hideSoftInputFromWindow(entreeText.getWindowToken(), 0);
+				    	
+						if(listeTacheTriee)
+							triTache();    		
+				    	
 				    	actualiserListe();
+				    	
+				    	
+				    	
 			    	}
 			    	break;
 			    	
@@ -225,8 +249,9 @@ public class MainActivity extends Activity{
 								case R.id.corbeille:
 									int nbTacheSelectionnees = 0;
 									for(int i = 0 ; i < lta.getCount() ; i++){
-							    		if(lta.getItem(i).getAfficheSelection())
+							    		if(lta.getItem(i).getAfficheSelection()){
 							    			nbTacheSelectionnees++;
+							    		}
 									}
 									
 									Builder confirmationSuppr = new AlertDialog.Builder(MainActivity.this);
@@ -237,14 +262,35 @@ public class MainActivity extends Activity{
 									
 									confirmationSuppr.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface dialog, int id){
+											if(listeTacheTriee){
+												ArrayList<Integer> tabTacheId = new ArrayList<Integer>();
+												for(int i = 0 ; i < lta.getCount() ; i++){
+										    		if(lta.getItem(i).getAfficheSelection()){
+										    			tabTacheId.add(lta.getItem(i).getIdTache());
+										    		}
+												}
+												lta = new ListeTacheAdapter(MainActivity.this);
+								    			checkList.setAdapter(lta);
+								    			for(int idTache : tabTacheId)
+								    				lta.getItem(lta.findPositionWithId(idTache)).setAfficheSelection(true);
+											}
+											
 											for(int i = 0 ; i < lta.getCount() ; i++){
 									    		if(lta.getItem(i).getAfficheSelection()){
 									    			lta.suppressionTacheAdapter(i);
 									    			i--;
 									    		}
 									    	}
-											actualiserListe();
+											
+											
+											
+											
 											changerModeSelection();
+											
+											if(listeTacheTriee)
+												triTache();
+											
+											actualiserListe();
 									    	actualiserHeader();
 										}
 									});
@@ -484,6 +530,69 @@ public class MainActivity extends Activity{
 					modeMenu = false;					
 					break;
 				case 1:
+					ListView lv = new ListView(MainActivity.this);
+					lv.setAdapter(lTagsAdapter);
+					lv.setBackgroundColor(getResources().getColor(R.color.blanc));
+					
+					for(Integer id : tabTagIdTri)
+						lTagsAdapter.getItem(lTagsAdapter.findPositionWithId(id)).setAfficheSelection(true);
+					
+					
+					lv.setOnItemClickListener(new ListView.OnItemClickListener(){
+						@Override
+						public void onItemClick(
+							AdapterView<?> av, View v, int position, long arg3) {
+								if(lTagsAdapter.getItem(position).getAfficheSelection())
+									lTagsAdapter.getItem(position).setAfficheSelection(false);
+								else
+									lTagsAdapter.getItem(position).setAfficheSelection(true);
+								lTagsAdapter.notifyDataSetChanged();
+						}
+					});
+					
+					AlertDialog.Builder listeTags = new AlertDialog.Builder(MainActivity.this);
+					listeTags.setTitle("Choisissez le/les tags");
+					listeTags.setCancelable(false);
+					listeTags.setView(lv);
+					
+					listeTags.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(
+							DialogInterface dialog, int position) {
+											
+								
+								for(int i = 0 ; i < lTagsAdapter.getCount() ; i++){
+									//cochage
+									if(lTagsAdapter.getItem(i).getAfficheSelection() && 
+											!tabTagIdTri.contains(lTagsAdapter.getItem(i).getId()))
+										tabTagIdTri.add(lTagsAdapter.getItem(i).getId());	
+									
+									//décochage
+									if(!lTagsAdapter.getItem(i).getAfficheSelection() &&
+											tabTagIdTri.contains(lTagsAdapter.getItem(i).getId()))
+										tabTagIdTri.remove(tabTagIdTri.indexOf(lTagsAdapter.getItem(i).getId()));
+							
+								}
+								
+								for(int i = 0 ; i < lTagsAdapter.getCount() ; i++)
+									lTagsAdapter.getItem(i).setAfficheSelection(false);
+								
+								triTache();
+						}
+					});
+					
+					listeTags.setNegativeButton("Annuler", new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(
+							DialogInterface dialog, int position) {
+								dialog.dismiss();
+								for(int i = 0 ; i < lta.getCount() ; i++){
+									lTagsAdapter.getItem(i).setAfficheSelection(false);
+								}
+						}
+					});
+					
+					listeTags.create().show();
 					break;
 				case 2:
 					Intent gererTag = new Intent(MainActivity.this, GererTags.class);
@@ -596,5 +705,14 @@ public class MainActivity extends Activity{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public void triTache(){
+		lta = new ListeTacheAdapter(this, tabTagIdTri);
+		for(int i = 0 ; i < lta.getCount() ; i++)
+	    	lta.getListeTache().ajouterAllTags(lta.getItem(i), lTagsAdapter.getListeTag());
+		checkList.setAdapter(lta);
+		listeTacheTriee = true;
+			
 	}
 }
