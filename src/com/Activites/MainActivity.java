@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todolist.R;
 
@@ -530,69 +531,75 @@ public class MainActivity extends Activity{
 					modeMenu = false;					
 					break;
 				case 1:
-					ListView lv = new ListView(MainActivity.this);
-					lv.setAdapter(lTagsAdapter);
-					lv.setBackgroundColor(getResources().getColor(R.color.blanc));
-					
-					for(Integer id : tabTagIdTri)
-						lTagsAdapter.getItem(lTagsAdapter.findPositionWithId(id)).setAfficheSelection(true);
-					
-					
-					lv.setOnItemClickListener(new ListView.OnItemClickListener(){
-						@Override
-						public void onItemClick(
-							AdapterView<?> av, View v, int position, long arg3) {
-								if(lTagsAdapter.getItem(position).getAfficheSelection())
-									lTagsAdapter.getItem(position).setAfficheSelection(false);
-								else
-									lTagsAdapter.getItem(position).setAfficheSelection(true);
-								lTagsAdapter.notifyDataSetChanged();
-						}
-					});
-					
-					AlertDialog.Builder listeTags = new AlertDialog.Builder(MainActivity.this);
-					listeTags.setTitle("Choisissez le/les tags");
-					listeTags.setCancelable(false);
-					listeTags.setView(lv);
-					
-					listeTags.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(
-							DialogInterface dialog, int position) {
-											
-								
-								for(int i = 0 ; i < lTagsAdapter.getCount() ; i++){
-									//cochage
-									if(lTagsAdapter.getItem(i).getAfficheSelection() && 
-											!tabTagIdTri.contains(lTagsAdapter.getItem(i).getId()))
-										tabTagIdTri.add(lTagsAdapter.getItem(i).getId());	
+					if(lTagsAdapter.getCount() != 0){
+						ListView lv = new ListView(MainActivity.this);
+						lv.setAdapter(lTagsAdapter);
+						lv.setBackgroundColor(getResources().getColor(R.color.blanc));
+						
+						for(Integer id : tabTagIdTri)
+							lTagsAdapter.getItem(lTagsAdapter.findPositionWithId(id)).setAfficheSelection(true);
+						
+						
+						lv.setOnItemClickListener(new ListView.OnItemClickListener(){
+							@Override
+							public void onItemClick(
+								AdapterView<?> av, View v, int position, long arg3) {
+									if(lTagsAdapter.getItem(position).getAfficheSelection())
+										lTagsAdapter.getItem(position).setAfficheSelection(false);
+									else
+										lTagsAdapter.getItem(position).setAfficheSelection(true);
+									lTagsAdapter.notifyDataSetChanged();
+							}
+						});
+						
+						AlertDialog.Builder listeTags = new AlertDialog.Builder(MainActivity.this);
+						listeTags.setTitle("Choisissez le/les tags");
+						listeTags.setCancelable(false);
+						listeTags.setView(lv);
+						
+						listeTags.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+							@Override
+							public void onClick(
+								DialogInterface dialog, int position) {
+												
 									
-									//décochage
-									if(!lTagsAdapter.getItem(i).getAfficheSelection() &&
-											tabTagIdTri.contains(lTagsAdapter.getItem(i).getId()))
-										tabTagIdTri.remove(tabTagIdTri.indexOf(lTagsAdapter.getItem(i).getId()));
-							
-								}
+									for(int i = 0 ; i < lTagsAdapter.getCount() ; i++){
+										//cochage
+										if(lTagsAdapter.getItem(i).getAfficheSelection() && 
+												!tabTagIdTri.contains(lTagsAdapter.getItem(i).getId()))
+											tabTagIdTri.add(lTagsAdapter.getItem(i).getId());	
+										
+										//décochage
+										if(!lTagsAdapter.getItem(i).getAfficheSelection() &&
+												tabTagIdTri.contains(lTagsAdapter.getItem(i).getId()))
+											tabTagIdTri.remove(tabTagIdTri.indexOf(lTagsAdapter.getItem(i).getId()));
 								
-								for(int i = 0 ; i < lTagsAdapter.getCount() ; i++)
-									lTagsAdapter.getItem(i).setAfficheSelection(false);
-								
-								triTache();
-						}
-					});
-					
-					listeTags.setNegativeButton("Annuler", new DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(
-							DialogInterface dialog, int position) {
-								dialog.dismiss();
-								for(int i = 0 ; i < lta.getCount() ; i++){
-									lTagsAdapter.getItem(i).setAfficheSelection(false);
-								}
-						}
-					});
-					
-					listeTags.create().show();
+									}
+									
+									for(int i = 0 ; i < lTagsAdapter.getCount() ; i++)
+										lTagsAdapter.getItem(i).setAfficheSelection(false);
+									
+									triTache();
+							}
+						});
+						
+						listeTags.setNegativeButton("Annuler", new DialogInterface.OnClickListener(){
+							@Override
+							public void onClick(
+								DialogInterface dialog, int position) {
+									dialog.dismiss();
+									for(int i = 0 ; i < lta.getCount() ; i++){
+										lTagsAdapter.getItem(i).setAfficheSelection(false);
+									}
+							}
+						});
+						
+						listeTags.create().show();
+					}
+					else
+						Toast.makeText(MainActivity.this,
+								"Vous n'avez pas encore de tags.",
+								Toast.LENGTH_SHORT).show();
 					break;
 				case 2:
 					Intent gererTag = new Intent(MainActivity.this, GererTags.class);
